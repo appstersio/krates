@@ -38,4 +38,6 @@ $ docker build -t kontena/server .
 
 ## License
 
+Krates is licensed under the MIT License. See [LICENSE](LICENSE.txt) for full license text.
+
 Kontena is licensed under the Apache License, Version 2.0. See [LICENSE](LICENSE) for full license text.
