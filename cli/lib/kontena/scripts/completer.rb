@@ -6,7 +6,7 @@ class Helper
 
   def client_config
     require 'json'
-    config_file = File.expand_path('~/.kontena_client.json')
+    config_file = File.expand_path('~/.krates.json')
     if(File.exist?(config_file))
       JSON.parse(File.read(config_file))
     else
