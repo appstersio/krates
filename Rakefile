@@ -10,17 +10,14 @@ UBUNTU_IMAGE = 'kontena-ubuntu-build'
 UBUNTU_REPO = ENV['UBUNTU_REPO'] || 'ubuntu'
 PKG_REV = ENV['PKG_REV'] || '1'
 
-namespace :release do
+def headline(text)
+  puts "\e[0;33m#{text}\e[0m"
+end
 
-  def headline(text)
-    puts "\e[0;33m#{text}\e[0m"
-  end
-
+namespace :build do
   task :setup => [:bump_version] do
-    %w(agent cli server).each do |dir|
-      Dir.chdir(dir) do
-        sh("bundle install")
-      end
+    %w(cli).each do |dir|
+      Dir.chdir(dir) { sh('bundle install') }
     end
   end
 
@@ -30,6 +27,9 @@ namespace :release do
       File.write("./#{dir}/VERSION", VERSION)
     end
   end
+end
+
+namespace :release do
 
   task :setup_ubuntu do
     headline "Building Docker image for Ubuntu package builds ..."
