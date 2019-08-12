@@ -8,4 +8,4 @@ services:
   krates:
     image: krates/buildbox:1.6.0
     working_dir: /src/krates/cli
-    command: [ "-c", "bundle exec rspec" ]
+    command: -c "sleep 10m"
