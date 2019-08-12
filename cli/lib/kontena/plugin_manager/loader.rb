@@ -6,7 +6,7 @@ module Kontena
     class Loader
       include Common
 
-      CLI_GEM = 'kontena-cli'.freeze
+      CLI_GEM = 'krates'.freeze
       MIN_CLI_VERSION = '0.15.99'.freeze
 
       def loaded_plugins

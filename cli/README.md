@@ -40,4 +40,6 @@ To get list of all commands:
 
 ## License
 
+Krates is licensed under the MIT License. See [LICENSE](LICENSE.txt) for full license text.
+
 Kontena is licensed under the Apache License, Version 2.0. See [LICENSE](LICENSE.txt) for full license text.

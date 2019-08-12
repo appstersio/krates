@@ -138,7 +138,7 @@ module Kontena
         )
       end
 
-      # Load configuration from default location ($HOME/.kontena_client.json)
+      # Load configuration from default location ($HOME/.krates.json)
       def load_settings_from_config_file
         settings = config_file_available? ? parse_config_file : default_settings
 
@@ -284,7 +284,7 @@ module Kontena
 
       # Generate the default configuration filename
       def default_config_filename
-        File.join(Dir.home, '.kontena_client.json')
+        File.join(Dir.home, '.krates.json')
       end
 
       # List of configured servers
