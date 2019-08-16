@@ -6,6 +6,6 @@ gem 'kommando', '~> 0.1.2'
 gem 'rake'
 
 group :development do
-  gem 'kontena-cli', path: '../cli'
+  gem 'krates', path: '../cli'
 end
 

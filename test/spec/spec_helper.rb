@@ -79,7 +79,7 @@ RSpec.configure do |config|
   end
 
   config.before :each do
-    k = Kommando.run "kontena grid use e2e"
+    k = Kommando.run "krates grid use e2e"
     unless k.code == 0
       STDERR.puts(k.out)
       fail "e2e grid does not exist"

@@ -13,7 +13,7 @@ release-up:
 		echo "OK: Successfuly launched all the required components..."
 
 dev:
-	@docker-compose -f docker-compose.dev.yml run --rm devbox
+	@docker-compose run --rm devbox
 
 test:
 	@docker-compose exec -T krates bundle exec rspec
