@@ -3,16 +3,18 @@ version: "3.6"
 services:
   # NOTE: This is a development box service
   devbox:
-    image: krates/toolbox:2.4.3.1
+    image: krates/toolbox:2.4.3.2
     working_dir: /krates/test
     environment:
       - CI=1
+      - INITIAL_ADMIN_CODE=xoxo
+      - CI_KRATES_TOKEN=yoyo
     volumes:
       - ".:/krates"
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
-      - "/usr/local/bin/docker:/usr/bin/docker"
     depends_on:
       - master
+      - worker
   # NOTE: This is a build box service
   buildbox:
     image: krates/buildbox:1.6.0
@@ -55,12 +57,13 @@ services:
     environment:
       - KONTENA_URI=ws://master:9292
       - KONTENA_TOKEN=yoyo
-      - NO_IMAGE_CLEANUP=yes
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./agent:/app
-    depends_on:
-      - master
+    # Solves timing issues and tries to get up unless explicitly stopped, eq.
+    # eventually Krates Master will be online and ready to accept Krates Worker(s)
+    restart: unless-stopped
+    network_mode: host
   # NOTE: This is a MongoDB service for data persistence
   mongodb:
     image: mongo:3.6

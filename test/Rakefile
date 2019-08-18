@@ -57,14 +57,12 @@ namespace :compose do
 
   desc "setup compose master"
   task :setup_master do
-    sh "krates master login --code xoxo --name compose-e2e http://master:9292"
+    sh "krates master login --code #{ENV['INITIAL_ADMIN_CODE']} --name compose-e2e http://master:9292"
   end
 
   desc "setup compose grid"
   task :setup_grid do
-    sh "krates grid create --token xoxo e2e"
-    #sh "docker-compose up -d agent"
-    #sleep 30
+    sh "krates grid create --token #{ENV['CI_KRATES_TOKEN']} e2e"
     sh "krates node ls"
   end
 
