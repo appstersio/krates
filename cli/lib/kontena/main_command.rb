@@ -1,22 +1,22 @@
 require 'kontena/command'
 
 class Kontena::MainCommand < Kontena::Command
-  option ['-v', '--version'], :flag, "Output Kontena CLI version #{Kontena::Cli::VERSION}" do
+  option ['-v', '--version'], :flag, "Output Krates CLI version #{Kontena::Cli::VERSION}" do
     build_tags = [ 'ruby' + RUBY_VERSION ]
     build_tags << RUBY_PLATFORM
     build_tags += ENV["KONTENA_EXTRA_BUILDTAGS"].to_s.split(',')
-    puts ['kontena-cli', Kontena::Cli::VERSION, "[#{build_tags.join('+')}]"].join(' ')
+    puts ['krates', Kontena::Cli::VERSION, "[#{build_tags.join('+')}]"].join(' ')
     exit 0
   end
 
   banner Kontena.pastel.green("Getting started:"), false
-  banner ' - Create a Kontena Master (see "kontena plugin search" for a list of', false
+  banner ' - Create a Krates Master (see "krates plugin search" for a list of', false
   banner '   provisioning plugins)', false
-  banner ' - Or log into an existing master, use: "kontena master login <master url>"', false
-  banner ' - Read more about Kontena at https://www.kontena.io/docs/', false
+  banner ' - Or log into an existing master, use: "krates master login <master url>"', false
+  banner ' - Read more about Krates at https://krates.appsters.io/docs/', false
 
-  subcommand "master", "Kontena Master specific commands", load_subcommand('master_command')
-  subcommand "cloud", "Kontena Cloud specific commands", load_subcommand('cloud_command')
+  subcommand "master", "Krates Master specific commands", load_subcommand('master_command')
+  subcommand "cloud", "Krates Cloud specific commands", load_subcommand('cloud_command')
   subcommand "node", "Node specific commands", load_subcommand('node_command')
   subcommand "grid", "Grid specific commands", load_subcommand('grid_command')
   subcommand "stack", "Stack specific commands", load_subcommand('stack_command')
