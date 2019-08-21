@@ -1,6 +1,6 @@
 require 'spec_helper'
 # NOTE: These tests are obsolete but might be useful for future reference
-describe 'app subcommand', :skip => 'OBSOLETE' do
+describe 'app subcommand', :broken => true do
   context 'with the app-command plugin', subcommand: :app do
     describe 'app ps', subcommand: :app do
       it "returns list" do
