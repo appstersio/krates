@@ -28,7 +28,7 @@ describe 'plugin support' do
   context 'config' do
     it 'does not need to be required' do
       k = run!('bundle exec ruby ' + fixture_dir('plugins') + 'config_test.rb')
-      expect(k.out).to match(/kontena_client/)
+      expect(k.out).to match(/krates\.json/)
     end
   end
 
