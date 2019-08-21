@@ -11,6 +11,7 @@ services:
       - CI_KRATES_TOKEN=yoyo
     volumes:
       - ".:/krates"
+      - "./.krates.json:/root/.krates.json"
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
     depends_on:
       - master

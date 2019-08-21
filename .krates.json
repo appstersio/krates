@@ -1,0 +1,20 @@
+{
+  "current_server": "compose-e2e",
+  "current_account": "kontena",
+  "servers": [
+    {
+      "name": "compose-e2e",
+      "url": "http://master:9292",
+      "username": "admin",
+      "grid": "e2e",
+      "token": "4011b9663a2b500f0901a297b5397c5483740138dab0481d250085648e985905",
+      "token_expires_at": 0,
+      "refresh_token": null
+    }
+  ],
+  "accounts": [
+    {
+      "name": "kontena"
+    }
+  ]
+}
