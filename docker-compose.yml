@@ -3,7 +3,7 @@ version: "3.6"
 services:
   # NOTE: This is a development box service
   devbox:
-    image: krates/toolbox:2.4.3.2
+    image: krates/toolbox:2.4.3-2
     working_dir: /krates/test
     environment:
       - CI=1
