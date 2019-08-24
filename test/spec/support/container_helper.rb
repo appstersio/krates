@@ -5,8 +5,8 @@ module ContainerHelper
   # Checks if a deployed container exists with given name
   # @param [String] name of the container to check
   def container_exist?(name)
-    k = run "kontena container ls -q"
-    fail "kontena container ls command failed: #{k.out}" if k.code != 0
+    k = run "krates container ls -q"
+    fail "krates container ls command failed: #{k.out}" if k.code != 0
     k.out.include?(name)
   end
 
