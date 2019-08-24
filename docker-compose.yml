@@ -3,7 +3,7 @@ version: "3.6"
 services:
   # NOTE: This is a development box service
   devbox:
-    image: krates/toolbox:2.4.3-2
+    image: krates/toolbox:2.4.3-3
     working_dir: /krates/test
     environment:
       - CI=1
@@ -16,6 +16,7 @@ services:
     depends_on:
       - master
       - worker
+    network_mode: host # NOTE: Host network is required to reach to services locally
   # NOTE: This is a build box service
   buildbox:
     image: krates/buildbox:1.6.0
