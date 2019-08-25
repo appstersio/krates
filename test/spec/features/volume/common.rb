@@ -5,7 +5,7 @@ module Common
   # @param [String] container to find
   # @return [String] fully qualified container path, i.e. node/stack.container
   def find_container(name)
-    k = run 'kontena container ls'
+    k = run 'krates container ls'
     k.out[/^\w*\/#{name}/]
   end
 
@@ -14,7 +14,7 @@ module Common
   # @param [String] container, full path
   # @return [Hash] containers mounts
   def container_mounts(container)
-    k = run "kontena container inspect #{container}"
+    k = run "krates container inspect #{container}"
     JSON.parse(k.out).dig('Mounts')
   end
 
