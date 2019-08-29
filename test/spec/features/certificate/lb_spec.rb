@@ -39,10 +39,10 @@ describe 'kontena/lb certificates' do
     File.write(cert_path, ssl_cert.to_pem)
     File.write(key_path, ssl_key.to_pem)
 
-    run!("kontena certificate import --private-key=#{key_path} #{cert_path}")
+    run!("krates certificate import --private-key=#{key_path} #{cert_path}")
 
     with_fixture_dir('stack/certificates') do
-      k = run('kontena stack install -v certificate=localhost kontena-lb.yml')
+      k = run('krates stack install -v certificate=localhost kontena-lb.yml')
       expect(k.code).to eq(0), k.out
     end
 
@@ -50,8 +50,8 @@ describe 'kontena/lb certificates' do
   end
 
   after(:each) do
-    run("kontena stack rm --force cert-test")
-    run("kontena certificate rm --force localhost")
+    run("krates stack rm --force cert-test")
+    run("krates certificate rm --force localhost")
     run("rm -rf #{tmp_path}")
   end
 
