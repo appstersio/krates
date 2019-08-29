@@ -1,42 +1,42 @@
 describe 'container exec' do
 
   it 'executes command in a given container' do
-    id = container_id('kontena-agent')
+    id = container_id('krates-worker')
     expect(id).not_to be_nil
 
-    k = kommando("kontena container exec #{id} -- ls -la")
+    k = kommando("krates container exec #{id} -- ls -la")
     expect(k.run).to be_truthy
     expect(k.out).to include("Gemfile.lock")
   end
 
   it 'exits with error if command fails' do
-    id = container_id('kontena-agent')
+    id = container_id('krates-worker')
     expect(id).not_to be_nil
 
-    k = kommando("kontena container exec #{id} -- ls -l /nonexist")
+    k = kommando("krates container exec #{id} -- ls -l /nonexist")
     expect(k.run).to be_truthy
     expect(k.code).to_not eq 0
     expect(k.out).to include("/nonexist: No such file or directory")
   end
 
   it 'exits with command error' do
-    id = container_id('kontena-agent')
+    id = container_id('krates-worker')
     expect(id).not_to be_nil
 
-    k = kommando("kontena container exec --shell #{id} exit 32")
+    k = kommando("krates container exec --shell #{id} exit 32")
     expect(k.run).to be_truthy
     expect(k.code).to eq 32
   end
 
   it 'fails if container does not exist' do
-    k = run("kontena container exec invalid-id -- ls -la")
+    k = run("krates container exec invalid-id -- ls -la")
     expect(k.code).to eq(1)
     expect(k.out).to match /Error during WebSocket handshake: Unexpected response code: 404/
   end
 
   it 'runs a command inside a container with tty' do
-    id = container_id('kontena-agent')
-    k = kommando("kontena container exec -it #{id} sh")
+    id = container_id('krates-worker')
+    k = kommando("krates container exec -it #{id} sh")
 
     k.out.on("#") do
       k.in << "ls -la \r"
