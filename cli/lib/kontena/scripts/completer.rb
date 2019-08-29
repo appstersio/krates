@@ -168,7 +168,7 @@ words = ARGV
 
 if words.first == '--subcommand-tree'
   require 'kontena/main_command'
-  helper.subcommand_tree("kontena", Kontena::MainCommand)
+  helper.subcommand_tree("krates", Kontena::MainCommand)
   exit 0
 end
 
