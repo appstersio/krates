@@ -1,7 +1,7 @@
 require 'openssl'
 require 'tmpdir'
 
-describe 'kontena/lb certificates' do
+describe 'krates/lb certificates' do
   let(:ssl_subject) do
     OpenSSL::X509::Name.parse "/CN=localhost"
   end
