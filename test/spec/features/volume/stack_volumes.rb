@@ -6,15 +6,15 @@ describe 'stack volumes' do
   include Common
 
   after(:each) do
-    run "kontena stack rm --force redis"
-    run "kontena volume rm --force redis-data"
+    run "krates stack rm --force redis"
+    run "krates volume rm --force redis-data"
   end
 
 
   it 'creates stack with reference to external volume' do
-    run! 'kontena volume create --scope instance --driver local redis-data'
+    run! 'krates volume create --scope instance --driver local redis-data'
     with_fixture_dir("stack/volumes") do
-      run! 'kontena stack install redis-simple.yml'
+      run! 'krates stack install redis-simple.yml'
     end
 
     container = find_container('redis.redis-1')
@@ -26,17 +26,17 @@ describe 'stack volumes' do
 
   it 'fails to create stack with reference to non-existing external volume' do
     with_fixture_dir("stack/volumes") do
-      k = run 'kontena stack install redis-simple.yml'
+      k = run 'krates stack install redis-simple.yml'
       expect(k.code).not_to eq(0)
     end
   end
 
   it 'fails to install stack with stack scoped volume' do
     with_fixture_dir("stack/volumes") do
-      k = run 'kontena stack install redis-with-volume.yml'
+      k = run 'krates stack install redis-with-volume.yml'
       expect(k.code).not_to eq(0)
     end
-    k = run 'kontena stack show redis'
+    k = run 'krates stack show redis'
     expect(k.code).not_to eq(0)
   end
 
