@@ -61,7 +61,8 @@ Vagrant.configure("2") do |config|
   # Forward 2375 port to manage Docker outside of the box (see https://www.vagrantup.com/docs/networking/forwarded_ports.html)
   # As a consequence, we have to explicitly set DOCKER_HOST variable to access this Docker instance
   config.vm.network "forwarded_port", guest: 2375, host: 2375
-  config.vm.synced_folder "/Users/pabloduo/Documents/Github/krates", "/Users/pabloduo/Documents/Github/krates", id: "core", :nfs => true, :mount_options => ['nolock,vers=3,udp']
+  config.vm.network "forwarded_port", guest: 80, host: 80
+  config.vm.synced_folder "/Users/pabloduo/Documents/Github", "/Users/pabloduo/Documents/Github", id: "github", :nfs => true, :mount_options => ['nolock,vers=3,udp']
 
   config.vm.provision :shell, :path => 'vagrant-provision.sh'
 end
