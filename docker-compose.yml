@@ -16,6 +16,7 @@ services:
     depends_on:
       - master
       - worker
+      - worker-b
     network_mode: host # NOTE: Host network is required to reach to services locally
   # NOTE: This is a build box service
   buildbox:
@@ -58,6 +59,28 @@ services:
     # env_file: agent/.env
     environment:
       - KONTENA_URI=ws://master:9292
+      - KONTENA_NODE_ID=OB5Q:DRRH:DGZD:TT3X:HYMF:TLCS:ZAPO:ZI7P:FGXE:TEV3:ICIO:P7KE
+      - KONTENA_NODE_NAME=worker-a
+      - KONTENA_TOKEN=yoyo
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./agent:/app
+    # Solves timing issues and tries to get up unless explicitly stopped, eq.
+    # eventually Krates Master will be online and ready to accept Krates Worker(s)
+    restart: unless-stopped
+    network_mode: host
+  # NOTE: This is a secondary worker service to schedule workloads
+  worker-b:
+    container_name: krates-worker-b
+    image: krates/worker:1.6.0
+    build:
+      context: agent
+      dockerfile: Dockerfile
+    # env_file: agent/.env
+    environment:
+      - KONTENA_URI=ws://master:9292
+      - KONTENA_NODE_ID=CZ4G:WFEU:45IE:TWUD:NKL3:W45E:Y4YQ:W4DS:J4NT:RMW6:P2RI:ZYIU
+      - KONTENA_NODE_NAME=worker-b
       - KONTENA_TOKEN=yoyo
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
