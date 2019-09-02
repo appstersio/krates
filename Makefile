@@ -1,5 +1,9 @@
 # README: http://makefiletutorial.com
 GEM_NAME = krates
+FS_NAME     = fskr
+VOLUME_NAME = krates
+FS_PATH     = $(FS_NAME):/src
+VOLUME_PATH = $(VOLUME_NAME):/src
 
 # Adding PHONY to a target will prevent make from confusing the phony target with a file name.
 # In this case, if `test` folder exists, `make test` will still be run.
@@ -9,8 +13,21 @@ build:
 	@docker-compose build --no-cache --force-rm
 
 release-up:
-	@docker-compose up -d && sleep 5 && \
+	@export COMPOSE_FILE=docker-compose.yml:docker-compose.r.yml && \
+		docker-compose up -d devbox && sleep 5 && \
 		echo "OK: Successfuly launched all the required components..."
+
+volume-init:
+	@docker volume rm -f $(VOLUME_NAME) > /dev/null && \
+		docker container create --name $(FS_NAME) -v $(VOLUME_PATH) busybox > /dev/null && \
+		docker cp . $(FS_PATH) && docker rm $(FS_NAME) > /dev/null
+
+compose-setup:
+	@docker-compose exec -T devbox rake compose:setup && sleep 30 && \
+		echo "OK: Successfuly completed 'compose:setup' step..."
+
+idev:
+	@export COMPOSE_FILE=docker-compose.yml:docker-compose.dev.yml && docker-compose run --rm devbox
 
 dev:
 	@docker-compose run --rm devbox

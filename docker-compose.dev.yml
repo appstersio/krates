@@ -1,8 +1,7 @@
 version: "3.6"
+# NOTE: List of services to override
 services:
   devbox:
-    image: krates/toolbox:2.4.3
-    working_dir: /src/krates/cli
     volumes:
-      - ".:/src/krates"
-      - "~/.krates.json:/root/.krates.json"
+      - ".:/krates"
+      - "./.krates.json:/root/.krates.json"

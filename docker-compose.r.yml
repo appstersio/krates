@@ -1,0 +1,11 @@
+version: "3.6"
+# NOTE: External volumes used to validate & release product
+volumes:
+  krates:
+    external: true
+# NOTE: List of services to override
+services:
+  devbox:
+    command: -c "sleep 1h"
+    volumes:
+      - "krates:/krates/"
