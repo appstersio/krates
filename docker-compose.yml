@@ -43,8 +43,6 @@ services:
       - ACME_ENDPOINT=https://acme-staging.api.letsencrypt.org/
       - INITIAL_ADMIN_CODE=xoxo
       - KONTENA_TOKEN=yoyo
-    volumes:
-      - ./server:/app
     depends_on:
       - mongodb
   # NOTE: This is a worker service to schedule workloads
@@ -62,7 +60,6 @@ services:
       - KONTENA_TOKEN=yoyo
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - ./agent:/app
     # Solves timing issues and tries to get up unless explicitly stopped, eq.
     # eventually Krates Master will be online and ready to accept Krates Worker(s)
     restart: unless-stopped
@@ -82,7 +79,6 @@ services:
       - KONTENA_TOKEN=yoyo
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - ./agent:/app
     # Solves timing issues and tries to get up unless explicitly stopped, eq.
     # eventually Krates Master will be online and ready to accept Krates Worker(s)
     restart: unless-stopped
