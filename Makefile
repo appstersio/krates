@@ -26,11 +26,8 @@ compose-setup:
 	@docker-compose exec -T devbox rake compose:setup && sleep 30 && \
 		echo "OK: Successfuly completed 'compose:setup' step..."
 
-idev:
-	@export COMPOSE_FILE=docker-compose.yml:docker-compose.dev.yml && docker-compose run --rm devbox
-
 dev:
-	@docker-compose run --rm devbox
+	@export COMPOSE_FILE=docker-compose.yml:docker-compose.dev.yml && docker-compose run --rm devbox
 
 test:
 	@docker-compose exec -T krates bundle exec rspec
