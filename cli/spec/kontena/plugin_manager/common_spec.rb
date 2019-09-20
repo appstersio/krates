@@ -4,22 +4,22 @@ describe Kontena::PluginManager::Common do
   let(:subject) { described_class }
 
   context '#prefix' do
-    it 'converts vagrant to kontena-plugin-vagrant' do
-      expect(subject.prefix('vagrant')).to eq 'kontena-plugin-vagrant'
+    it 'converts vagrant to krates-plugin-vagrant' do
+      expect(subject.prefix('vagrant')).to eq 'krates-plugin-vagrant'
     end
 
     it 'returns the same if the string is already prefixed' do
-      expect(subject.prefix('kontena-plugin-vagrant')).to eq 'kontena-plugin-vagrant'
+      expect(subject.prefix('krates-plugin-vagrant')).to eq 'krates-plugin-vagrant'
     end
   end
 
   context '#installed' do
     before(:each) do
-      allow(subject).to receive(:plugins).and_return([double(name: 'kontena-plugin-foo'), double(name: 'kontena-plugin-bar')])
+      allow(subject).to receive(:plugins).and_return([double(name: 'krates-plugin-foo'), double(name: 'krates-plugin-bar')])
     end
 
     it 'returns an installed spec by name' do
-      expect(subject.installed('bar').name).to eq 'kontena-plugin-bar'
+      expect(subject.installed('bar').name).to eq 'krates-plugin-bar'
     end
 
     it 'returns nothing if not found' do

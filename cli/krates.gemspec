@@ -19,7 +19,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   # NOTE: Exclude files not relevant to the plugin
-  spec.files        -= %w[ Dockerfile Makefile docker-compose.yml docker-compose.dev.yml Jenkinsfile .dockerignore Rakefile .gitignore .rspec ]
+  spec.files        -= %w[ Dockerfile Makefile docker-compose.yml docker-compose.d.yml docker-compose.r.yml Jenkinsfile .dockerignore Rakefile .gitignore .rspec ]
   spec.files        -= %w[ Gemfile krates.gemspec README.md ]
 
   spec.required_ruby_version = ">= 2.3.0"

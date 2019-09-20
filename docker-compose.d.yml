@@ -1,6 +1,11 @@
 version: "3.6"
 # NOTE: List of services to override
 services:
+  krates:
+    command: ''
+    working_dir: /src/krates/cli
+    volumes:
+      - ".:/src/krates"
   # NOTE: This is a development box service
   devbox:
     volumes:

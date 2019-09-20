@@ -9,6 +9,22 @@ VOLUME_PATH = $(VOLUME_NAME):/src
 # In this case, if `test` folder exists, `make test` will still be run.
 .PHONY: test build teardown up dev
 
+# Command-line integration
+cli.build:
+	@docker-compose build --no-cache --force-rm buildbox
+
+cli.up:
+	@export COMPOSE_FILE=docker-compose.yml:docker-compose.r.yml && \
+		docker-compose up -d krates && sleep 5 && \
+		echo "OK: Successfuly launched all the required components..."
+
+cli.dev:
+	@export COMPOSE_FILE=docker-compose.yml:docker-compose.d.yml && \
+		docker-compose run --rm krates
+
+cli.test:
+	@docker-compose exec -T krates bundle exec rspec
+
 build:
 	@docker-compose build --no-cache --force-rm
 
