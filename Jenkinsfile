@@ -18,6 +18,17 @@ pipeline {
         sh 'make cli.up'
       }
     }
+    stage('Test') {
+      steps {
+        sh 'make cli.test'
+      }
+    }
+    stage('Publish') {
+      steps {
+        sh 'make gemspec'
+        sh 'make credspec'
+      }
+    }
   }
   post {
     always {
