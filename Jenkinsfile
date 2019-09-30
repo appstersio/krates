@@ -14,6 +14,7 @@ pipeline {
     stage('Setup') {
       steps {
         sh 'make cli.build'
+        sh 'make cli.up'
       }
     }
   }
