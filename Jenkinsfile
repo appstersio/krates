@@ -19,9 +19,15 @@ pipeline {
       }
     }
     stage('Publish') {
+      when {
+        branch 'master'
+        buildingTag()
+        expression { currentBuild.result == null || currentBuild.result == 'SUCCESS' }
+      }
       steps {
-        sh 'make gemspec'
-        sh 'make credspec'
+        sh 'make cli.gemspec'
+        sh 'make cli.credspec'
+        sh 'make cli.publish'
       }
     }
   }
