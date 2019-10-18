@@ -7,7 +7,7 @@ VOLUME_PATH = $(VOLUME_NAME):/src
 
 # Adding PHONY to a target will prevent make from confusing the phony target with a file name.
 # In this case, if `test` folder exists, `make test` will still be run.
-.PHONY: test build teardown up dev
+.PHONY: test build teardown up dev gemspec credspec teardown
 
 # Courtesy of: https://stackoverflow.com/a/49524393/3072002
 # Common env variables (https://www.gnu.org/software/make/manual/make.html#index-_002eEXPORT_005fALL_005fVARIABLES)
