@@ -61,11 +61,11 @@ RSpec.configure do |config|
   include ContainerHelper
 
   config.before :context, :subcommand => :app do
-    version = Kommando.run("kontena --version").out[/kontena-cli (\d+.+?) /, 1]
+    version = Kommando.run("krates --version").out[/krates (\d+.+?) /, 1]
     if Gem::Version.new(version) >= Gem::Version.new('1.4.0')
-      k = Kommando.run "kontena plugin install app-command"
+      k = Kommando.run "krates plugin install app-command"
     else
-      k = Kommando.run "kontena plugin install --version 0.1.0.rc1 app-command"
+      k = Kommando.run "krates plugin install --version 0.1.0.rc1 app-command"
     end
 
     unless k.code == 0
@@ -75,11 +75,11 @@ RSpec.configure do |config|
   end
 
   config.after :context, :subcommand => :app do
-    k = Kommando.run "kontena plugin uninstall app-command"
+    k = Kommando.run "krates plugin uninstall app-command"
   end
 
   config.before :each do
-    k = Kommando.run "kontena grid use e2e"
+    k = Kommando.run "krates grid use e2e"
     unless k.code == 0
       STDERR.puts(k.out)
       fail "e2e grid does not exist"

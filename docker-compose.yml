@@ -1,11 +1,90 @@
 version: "3.6"
 
 services:
+  # NOTE: This is a development box service
+  devbox:
+    image: krates/toolbox:2.4.3-3
+    working_dir: /krates/test
+    environment:
+      - CI=1
+      - INITIAL_ADMIN_CODE=xoxo
+      - CI_KRATES_TOKEN=yoyo
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+    depends_on:
+      - master
+      - worker
+  # NOTE: Second worker is commented out for now
+  #    - worker-b
+    network_mode: host # NOTE: Host network is required to reach to services locally
+  # NOTE: This is a build box service
   buildbox:
     image: krates/buildbox:1.6.0
     build: .
-
+  # NOTE: This is a service to test krates command-line tool
   krates:
     image: krates/buildbox:1.6.0
     working_dir: /src/krates/cli
     command: -c "sleep 10m"
+  # NOTE: This is master service
+  master:
+    container_name: krates-master
+    image: krates/master:1.6.0
+    build:
+      context: server
+      dockerfile: Dockerfile
+    ports:
+      - 9292:9292
+    environment:
+      - RACK_ENV=production
+      - DEBUG=yes
+      - MONGODB_URI=mongodb://mongodb:27017/krates_development
+      - VAULT_KEY=8cd0fee89585a5d46ed73fc3b25dbc11
+      - VAULT_IV=48dc8d29308eb256edc76f25def07251
+      - ACME_ENDPOINT=https://acme-staging.api.letsencrypt.org/
+      - INITIAL_ADMIN_CODE=xoxo
+      - KONTENA_TOKEN=yoyo
+    depends_on:
+      - mongodb
+  # NOTE: This is a worker service to schedule workloads
+  worker:
+    container_name: krates-worker
+    image: krates/worker:1.6.0
+    build:
+      context: agent
+      dockerfile: Dockerfile
+    # env_file: agent/.env
+    environment:
+      - KONTENA_URI=ws://master:9292
+      - KONTENA_NODE_ID=OB5Q:DRRH:DGZD:TT3X:HYMF:TLCS:ZAPO:ZI7P:FGXE:TEV3:ICIO:P7KE
+      - KONTENA_NODE_NAME=worker-a
+      - KONTENA_TOKEN=yoyo
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    # Solves timing issues and tries to get up unless explicitly stopped, eq.
+    # eventually Krates Master will be online and ready to accept Krates Worker(s)
+    restart: unless-stopped
+    network_mode: host
+  # NOTE: This is a secondary worker service to schedule workloads
+  worker-b:
+    container_name: krates-worker-b
+    image: krates/worker:1.6.0
+    build:
+      context: agent
+      dockerfile: Dockerfile
+    # env_file: agent/.env
+    environment:
+      - KONTENA_URI=ws://master:9292
+      - KONTENA_NODE_ID=CZ4G:WFEU:45IE:TWUD:NKL3:W45E:Y4YQ:W4DS:J4NT:RMW6:P2RI:ZYIU
+      - KONTENA_NODE_NAME=worker-b
+      - KONTENA_TOKEN=yoyo
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    # Solves timing issues and tries to get up unless explicitly stopped, eq.
+    # eventually Krates Master will be online and ready to accept Krates Worker(s)
+    restart: unless-stopped
+    network_mode: host
+  # NOTE: This is a MongoDB service for data persistence
+  mongodb:
+    image: mongo:3.6
+    command: mongod --smallfiles

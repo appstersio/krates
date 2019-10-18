@@ -4,12 +4,12 @@ describe 'stack service entrypoint' do
   context 'for a stack service with an entrypoint' do
     before(:all) do
       with_fixture_dir("stack/entrypoint") do
-        run! 'kontena stack install sleep.yml'
+        run! 'krates stack install sleep.yml'
       end
     end
 
     after(:all) do
-      run! 'kontena stack rm --force sleep'
+      run! 'krates stack rm --force sleep'
     end
 
     it 'configures the container with the nested /w/w entrypoint' do
@@ -23,12 +23,12 @@ describe 'stack service entrypoint' do
   context 'for a stack service with an entrypoint in network_mode=host' do
     before(:all) do
       with_fixture_dir("stack/entrypoint") do
-        run! 'kontena stack install etcdctl-watch.yml'
+        run! 'krates stack install etcdctl-watch.yml'
       end
     end
 
     after(:all) do
-      run! 'kontena stack rm --force etcdctl-watch'
+      run! 'krates stack rm --force etcdctl-watch'
     end
 
     it 'configures the container with the correct entrypoint' do

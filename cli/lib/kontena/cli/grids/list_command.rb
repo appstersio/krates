@@ -32,7 +32,7 @@ module Kontena::Cli::Grids
 
       if gridlist.size == 0
         self.verbose? && puts
-        puts pastel.yellow("Kontena Master #{config.current_master.name} doesn't have any grids yet. Create one now using 'kontena grid create' command")
+        puts pastel.yellow("Krates Master #{config.current_master.name} doesn't have any grids yet. Create one now using 'krates grid create' command")
         self.verbose? && puts
       else
         vputs

@@ -1,6 +1,6 @@
 describe 'container list' do
   it 'lists containers' do 
-    k = run("kontena container list")
-    expect(k.out.match(/.*kontena-agent.*/)).to be_truthy
+    k = run("krates container list")
+    expect(k.out.match(/.*krates-worker.*/)).to be_truthy
   end
 end

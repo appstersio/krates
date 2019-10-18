@@ -1,12 +1,12 @@
 require 'net/http'
 
-describe 'kontena service health_check' do
+describe 'krates service health_check' do
   context 'for a http test service' do
     include DebugHelper
 
     before(:all) do
       with_fixture_dir('stack/healthcheck') do
-        run! 'kontena stack build --no-push'
+        run! 'krates stack build --no-push'
       end
     end
 
@@ -15,7 +15,7 @@ describe 'kontena service health_check' do
 
       until match = out.match(/health: (\w+)/)
         sleep 1
-        k = run! "kontena service show #{service}"
+        k = run! "krates service show #{service}"
         out = k.out
       end
 
@@ -52,11 +52,11 @@ describe 'kontena service health_check' do
 
       before(:all) do
         with_fixture_dir('stack/healthcheck') do
-          run! "kontena stack install -n healthcheck-test-200 -v health_status=200"
+          run! "krates stack install -n healthcheck-test-200 -v health_status=200"
         end
       end
       after(:all) do
-        run! 'kontena stack rm --force healthcheck-test-200'
+        run! 'krates stack rm --force healthcheck-test-200'
       end
 
       it "has a healthy status" do
@@ -73,11 +73,11 @@ describe 'kontena service health_check' do
 
       before(:all) do
         with_fixture_dir('stack/healthcheck') do
-          run! "kontena stack install -n healthcheck-test-302-200 -v health_status=302 -v health_location=/health?status=200"
+          run! "krates stack install -n healthcheck-test-302-200 -v health_status=302 -v health_location=/health?status=200"
         end
       end
       after(:all) do
-        run! 'kontena stack rm --force healthcheck-test-302-200'
+        run! 'krates stack rm --force healthcheck-test-302-200'
       end
 
       it "has a healthy status" do
@@ -94,11 +94,11 @@ describe 'kontena service health_check' do
 
       before(:all) do
         with_fixture_dir('stack/healthcheck') do
-          run! "kontena stack install -n healthcheck-test-302-500 -v health_status=302 -v health_location=/health?status=500"
+          run! "krates stack install -n healthcheck-test-302-500 -v health_status=302 -v health_location=/health?status=500"
         end
       end
       after(:all) do
-        run! 'kontena stack rm --force healthcheck-test-302-500'
+        run! 'krates stack rm --force healthcheck-test-302-500'
       end
 
       it "has a healthy status" do
@@ -114,11 +114,11 @@ describe 'kontena service health_check' do
       let(:stack_name) { 'healthcheck-test-500' }
       before(:all) do
         with_fixture_dir('stack/healthcheck') do
-          run! "kontena stack install -n healthcheck-test-500 -v health_status=500"
+          run! "krates stack install -n healthcheck-test-500 -v health_status=500"
         end
       end
       after(:all) do
-        run! 'kontena stack rm --force healthcheck-test-500'
+        run! 'krates stack rm --force healthcheck-test-500'
       end
 
       it "has an unhealthy status" do

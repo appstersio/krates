@@ -60,8 +60,8 @@ module Kontena
       # @param [Gem::Specification] spec
       # @return [Boolean]
       def spec_has_valid_dependency?(spec)
-        kontena_cli = spec.runtime_dependencies.find{ |d| d.name == CLI_GEM }
-        !kontena_cli.match?(CLI_GEM, MIN_CLI_VERSION)
+        krates = spec.runtime_dependencies.find{ |d| d.name == CLI_GEM }
+        !krates.match?(CLI_GEM, MIN_CLI_VERSION)
       rescue
         false
       end

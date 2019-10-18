@@ -1,5 +1,24 @@
 # Kontena E2E Test Suite
 
+# Vagrant, Docker and control socket forwarding
+
+rm -fr /var/run/docker.sock
+
+Based on this article: https://medium.com/@dperny/forwarding-the-docker-socket-over-ssh-e6567cfab160
+
+ssh -nNT -f -F .ssh-cfg -o StreamLocalBindMask=0111 -L /var/run/docker.sock:/var/run/docker.sock default
+
+Networking perf ideas:
+
+https://superuser.com/questions/850357/how-to-fix-extremely-slow-virtualbox-network-download-speed
+
+Need a custom plugin for Vagrant to make it seamless, here is an example of DNS plugin:
+
+https://github.com/BerlinVagrant/vagrant-dns
+https://rubygems.org/gems/vagrant-shell
+https://rubygems.org/gems/vagrant-hostmaster
+https://github.com/mitchellh/vagrant-aws
+
 
 ## Running tests
 

@@ -4,22 +4,22 @@ describe 'vpn' do
       # Due to async nature of stack/service removals, need to wait until possible previous vpn containers have gone
       wait_until_container_gone('vpn.server-1')
 
-      run! 'kontena vpn create'
+      run! 'krates vpn create'
     end
 
     after(:all) do
-      run 'kontena stack rm --force vpn'
+      run 'krates stack rm --force vpn'
     end
 
     it 'creates a vpn stack' do
-      k = run! 'kontena stack show vpn'
+      k = run! 'krates stack show vpn'
 
       expect(k.out.match(/state: running/))
     end
 
     describe 'config' do
       it 'outputs a working openvpn config' do
-        k = run! 'kontena vpn config'
+        k = run! 'krates vpn config'
 
         expect(k.out.match(/BEGIN PRIVATE KEY/))
       end

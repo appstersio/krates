@@ -1,23 +1,27 @@
 pipeline {
+
   agent {
     node {
       label 'local'
     }
-
   }
+
   stages {
+
     stage('Setup') {
       steps {
-        sh 'make cli.build'
+        sh 'make build'
         sh 'make volume-init'
-        sh 'make cli.up'
+        sh 'make up'
       }
     }
+
     stage('Test') {
       steps {
-        sh 'make cli.test'
+        sh 'make test'
       }
     }
+
     stage('Publish') {
       when {
         branch 'master'
@@ -25,17 +29,16 @@ pipeline {
         expression { currentBuild.result == null || currentBuild.result == 'SUCCESS' }
       }
       steps {
-        sh 'make cli.gemspec'
-        sh 'make cli.credspec'
-        sh 'make cli.publish'
+        sh 'make gemspec'
+        sh 'make credspec'
+        sh 'make publish'
       }
     }
   }
+
   post {
     always {
       sh 'make teardown'
-
     }
-
   }
 }

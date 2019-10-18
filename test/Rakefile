@@ -49,21 +49,21 @@ namespace :compose do
   end
 
   desc "setup compose"
-  task :setup => [:setup_master, :setup_grid]
+  task :setup => [:bundle, :setup_master, :setup_grid]
+
+  task :bundle do
+    sh "bundle install"
+  end
 
   desc "setup compose master"
   task :setup_master do
-    sh "docker-compose up -d api"
-    sleep 20
-    sh "kontena master login --code initialadmincode --name compose-e2e http://localhost:9292"
+    sh "krates master login --code #{ENV['INITIAL_ADMIN_CODE']} --name compose-e2e http://master:9292"
   end
 
   desc "setup compose grid"
   task :setup_grid do
-    sh "kontena grid create --token e2etoken e2e"
-    sh "docker-compose up -d agent"
-    sleep 30
-    sh "kontena node ls"
+    sh "krates grid create --token #{ENV['CI_KRATES_TOKEN']} e2e"
+    sh "krates node ls"
   end
 
   desc "teardown compose"

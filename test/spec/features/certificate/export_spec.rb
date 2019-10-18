@@ -7,15 +7,15 @@ describe 'certificate import' do
 
   before(:all) do
     with_fixture_dir('certificates/test') do
-      run!('kontena certificate import --private-key key.pem --chain ca.pem cert.pem')
+      run!('krates certificate import --private-key key.pem --chain ca.pem cert.pem')
     end
   end
   after(:all) do
-    run("kontena certificate rm --force test")
+    run("krates certificate rm --force test")
   end
 
   it 'exports certificate bundle' do
-    k = run!("kontena certificate export test")
+    k = run!("krates certificate export test")
 
     out = k.out.gsub("\r\n", "\n")
 
@@ -25,23 +25,23 @@ describe 'certificate import' do
   end
 
   it 'exports certificate' do
-    k = run!("kontena certificate export --certificate test")
+    k = run!("krates certificate export --certificate test")
     expect(k.out.gsub("\r\n", "\n")).to eq(cert_pem)
   end
 
   it 'exports private key' do
-    k = run!("kontena certificate export --private-key test")
+    k = run!("krates certificate export --private-key test")
     expect(k.out.gsub("\r\n", "\n")).to eq(key_rsa_pem) # gets converted
   end
 
   it 'exports chain' do
-    k = run!("kontena certificate export --chain test")
+    k = run!("krates certificate export --chain test")
     expect(k.out.gsub("\r\n", "\n")).to eq(ca_pem)
   end
 
   it 'logs audit' do
-    run!("kontena certificate export --chain test")
-    k = run!('kontena grid audit-log --lines=10')
+    run!("krates certificate export --chain test")
+    k = run!('krates grid audit-log --lines=10')
     expect(k.out).to match /Certificate.*export/
   end
 end

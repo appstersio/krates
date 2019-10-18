@@ -1,0 +1,25 @@
+version: "3.6"
+# NOTE: List of services to override
+services:
+  krates:
+    command: ''
+    working_dir: /src/krates/cli
+    volumes:
+      - ".:/src/krates"
+  # NOTE: This is a development box service
+  devbox:
+    volumes:
+      - ".:/krates"
+      - "./.krates.json:/root/.krates.json"
+  # NOTE: This is master service
+  master:
+    volumes:
+      - ./server:/app
+  # NOTE: This is a worker service to schedule workloads
+  worker:
+    volumes:
+      - ./agent:/app
+  # NOTE: This is a secondary worker service to schedule workloads
+  worker-b:
+    volumes:
+      - ./agent:/app

@@ -9,32 +9,37 @@ VOLUME_PATH = $(VOLUME_NAME):/src
 # In this case, if `test` folder exists, `make test` will still be run.
 .PHONY: test build teardown up dev
 
+# Courtesy of: https://stackoverflow.com/a/49524393/3072002
+# Common env variables (https://www.gnu.org/software/make/manual/make.html#index-_002eEXPORT_005fALL_005fVARIABLES)
+.EXPORT_ALL_VARIABLES:
+COMPOSE_FILE=../docker-compose.yml:../docker-compose.r.yml
+
 # Command-line integration
-cli.build:
+build:
 	@docker-compose build --no-cache --force-rm buildbox
 
-cli.up:
-	@export COMPOSE_FILE=docker-compose.yml:docker-compose.r.yml && \
-		docker-compose up -d krates && sleep 5 && \
+up:
+	@docker-compose up -d krates && sleep 5 && \
 		echo "OK: Successfuly launched all the required components..."
 
-cli.dev:
-	@export COMPOSE_FILE=docker-compose.yml:docker-compose.d.yml && \
-		docker-compose run --rm krates
+# Override environment variables for DEV environment
+dev: export COMPOSE_FILE=../docker-compose.yml:../docker-compose.d.yml
+dev:
+	@docker-compose run --rm krates
 
-cli.test:
+test:
 	@docker-compose exec -T krates bundle exec rspec
 
-cli.gemspec:
+gemspec:
 	@docker-compose exec -T krates gem build $(GEM_NAME) && \
 		echo "OK: Successfuly built .gem file that includes the plugin..."
 
 # NOTE: This is a temporary task until gem has released 3.1.0 version
-cli.credspec:
+credspec:
 	@docker-compose exec -T krates bash -c "echo :rubygems_api_key: $$(kontena vault read --value KRATES_GEM_HOST_API_KEY) > ~/.gem/credentials && chmod 0600 ~/.gem/credentials" && \
 		echo "OK: Successfuly saved credspec file for publishing..."
 
-cli.publish:
+publish:
 	@docker-compose exec -T krates bash -c "gem push $$(basename $(GEM_NAME)*.gem)" && \
 		echo "OK: Successfuly published plugin to RubyGems.org..."
 
@@ -42,13 +47,6 @@ volume-init:
 	@docker volume rm -f $(VOLUME_NAME) > /dev/null && \
 		docker container create --name $(FS_NAME) -v $(VOLUME_PATH) busybox > /dev/null && \
 		docker cp . $(FS_PATH) && docker rm $(FS_NAME) > /dev/null
-
-compose-setup:
-	@docker-compose exec -T devbox rake compose:setup && sleep 30 && \
-		echo "OK: Successfuly completed 'compose:setup' step..."
-
-dev:
-	@export COMPOSE_FILE=docker-compose.yml:docker-compose.dev.yml && docker-compose run --rm devbox
 
 teardown:
 	@docker-compose down && \

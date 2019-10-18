@@ -1,5 +1,5 @@
 FROM alpine:3.6
-MAINTAINER Kontena, Inc. <info@kontena.io>
+LABEL maintainer="Pavel Tsurbeleu <staticpagesio@gmail.com>"
 
 RUN apk update && apk --update add tzdata ruby ruby-irb ruby-bigdecimal \
     ruby-io-console ruby-json ruby-rake ca-certificates libssl1.0 openssl libstdc++
