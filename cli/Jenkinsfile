@@ -6,40 +6,40 @@ pipeline {
     }
   }
 
-  dir('cli') {
-    stages {
-      stage('Setup') {
-        steps {
-          sh 'make build'
-          sh 'make volume-init'
-          sh 'make up'
-        }
-      }
+  env.WORKSPACE = '$WORKSPACE\cli'
 
-      stage('Test') {
-        steps {
-          sh 'make test'
-        }
-      }
-
-      stage('Publish') {
-        when {
-          branch 'master'
-          buildingTag()
-          expression { currentBuild.result == null || currentBuild.result == 'SUCCESS' }
-        }
-        steps {
-          sh 'make gemspec'
-          sh 'make credspec'
-          sh 'make publish'
-        }
+  stages {
+    stage('Setup') {
+      steps {
+        sh 'make build'
+        sh 'make volume-init'
+        sh 'make up'
       }
     }
 
-    post {
-      always {
-        sh 'make teardown'
+    stage('Test') {
+      steps {
+        sh 'make test'
       }
+    }
+
+    stage('Publish') {
+      when {
+        branch 'master'
+        buildingTag()
+        expression { currentBuild.result == null || currentBuild.result == 'SUCCESS' }
+      }
+      steps {
+        sh 'make gemspec'
+        sh 'make credspec'
+        sh 'make publish'
+      }
+    }
+  }
+
+  post {
+    always {
+      sh 'make teardown'
     }
   }
 }
