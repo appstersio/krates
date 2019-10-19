@@ -6,7 +6,7 @@ pipeline {
     }
   }
 
-  env.WORKSPACE = '$WORKSPACE\cli'
+  env.WORKSPACE = '$WORKSPACE/cli'
 
   stages {
     stage('Setup') {
