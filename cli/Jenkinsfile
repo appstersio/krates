@@ -9,7 +9,7 @@ pipeline {
   stages {
     stage('Setup') {
       steps {
-        dir 'cli' {
+        dir('cli') {
           sh 'make build'
           sh 'make volume-init'
           sh 'make up'
@@ -19,7 +19,7 @@ pipeline {
 
     stage('Test') {
       steps {
-        dir 'cli' {
+        dir('cli') {
           sh 'make test'
         }
       }
@@ -32,7 +32,7 @@ pipeline {
         expression { currentBuild.result == null || currentBuild.result == 'SUCCESS' }
       }
       steps {
-        dir 'cli' {
+        dir('cli') {
           sh 'make gemspec'
           sh 'make credspec'
           sh 'make publish'
@@ -43,7 +43,7 @@ pipeline {
 
   post {
     always {
-      dir 'cli' { sh 'make teardown' }
+      dir('cli') { sh 'make teardown' }
     }
   }
 }
