@@ -3,11 +3,12 @@ pipeline {
   agent {
     node {
       label 'local'
-      customWorkspace 'workspace/platform/cli/cli'
     }
   }
 
   stages {
+    customWorkspace 'workspace/platform/cli/cli'
+    
     stage('Setup') {
       steps {
         sh 'make build'
