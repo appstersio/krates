@@ -7,10 +7,9 @@ pipeline {
   }
 
   stages {
-    customWorkspace 'workspace/platform/cli/cli'
-    
     stage('Setup') {
       steps {
+        dir 'cli'
         sh 'make build'
         sh 'make volume-init'
         sh 'make up'
@@ -19,6 +18,7 @@ pipeline {
 
     stage('Test') {
       steps {
+        dir 'cli'
         sh 'make test'
       }
     }
@@ -30,6 +30,7 @@ pipeline {
         expression { currentBuild.result == null || currentBuild.result == 'SUCCESS' }
       }
       steps {
+        dir 'cli'
         sh 'make gemspec'
         sh 'make credspec'
         sh 'make publish'
@@ -39,6 +40,7 @@ pipeline {
 
   post {
     always {
+      dir 'cli'
       sh 'make teardown'
     }
   }
