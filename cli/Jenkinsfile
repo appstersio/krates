@@ -3,7 +3,7 @@ pipeline {
   agent {
     node {
       label 'local'
-      customWorkspace '$WORKSPACE/cli'
+      customWorkspace 'workspace/platform/cli/cli'
     }
   }
 
