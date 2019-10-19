@@ -6,39 +6,40 @@ pipeline {
     }
   }
 
-  stages {
+  dir('cli') {
+    stages {
+      stage('Setup') {
+        steps {
+          sh 'make build'
+          sh 'make volume-init'
+          sh 'make up'
+        }
+      }
 
-    stage('Setup') {
-      steps {
-        sh 'make build'
-        sh 'make volume-init'
-        sh 'make up'
+      stage('Test') {
+        steps {
+          sh 'make test'
+        }
+      }
+
+      stage('Publish') {
+        when {
+          branch 'master'
+          buildingTag()
+          expression { currentBuild.result == null || currentBuild.result == 'SUCCESS' }
+        }
+        steps {
+          sh 'make gemspec'
+          sh 'make credspec'
+          sh 'make publish'
+        }
       }
     }
 
-    stage('Test') {
-      steps {
-        sh 'make test'
+    post {
+      always {
+        sh 'make teardown'
       }
-    }
-
-    stage('Publish') {
-      when {
-        branch 'master'
-        buildingTag()
-        expression { currentBuild.result == null || currentBuild.result == 'SUCCESS' }
-      }
-      steps {
-        sh 'make gemspec'
-        sh 'make credspec'
-        sh 'make publish'
-      }
-    }
-  }
-
-  post {
-    always {
-      sh 'make teardown'
     }
   }
 }
