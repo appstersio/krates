@@ -3,10 +3,9 @@ pipeline {
   agent {
     node {
       label 'local'
+      customWorkspace '$WORKSPACE/cli'
     }
   }
-
-  env.WORKSPACE = '$WORKSPACE/cli'
 
   stages {
     stage('Setup') {
