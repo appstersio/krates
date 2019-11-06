@@ -11,7 +11,7 @@ module Kontena
     def init
       # TODO: Figure out how to co-exist with Bundler's post_reset hook
       # that restores specs captured by Bundler's closure originally
-      Gem.post_reset_hooks.delete_if {|h| h.to_s.match /bundler/}
+      # Gem.post_reset_hooks.delete_if {|h| h.to_s.match /bundler/}
       ENV["GEM_HOME"] = Common.install_dir
       Gem.paths = ENV
       Common.use_dummy_ui unless Kontena.debug?
