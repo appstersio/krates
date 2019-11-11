@@ -1,10 +1,6 @@
 pipeline {
-  agent {
-    node {
-      label 'local'
-    }
+  agent any
 
-  }
   stages {
     stage('Setup') {
       steps {
@@ -34,8 +30,6 @@ pipeline {
   post {
     always {
       sh 'make teardown'
-
     }
-
   }
 }
