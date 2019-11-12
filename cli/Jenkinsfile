@@ -29,7 +29,7 @@ pipeline {
       when {
         allOf {
           branch 'master'
-          tag pattern: 'v*'
+          tag 'v*'
           expression { currentBuild.result == null || currentBuild.result == 'SUCCESS' }
         }
       }
