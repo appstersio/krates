@@ -34,6 +34,7 @@ module Kontena::NetworkAdapters
 
     def start
       observe(Actor[:node_info_worker].observable) do |node|
+        info "launching node "
         async.launch(node)
       end
     end
@@ -249,6 +250,7 @@ module Kontena::NetworkAdapters
 
     # @param [Array<String>] peer_ips
     def connect_peers(peer_ips)
+      info "connect peers"
       if peer_ips.size > 0
         @executor_pool.execute(['--local', 'connect', '--replace'] + peer_ips)
         info "router connected to peers #{peer_ips.join(', ')}"
@@ -371,6 +373,11 @@ module Kontena::NetworkAdapters
             '/w' => {},
             '/w-noop' => {},
             '/w-nomcast' => {}
+          },
+          'HostConfig' => {
+            'LogConfig' => {
+              'Type' => 'journald' # This has to be a logging driver that outputs to STDOUT/STDERR
+            }
           }
         )
       end

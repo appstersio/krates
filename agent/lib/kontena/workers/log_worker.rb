@@ -132,6 +132,9 @@ module Kontena::Workers
         rescue Docker::Error::NotFoundError => exc
           # Could be thrown since container.skip_logs? actually loads the container details
           warn exc.message
+        rescue Excon::Errors::NotImplemented => exc
+          # Could be thrown since log driver other than 'json-file', 'journald' yields 501 Not Implemented
+          warn exc.message
         rescue => exc
           error exc
         end
