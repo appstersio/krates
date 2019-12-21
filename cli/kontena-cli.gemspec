@@ -28,7 +28,7 @@ Gem::Specification.new do |spec|
     "source_code_uri"   => "https://github.com/kontena/kontena"
   }
 
-  spec.add_development_dependency "bundler", "~> 1.7"
+  spec.add_development_dependency "bundler", "~> 2.0"
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_runtime_dependency "excon", "0.62.0"
   spec.add_runtime_dependency "tty-prompt", "0.16.1"
