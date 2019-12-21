@@ -61,7 +61,8 @@ GEM
       activesupport (>= 3.0.0, < 5)
       multi_json (~> 1.2)
     json-jwt (1.11.0)
-      activesupport
+      activesupport (>= 4.2)
+      aes_key_wrap (>= 0)
       bindata
       multi_json (>= 1.3)
       securecompare
