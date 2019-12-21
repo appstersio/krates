@@ -60,7 +60,7 @@ GEM
     jbuilder (2.2.5)
       activesupport (>= 3.0.0, < 5)
       multi_json (~> 1.2)
-    json-jwt (1.5.2)
+    json-jwt (1.11.0)
       activesupport
       bindata
       multi_json (>= 1.3)
