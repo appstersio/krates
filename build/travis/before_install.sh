@@ -10,4 +10,4 @@ if [ "$TEST_DIR" = "server" ]; then
 fi
 
 gem update --system
-gem install bundler-audit --no-ri --no-rdoc
+gem install bundler-audit --no-rdoc
