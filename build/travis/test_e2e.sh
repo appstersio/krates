@@ -3,7 +3,7 @@ set -ue
 
 cd cli && \
   gem build kontena-cli.gemspec && \
-  gem install --no-ri --no-rdoc *.gem && \
+  gem install *.gem && \
   kontena -v && \
   cd ..
 
