@@ -1,20 +1,26 @@
-FROM alpine:3.6
-MAINTAINER Kontena, Inc. <info@kontena.io>
+FROM ruby:2.4.9-slim
+LABEL maintainer="Pavel Tsurbeleu <staticpagesio@gmail.com>"
 
-RUN apk update && apk --update add tzdata ruby ruby-irb ruby-bigdecimal \
-    ruby-io-console ruby-json ruby-rake ca-certificates libssl1.0 openssl libstdc++
+ENV LANG=C.UTF-8 \
+    BUNDLER_VERSION=2.0.2 \
+    BUNDLE_JOBS=16 \
+    BUNDLE_GEMFILE=
 
 ADD Gemfile Gemfile.lock /app/
 
-RUN apk --update add --virtual build-dependencies ruby-dev build-base openssl-dev libffi-dev && \
-    gem install bundler --no-ri --no-rdoc && \
-    cd /app ; bundle install --without development test && \
-    apk del build-dependencies
+RUN apt-get update -y && apt-get install -y make gcc g++ && \
+    gem install bundler --version ${BUNDLER_VERSION} && \
+    gem cleanup bundler; cd app ; bundle install && \
+    apt-get remove -y make gcc g++ && apt-get autoremove -y && \
+    rm -rf /var/lib/apt/lists/*
 
 ADD . /app
+
 USER nobody
+
 ENV PATH="/app/bin:${PATH}" \
     RACK_ENV=production
+
 EXPOSE 9292
 
 WORKDIR /app
