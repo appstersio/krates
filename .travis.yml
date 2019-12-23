@@ -35,9 +35,8 @@ jobs:
       script: make worker
       env: WORKER=y
     - stage: test
-      script: ./build/travis/test.sh
-      rvm: 2.4
-      env: TEST_DIR=server
+      script: make master
+      env: MASTER=y
     - stage: test e2e
       script: ./build/travis/test_e2e.sh
       rvm: 2.4
