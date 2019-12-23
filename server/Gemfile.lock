@@ -199,4 +199,4 @@ DEPENDENCIES
   websocket-driver (~> 0.6.2)
 
 BUNDLED WITH
-   2.1.2
+   2.0.2

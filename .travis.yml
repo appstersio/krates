@@ -7,7 +7,7 @@ cache:
 services:
   - docker
 before_install:
-  - gem install bundler
+  - gem install bundler --version 2.0.2
   - ./build/travis/before_install.sh
 bundler_args: --without development --with test
 env:
@@ -29,9 +29,7 @@ jobs:
       - ALLOW_FAILURES=true
   include:
     - stage: test
-      script: ./build/travis/test.sh
-      rvm: 2.4
-      env: TEST_DIR=cli
+      script: make cmd
     - stage: test
       script: ./build/travis/test.sh
       rvm: 2.4
