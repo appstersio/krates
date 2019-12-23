@@ -9,8 +9,6 @@ pushd cli && \
 popd
 
 pushd test && \
-  bundle config set system 'true' && \
-  bundle config set without 'development' && \
   bundle install && \
   kontena -v && \
   rake compose:setup && \
