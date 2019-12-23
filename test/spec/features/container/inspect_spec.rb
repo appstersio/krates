@@ -1,7 +1,7 @@
 describe 'container inspect' do
 
   it 'inspects a given container' do
-    id = container_id('kontena-agent')
+    id = container_id('krates-worker')
     expect(id).not_to be_nil
 
     k = kommando("kontena container inspect #{id}")

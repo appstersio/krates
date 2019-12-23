@@ -1,7 +1,7 @@
 describe 'container exec' do
 
   it 'executes command in a given container' do
-    id = container_id('kontena-agent')
+    id = container_id('krates-worker')
     expect(id).not_to be_nil
 
     k = kommando("kontena container exec #{id} -- ls -la")
@@ -10,17 +10,17 @@ describe 'container exec' do
   end
 
   it 'exits with error if command fails' do
-    id = container_id('kontena-agent')
+    id = container_id('krates-worker')
     expect(id).not_to be_nil
 
     k = kommando("kontena container exec #{id} -- ls -l /nonexist")
     expect(k.run).to be_truthy
     expect(k.code).to_not eq 0
-    expect(k.out).to include("/nonexist: No such file or directory")
+    expect(k.out).to include("'/nonexist': No such file or directory")
   end
 
   it 'exits with command error' do
-    id = container_id('kontena-agent')
+    id = container_id('krates-worker')
     expect(id).not_to be_nil
 
     k = kommando("kontena container exec --shell #{id} exit 32")
@@ -35,7 +35,7 @@ describe 'container exec' do
   end
 
   it 'runs a command inside a container with tty' do
-    id = container_id('kontena-agent')
+    id = container_id('krates-worker')
     k = kommando("kontena container exec -it #{id} sh")
 
     k.out.on("#") do
