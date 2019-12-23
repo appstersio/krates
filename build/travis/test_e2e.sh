@@ -1,15 +1,19 @@
 #!/bin/bash
 set -ue
 
-cd cli && \
+pushd cli && \
   gem build kontena-cli.gemspec && \
   gem install *.gem && \
-  kontena -v && \
-  cd ..
+  kontena -v
 
-cd test && \
-  bundle install --system --without development && \
-  rm Gemfile && \
+popd
+
+pushd test && \
+  bundle config set system 'true' && \
+  bundle config set without 'development' && \
+  bundle install && \
   kontena -v && \
   rake compose:setup && \
   rake
+
+popd
