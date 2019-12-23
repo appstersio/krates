@@ -30,10 +30,10 @@ jobs:
   include:
     - stage: test
       script: make cmd
+      env: CMD=y
     - stage: test
-      script: ./build/travis/test.sh
-      rvm: 2.4
-      env: TEST_DIR=agent
+      script: make worker
+      env: WORKER=y
     - stage: test
       script: ./build/travis/test.sh
       rvm: 2.4
