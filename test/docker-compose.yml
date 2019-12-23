@@ -48,4 +48,4 @@ services:
       - api
 
   mongodb:
-    image: mongo:3.4
+    image: mongo:3.6
