@@ -1,5 +1,6 @@
 require 'kommando'
 require 'dotenv'
+require 'date'
 Dotenv.load
 
 kontena_version = ENV['VERSION'] || 'edge'
@@ -79,11 +80,11 @@ RSpec.configure do |config|
   end
 
   config.before :each do
-    k = Kommando.run "kontena grid use e2e"
-    unless k.code == 0
-      STDERR.puts(k.out)
-      fail "e2e grid does not exist"
-    end
+    puts DateTime.now.strftime "%Y-%m-%d %H:%M:%S.%L"
+  end
+
+  config.after :each do
+    puts DateTime.now.strftime "%Y-%m-%d %H:%M:%S.%L"
   end
 
 # The settings below are suggested to provide a good initial experience
