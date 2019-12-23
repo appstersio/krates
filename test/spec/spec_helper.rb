@@ -1,6 +1,7 @@
 require 'kommando'
 require 'dotenv'
 require 'date'
+require 'pry'
 Dotenv.load
 
 kontena_version = ENV['VERSION'] || 'edge'

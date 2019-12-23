@@ -7,5 +7,10 @@ gem 'rake'
 
 group :development do
   gem 'kontena-cli', path: '../cli'
+  gem 'pry', :require => true
+  gem 'pry-doc'
+  gem 'pry-byebug'
+  gem 'pry-rescue'
+  gem 'pry-stack_explorer'
 end
 
