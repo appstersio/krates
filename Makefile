@@ -9,10 +9,12 @@ DOCKER_SOCKET = /var/run/docker.sock:/var/run/docker.sock
 .EXPORT_ALL_VARIABLES:
 VERSION=$(shell cat VERSION)
 
-integration: wipe
-	docker-compose run toolbox
+# Adding PHONY to a target will prevent make from confusing the phony target with a file name.
+# In this case, if `test` folder exists, `make test` will still be run.
+.PHONY: build
 
-# -c "./build/travis/before_install.sh && ./build/travis/test_e2e.sh"
+integration: wipe
+	docker-compose run toolbox -c "./build/travis/before_install.sh && ./build/travis/test_e2e.sh"
 
 master: wipe
 	docker run -ti --rm -e "CI=1" -e "TEST_DIR=server" --net host --name master --workdir $(TARGET_PATH) -v $(VOLUME_PATH) \
@@ -26,6 +28,10 @@ worker: wipe
 cmd: wipe
 	docker run -ti --rm -e "TEST_DIR=cli" --net host --name cmd --workdir $(TARGET_PATH) -v $(VOLUME_PATH) $(RUBY_IMAGE) \
 		-c "./build/travis/before_install.sh && ./build/travis/test.sh"
+
+build:
+	@docker-compose build --no-cache && \
+		echo "OK: Successfuly built all the required components..."
 
 wipe: down
 	docker ps -aq | xargs -r docker rm -f

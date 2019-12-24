@@ -38,10 +38,8 @@ jobs:
       script: make master
       env: MASTER=y
     - stage: test e2e
-      script: ./build/travis/test_e2e.sh
-      rvm: 2.4
-      env:
-        - TEST_DIR=cli
+      script: make integration
+      env: INTEGRATION=y
     - stage: deploy gem
       script: "rvm $TRAVIS_RUBY_VERSION do $TRAVIS_BUILD_DIR/build/travis/deploy_gem.sh"
       tags: true

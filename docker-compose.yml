@@ -9,6 +9,7 @@ services:
       - CI=1
       - INITIAL_ADMIN_CODE=xoxo
       - CI_KRATES_TOKEN=yoyo
+      - DEBUG_SPECS=yes
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
       - ".:/src/app"
@@ -20,6 +21,8 @@ services:
   master:
     container_name: krates-master
     image: krates/master:${VERSION}
+    volumes:
+      - ./server:/app
     build:
       context: server
       dockerfile: Dockerfile
@@ -27,6 +30,7 @@ services:
       - 9292:9292
     environment:
       - RACK_ENV=production
+      - LOG_LEVEL=DEBUG
       - DEBUG=yes
       - MONGODB_URI=mongodb://mongodb:27017/krates_development
       - VAULT_KEY=8cd0fee89585a5d46ed73fc3b25dbc11
@@ -50,8 +54,10 @@ services:
       - KONTENA_NODE_ID=OB5Q:DRRH:DGZD:TT3X:HYMF:TLCS:ZAPO:ZI7P:FGXE:TEV3:ICIO:P7KE
       - KONTENA_NODE_NAME=worker-a
       - KONTENA_TOKEN=yoyo
+      - LOG_LEVEL=DEBUG
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      - ./agent:/app
     # Solves timing issues and tries to get up unless explicitly stopped, eq.
     # eventually Krates Master will be online and ready to accept Krates Worker(s)
     restart: unless-stopped
