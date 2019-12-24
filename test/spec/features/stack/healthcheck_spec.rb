@@ -4,10 +4,15 @@ describe 'kontena service health_check' do
   context 'for a http test service' do
     include DebugHelper
 
+    # Spin load balancer only once
     before(:all) do
-      with_fixture_dir('stack/healthcheck') do
-        run! 'kontena stack build --no-push'
+      with_fixture_dir('stack/ingress') do
+        run! 'kontena stack install'
       end
+    end
+
+    after(:all) do
+      run! 'kontena stack rm --force ingress'
     end
 
     def check_service_health(service)

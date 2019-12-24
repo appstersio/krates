@@ -1,0 +1,12 @@
+stack: ingress
+services:
+  lb:
+    image: kontena/lb
+    network_mode: host
+    deploy:
+      wait_for_port: 80
+    environment:
+      - ETCD_NODE=127.0.0.1
+      - KONTENA_LB_HEALTH_URI=/.lb/health
+      - LOG_LEVEL=0
+    stop_grace_period: 0s
