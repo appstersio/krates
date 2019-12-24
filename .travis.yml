@@ -1,15 +1,12 @@
-language: ruby
+language: minimal
 sudo: required
-cache: bundler
-cache:
-  directories:
-  - $TEST_DIR/vendor/bundle
 services:
   - docker
 before_install:
-  - gem install bundler --version 2.0.2
-  - ./build/travis/before_install.sh
-bundler_args: --without development --with test
+  - openssl aes-256-cbc -K $encrypted_2919c18ab77a_key -iv $encrypted_2919c18ab77a_iv -in build/daemon.json.enc -out daemon.json -d
+  - sudo cp daemon.json /etc/docker/daemon.json
+  - sudo systemctl restart docker.service
+  - docker info
 env:
   global:
     - ALLOW_FAILURES=false
