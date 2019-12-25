@@ -11,7 +11,14 @@ popd
 pushd test && \
   bundle install && \
   kontena -v && \
-  rake compose:setup && \
-  rake
+  rake compose:setup
 
-popd
+# Skip running all the tests when we're in tracing mode
+if [ "$TRACE" = "1" ];
+then
+  /bin/bash
+else
+  # End-2-end integration testing is desired
+  rake
+  popd
+fi

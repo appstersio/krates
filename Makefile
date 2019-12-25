@@ -13,8 +13,11 @@ VERSION=$(shell cat VERSION)
 # In this case, if `test` folder exists, `make test` will still be run.
 .PHONY: build
 
+trace: export TRACE=1
+trace: integration
+
 integration: wipe
-	docker-compose run toolbox -c "./build/travis/before_install.sh && ./build/travis/test_e2e.sh"
+	docker-compose run -e "TRACE=${TRACE}" toolbox -c "./build/travis/before_install.sh && ./build/travis/test_e2e.sh"
 
 master: wipe
 	docker run -ti --rm -e "CI=1" -e "TEST_DIR=server" --net host --name master --workdir $(TARGET_PATH) -v $(VOLUME_PATH) \
