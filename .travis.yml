@@ -9,7 +9,6 @@ before_install:
   - sudo systemctl restart docker.service
   - docker info
   - sudo netstat -ntlp | grep LISTEN
-after_script: sudo journalctl -u docker
 env:
   global:
   - ALLOW_FAILURES=false
