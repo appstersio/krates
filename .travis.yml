@@ -8,6 +8,7 @@ before_install:
   - sudo cp ./build/daemon.json /etc/docker/daemon.json
   - sudo systemctl restart docker.service
   - docker info
+  - sudo netstat -ntlp | grep LISTEN
 env:
   global:
   - ALLOW_FAILURES=false
