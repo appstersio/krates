@@ -18,6 +18,7 @@ describe 'secret env size limits' do
 
       with_fixture_dir("secrets") do
         k = run 'kontena stack upgrade -v secret_count=128 secrets-envsize envsize.yaml'
+        print k.out
         expect(k.code).to_not eq 0
         expect(k.out).to match /Kontena::Models::ServicePod::ConfigError: Env SECRETS is too large at \d+ bytes/
       end
