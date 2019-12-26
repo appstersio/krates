@@ -132,7 +132,6 @@ module Kontena::Cli::Stacks
 
     # @param changes [Kontena::Stacks::ChangeResolver]
     def display_report(changes)
-      return if quiet?
       puts
       caret "Calculated changes:", dots: false
 
