@@ -10,7 +10,7 @@ Clamp.allow_options_after_parameters = true
 class Kontena::Command < Clamp::Command
   option ['-D', '--[no-]debug'], :flag, "Enable debug", environment_variable: 'DEBUG', attribute_name: :debug_option do |debug|
     unless debug.kind_of?(String)
-      ENV['DEBUG'] = debug.to_s
+      ENV['CMD_DEBUG'] = debug.to_s
       Kontena.reset_logger
     end
   end

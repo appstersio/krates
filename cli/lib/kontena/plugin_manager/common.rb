@@ -10,7 +10,7 @@ module Kontena
 
       # @return [Boolean] is the CLI in plugin debugging mode?
       def plugin_debug?
-        @plugin_debug ||= ENV['DEBUG'] == 'plugin'
+        @plugin_debug ||= ENV['CMD_DEBUG'] == 'plugin'
       end
       module_function :plugin_debug?
 

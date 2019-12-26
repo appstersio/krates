@@ -165,7 +165,7 @@ module Kontena
   end
 
   def self.debug?
-    !['', 'false'].include?(ENV['DEBUG'].to_s)
+    !['', 'false'].include?(ENV['CMD_DEBUG'].to_s)
   end
 end
 
