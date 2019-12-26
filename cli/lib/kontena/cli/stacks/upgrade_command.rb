@@ -23,6 +23,7 @@ module Kontena::Cli::Stacks
     option '--skip-dependencies', :flag, "Do not upgrade any stack dependencies", default: false
     option '--reuse-values', :flag, "Reuse existing values"
     option '--dry-run', :flag, "Simulate upgrade"
+    option ['-q', '--quiet'], :flag, "Output status messages only", hidden: true
 
     requires_current_master
     requires_current_master_token
@@ -131,6 +132,7 @@ module Kontena::Cli::Stacks
 
     # @param changes [Kontena::Stacks::ChangeResolver]
     def display_report(changes)
+      return if quiet?
       puts
       caret "Calculated changes:", dots: false
 

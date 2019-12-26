@@ -13,11 +13,17 @@ describe 'secret env size limits' do
       run 'kontena stack rm --force secrets-envsize'
     end
 
+    it 'fails to upgrade with too many secrets, without killing the deployed container (shell)' do
+      with_fixture_dir("secrets") do
+        `kontena stack upgrade --quiet -v secret_count=128 secrets-envsize envsize.yaml`
+      end
+    end
+
     it 'fails to upgrade with too many secrets, without killing the deployed container' do
       cid = container_id('secrets-envsize.test-1')
 
       with_fixture_dir("secrets") do
-        k = run 'kontena stack upgrade -v secret_count=128 secrets-envsize envsize.yaml', { env: { CMD_DEBUG: "api" } }
+        k = run 'kontena stack upgrade --quiet -v secret_count=128 secrets-envsize envsize.yaml'
         print k.out
         expect(k.code).to_not eq 0
         expect(k.out).to match /Kontena::Models::ServicePod::ConfigError: Env SECRETS is too large at \d+ bytes/

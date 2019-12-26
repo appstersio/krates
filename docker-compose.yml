@@ -5,6 +5,8 @@ services:
   toolbox:
     image: krates/toolbox:2.4.9-1
     working_dir: /src/app
+    logging:
+      driver: "journald"
     environment:
       - CI=1
       - INITIAL_ADMIN_CODE=xoxo
