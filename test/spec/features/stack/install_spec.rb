@@ -125,10 +125,11 @@ describe 'stack install' do
 
   context 'For a stack with dependencies' do
 
-    after do
-      %w(twemproxy twemproxy-redis_from_registry twemproxy-redis_from_yml).each do |stack|
-        run "kontena stack rm --force #{stack}"
+    after(:each) do
+      %w(twemproxy-redis_from_registry twemproxy-redis_from_yml twemproxy).each do |stack|
+        run! "kontena stack rm --force #{stack}"
       end
+      sleep 5
     end
 
     it 'installs all dependencies' do
