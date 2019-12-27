@@ -19,6 +19,7 @@ module Kontena::NetworkAdapters
     # @yield [line] Each line of output
     def execute(cmd, &block)
       begin
+        info "executing cmd: #{cmd}"
         container = Docker::Container.create(
           'Image' => weave_exec_image,
           'Cmd' => cmd,
@@ -41,7 +42,10 @@ module Kontena::NetworkAdapters
             'Binds' => [
               '/var/run/docker.sock:/var/run/docker.sock',
               '/:/host'
-            ]
+            ],
+            'LogConfig' => {
+              'Type' => 'journald' # This has to be a logging driver that outputs to STDOUT/STDERR
+            }
           }
         )
         retries = 0
@@ -52,6 +56,7 @@ module Kontena::NetworkAdapters
           error exc.message
           return false
         rescue => exc
+          info "oops, something unexpected happened"
           retries += 1
           error exc.message
           sleep 0.5
@@ -134,6 +139,7 @@ module Kontena::NetworkAdapters
     end
 
     def ensure_images
+      info "ensure weave images"
       pull_image(weave_exec_image)
       @images_exist = true
     end

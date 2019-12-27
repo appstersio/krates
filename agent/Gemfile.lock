@@ -35,8 +35,8 @@ GEM
     dotenv (2.2.1)
     etcd (0.3.0)
       mixlib-log
-    excon (0.58.0)
-    ffi (1.9.18)
+    excon (0.62.0)
+    ffi (1.9.24)
     fluent-logger (0.6.2)
       msgpack (>= 0.5.6, < 2)
     hashdiff (0.3.4)
@@ -112,4 +112,4 @@ DEPENDENCIES
   webmock
 
 BUNDLED WITH
-   1.15.4
+   2.0.2

@@ -1,6 +1,6 @@
-FROM alpine
+FROM ruby:2.4.3-slim
 
-RUN apk update && apk --update add ruby 
+RUN gem install webrick
 
 ADD server.rb .
 

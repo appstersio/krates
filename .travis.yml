@@ -1,59 +1,53 @@
-language: ruby
+language: minimal
 sudo: required
-cache: bundler
-cache:
-  directories:
-  - $TEST_DIR/vendor/bundle
 services:
-  - docker
+- docker
 before_install:
-  - gem install bundler
-  - ./build/travis/before_install.sh
-bundler_args: --without development --with test
+  - openssl aes-256-cbc -K $encrypted_cdbe4333a8fb_key -iv $encrypted_cdbe4333a8fb_iv
+    -in ./build/daemon.json.enc -out ./build/daemon.json -d
+  - sudo cp ./build/daemon.json /etc/docker/daemon.json
+  - sudo systemctl restart docker.service
+  - docker info
+  - sudo netstat -ntlp | grep LISTEN
 env:
   global:
-    - ALLOW_FAILURES=false
+  - ALLOW_FAILURES=false
 stages:
-  - name: test
-  - name: test e2e
-    if: type = pull_request OR type = cron
-  - name: deploy gem
-    if: tag IS present
-  - name: deploy images
-    if: tag IS present
+- name: test
+- name: test e2e
+  if: type = pull_request OR type = cron
+- name: deploy gem
+  if: tag IS present
+- name: deploy images
+  if: tag IS present
 jobs:
   fast_finish: true
   allow_failures:
-    - env:
-      - TEST_DIR=cli
-      - ALLOW_FAILURES=true
+  - env:
+    - TEST_DIR=cli
+    - ALLOW_FAILURES=true
   include:
-    - stage: test
-      script: ./build/travis/test.sh
-      rvm: 2.4
-      env: TEST_DIR=cli
-    - stage: test
-      script: ./build/travis/test.sh
-      rvm: 2.4
-      env: TEST_DIR=agent
-    - stage: test
-      script: ./build/travis/test.sh
-      rvm: 2.4
-      env: TEST_DIR=server
-    - stage: test e2e
-      script: ./build/travis/test_e2e.sh
-      rvm: 2.4
-      env:
-        - TEST_DIR=cli
-    - stage: deploy gem
-      script: "rvm $TRAVIS_RUBY_VERSION do $TRAVIS_BUILD_DIR/build/travis/deploy_gem.sh"
-      tags: true
-      repo: kontena/kontena
-      rvm: 2.3
-      env: TEST_DIR=cli
-    - stage: deploy images
-      script: "rvm $TRAVIS_RUBY_VERSION do $TRAVIS_BUILD_DIR/build/travis/deploy.sh"
-      tags: true
-      repo: kontena/kontena
-      rvm: 2.4
-      env: TEST_DIR=server
+  - stage: test
+    script: make cmd
+    env: CMD=y
+  - stage: test
+    script: make worker
+    env: WORKER=y
+  - stage: test
+    script: make master
+    env: MASTER=y
+  - stage: test e2e
+    script: make integration
+    env: INTEGRATION=y
+  - stage: deploy gem
+    script: rvm $TRAVIS_RUBY_VERSION do $TRAVIS_BUILD_DIR/build/travis/deploy_gem.sh
+    tags: true
+    repo: kontena/kontena
+    rvm: 2.3
+    env: TEST_DIR=cli
+  - stage: deploy images
+    script: rvm $TRAVIS_RUBY_VERSION do $TRAVIS_BUILD_DIR/build/travis/deploy.sh
+    tags: true
+    repo: kontena/kontena
+    rvm: 2.4
+    env: TEST_DIR=server

@@ -1,0 +1,12 @@
+stack: ingress
+services:
+  lb:
+    image: kontena/lb
+    ports:
+      - 80:80
+    deploy:
+      wait_for_port: 80
+    environment:
+      - KONTENA_LB_HEALTH_URI=/.lb/health
+      - LOG_LEVEL=0
+    stop_grace_period: 0s

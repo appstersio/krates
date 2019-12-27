@@ -48,6 +48,8 @@ module Kontena::Workers
       error "#{exc.class.name}: #{exc.message}"
       error exc.backtrace.join("\n")
       retry
+    rescue Excon::Errors::NotImplemented => exc
+      warn "looks like logging driver doesn't support stdout/stderr => #{exc.message}"
     rescue Docker::Error::TimeoutError
       since = Time.now.to_f
       debug "log stream timeout: #{@container.id}"

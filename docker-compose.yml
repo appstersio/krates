@@ -1,7 +1,30 @@
-version: '2'
+version: "3.6"
 
 services:
-  api:
+  # NOTE: This is a development box service
+  toolbox:
+    image: krates/toolbox:2.4.9-1
+    working_dir: /src/app
+    logging:
+      driver: "journald"
+    environment:
+      - CI=1
+      - INITIAL_ADMIN_CODE=xoxo
+      - CI_KRATES_TOKEN=yoyo
+      - DEBUG_SPECS=yes
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - ".:/src/app"
+    depends_on:
+      - master
+      - worker
+    network_mode: host # NOTE: Host network is required to reach to services locally
+  # NOTE: This is master service
+  master:
+    container_name: krates-master
+    image: krates/master:${VERSION}
+    volumes:
+      - ./server:/app
     build:
       context: server
       dockerfile: Dockerfile
@@ -9,31 +32,39 @@ services:
       - 9292:9292
     environment:
       - RACK_ENV=production
-      - MONGODB_URI=mongodb://mongodb:27017/kontena_development
-      - VAULT_KEY=asdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdf
-      - VAULT_IV=kljhkljhkljhkljhkljhkljhkljhkljhkljhkljhkljhkljhkljhkljhkljhkljh
+      - LOG_LEVEL=DEBUG
+      - DEBUG=yes
+      - MONGODB_URI=mongodb://mongodb:27017/krates_development
+      - VAULT_KEY=8cd0fee89585a5d46ed73fc3b25dbc11
+      - VAULT_IV=48dc8d29308eb256edc76f25def07251
       - ACME_ENDPOINT=https://acme-staging.api.letsencrypt.org/
-      - INITIAL_ADMIN_CODE=initialadmincode
-    volumes:
-      - ./server:/app
+      - INITIAL_ADMIN_CODE=xoxo
+      - KONTENA_TOKEN=yoyo
+      - CI=1 # NOTE: Special flag to re-configure indexes in MongoDB
     depends_on:
       - mongodb
-
-  agent:
-    container_name: kontena-agent
+  # NOTE: This is a worker service to schedule workloads
+  worker:
+    container_name: krates-worker
+    image: krates/worker:${VERSION}
     build:
       context: agent
       dockerfile: Dockerfile
-    env_file: agent/.env
+    # env_file: agent/.env
     environment:
       - KONTENA_URI=ws://localhost:9292
-    network_mode: "host"
+      - KONTENA_NODE_ID=OB5Q:DRRH:DGZD:TT3X:HYMF:TLCS:ZAPO:ZI7P:FGXE:TEV3:ICIO:P7KE
+      - KONTENA_NODE_NAME=worker-a
+      - KONTENA_TOKEN=yoyo
+      - LOG_LEVEL=DEBUG
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./agent:/app
-    depends_on:
-      - api
-
+    # Solves timing issues and tries to get up unless explicitly stopped, eq.
+    # eventually Krates Master will be online and ready to accept Krates Worker(s)
+    restart: unless-stopped
+    network_mode: host
+  # NOTE: This is a MongoDB service for data persistence
   mongodb:
-    image: mongo:3.0
+    image: mongo:3.6
     command: mongod --smallfiles

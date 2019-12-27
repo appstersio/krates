@@ -7,16 +7,11 @@ variables:
     type: string
     required: false
 services:
-  lb:
-    image: kontena/lb
-    network_mode: host
-    environment:
-      - ETCD_NODE=127.0.0.1
-      - KONTENA_LB_HEALTH_URI=/.lb/health
-    stop_grace_period: 0s
   server:
     build: .
-    image: healthcheck-test
+    image: krates/healthcheck-test
+    deploy:
+      wait_for_port: 8000
     health_check:
       protocol: http
       port: 8000
@@ -27,8 +22,7 @@ services:
       # {% endif %}
       initial_delay: 2
     links:
-      - lb
+      - ingress/lb
     environment:
       - KONTENA_LB_INTERNAL_PORT=8000
       - KONTENA_LB_VIRTUAL_PATH=/
-

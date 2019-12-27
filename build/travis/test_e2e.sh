@@ -1,15 +1,24 @@
 #!/bin/bash
 set -ue
 
-cd cli && \
+pushd cli && \
   gem build kontena-cli.gemspec && \
-  gem install --no-ri --no-rdoc *.gem && \
-  kontena -v && \
-  cd ..
+  gem install *.gem && \
+  kontena -v
 
-cd test && \
-  bundle install --system --without development && \
-  rm Gemfile && \
+popd
+
+pushd test && \
+  bundle install && \
   kontena -v && \
-  rake compose:setup && \
+  rake compose:setup
+
+# Skip running all the tests when we're in tracing mode
+if [ "$TRACE" = "1" ];
+then
+  /bin/bash
+else
+  # End-2-end integration testing is desired
   rake
+  popd
+fi

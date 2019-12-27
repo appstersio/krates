@@ -49,7 +49,7 @@ module Kontena
         end
 
         str = "Body: "
-        if ENV["DEBUG"] == "api"
+        if ENV["CMD_DEBUG"] == "api"
           str << "\n"
           str << body
         else
