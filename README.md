@@ -2,8 +2,7 @@
 
 > **IMPORTANT!** This project is deprecated. Please see [Kontena Pharos](https://github.com/kontena/pharos-cluster/) - The Simple, Solid, Certifified Kubernetes Distribution That Just Works!
 
-[![Build Status](https://travis-ci.org/kontena/kontena.svg?branch=master)](https://travis-ci.org/kontena/kontena)
-[![Join the chat at https://slack.kontena.io](https://slack.kontena.io/badge.svg)](https://slack.kontena.io)
+[![Build Status](https://travis-ci.org/appstersio/krates.svg?branch=master)](https://travis-ci.org/appstersio/krates)
 
 [Kontena Classic](https://www.kontena.io/classic/) is a developer friendly, open source platform for orchestrating applications that are run on Docker containers. It simplifies deploying and running containerized applications on any infrastructure. By leveraging technologies such as [Docker](https://www.docker.com/), [Container Linux](https://coreos.com/os/docs/latest/) and [Weave Net](https://github.com/weaveworks/weave), it provides complete solution for organizations of any size.
 
