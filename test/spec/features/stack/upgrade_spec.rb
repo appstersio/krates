@@ -13,6 +13,7 @@ describe 'stack upgrade' do
     after(:each) do
       run 'kontena stack rm --force redis'
       run 'kontena stack rm --force links-external-linked'
+      sleep 5
     end
 
     it 'upgrades a stack' do
@@ -52,6 +53,7 @@ describe 'stack upgrade' do
     after(:each) do
       run 'kontena service rm --force external-linking-service'
       run 'kontena stack rm --force links-external-linked'
+      sleep 5
     end
 
     it 'fails to upgrade if linked' do
@@ -84,6 +86,7 @@ describe 'stack upgrade' do
       run('kontena stack ls -q').out.split(/[\r\n]/).each do |stack|
         run "kontena stack rm --force #{stack}"
       end
+      sleep 5
     end
 
     context "when a new dependency is added" do
