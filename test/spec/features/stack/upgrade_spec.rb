@@ -82,7 +82,6 @@ describe 'stack upgrade' do
   context "for a stack that has dependencies" do
     after do
       run('kontena stack ls -q').out.split(/[\r\n]/).each do |stack|
-        next unless stack.start_with?('twemproxy')
         run "kontena stack rm --force #{stack}"
       end
     end
