@@ -51,11 +51,11 @@ module Kontena::Cli::Stacks
         if deployment['state'] == 'error'
           deployment['service_deploys'].each do |service_deploy|
             if service_deploy['state'] == 'error'
-              $stderr.puts "Deployment of service #{pastel.cyan(service_deploy['service_id'])} failed:"
-              $stderr.puts "  - #{service_deploy['reason'].strip}"
+              puts "Deployment of service #{pastel.cyan(service_deploy['service_id'])} failed:"
+              puts "  - #{service_deploy['reason'].strip}"
               service_deploy['instance_deploys'].each do |instance_deploy|
                 if instance_deploy['state'] == 'error'
-                  $stderr.puts "  - " + "#{instance_deploy['error'].strip} (on node #{pastel.cyan(instance_deploy['node'])})"
+                  puts "  - " + "#{instance_deploy['error'].strip} (on node #{pastel.cyan(instance_deploy['node'])})"
                 end
               end
             end
