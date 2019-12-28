@@ -1,9 +1,8 @@
 GIT
-  remote: git://github.com/opscode/omnibus-software.git
-  revision: 4ef2d1a5b9162f4f5f52617d2a0122796b4f3c43
+  remote: git://github.com/chef/omnibus-software.git
+  revision: 7402675e2042aa6bae26d6d7025924885b5da67b
   specs:
     omnibus-software (4.0.0)
-      chef-sugar (>= 3.4.0)
       omnibus (>= 5.6.1)
 
 GEM
@@ -29,7 +28,7 @@ GEM
     chef-sugar (3.6.0)
     citrus (3.0.2)
     cleanroom (1.0.0)
-    ffi (1.9.21)
+    ffi (1.11.3)
     ffi-yajl (2.3.1)
       libyajl2 (~> 1.2)
     fuzzyurl (0.9.0)
