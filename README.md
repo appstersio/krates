@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/appstersio/krates.svg?branch=master)](https://travis-ci.org/appstersio/krates)
 
-[Krates](https://krates.appsters.io/) is a developer friendly, open source platform (based on Kontena Classic) for orchestrating applications that are run on Docker containers. It simplifies deploying and running containerized applications on any infrastructure. By leveraging technologies such as [Docker](https://www.docker.com/), [Container Linux](https://coreos.com/os/docs/latest/) and [Weave Net](https://github.com/weaveworks/weave), it provides complete solution for organizations of any size.
+[Krates](https://krates.appsters.io/) is a developer friendly, open source platform (_based on Kontena Classic_) for orchestrating applications that are run on Docker containers. It simplifies deploying and running containerized applications on any infrastructure. By leveraging technologies such as [Docker](https://www.docker.com/), [Container Linux](https://coreos.com/os/docs/latest/) and [Weave Net](https://github.com/weaveworks/weave), it provides complete solution for organizations of any size.
 
 Krates is built to maximize developer happiness; it is designed for application developers and therefore does not require ops teams to setup or maintain. Therefore, it is an ideal choice for organizations without aspiration to configure and maintain scalable Docker container infrastructure.
 
