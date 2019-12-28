@@ -53,7 +53,7 @@ GEM
     faye-websocket (0.10.7)
       eventmachine (>= 0.12.0)
       websocket-driver (>= 0.5.1)
-    ffi (1.9.24)
+    ffi (1.11.3)
     hitimes (1.2.4)
     hkdf (0.3.0)
     httpclient (2.8.2.3)
