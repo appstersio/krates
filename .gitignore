@@ -11,3 +11,4 @@ docs/_book
 .bundle/*
 .ruby-version
 .ruby-gemset
+daemon.json
