@@ -36,8 +36,11 @@ build:
 	@docker-compose build --no-cache && \
 		echo "OK: Successfuly built all the required components..."
 
-wipe: down
+wipe: down volumes
 	docker ps -aq | xargs -r docker rm -f
 
 down:
 	@docker-compose down
+
+volumes:
+	@docker volume prune --force
