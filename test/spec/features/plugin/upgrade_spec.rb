@@ -1,39 +1,33 @@
 require 'spec_helper'
 
 describe 'plugin upgrade' do
-  context "with older versions of the aws, digitalocean plugins installed" do
+  context "with older versions of the digitalocean plugin installed" do
     before(:each) do
-      run 'kontena plugin uninstall aws'
-      run 'kontena plugin uninstall digitalocean'
-      run! 'kontena plugin install --version 0.2.7 aws'
-      run! 'kontena plugin install --version 0.2.5 digitalocean'
+      run 'krates plugin uninstall digitalocean'
+      run! 'krates plugin install --version 0.3.8 digitalocean'
     end
 
     after(:each) do
-      run 'kontena plugin uninstall aws'
-      run 'kontena plugin uninstall digitalocean'
+      run 'krates plugin uninstall digitalocean'
     end
 
     it 'upgrades all plugins' do
-      k = run!('kontena plugin upgrade')
-      expect(k.out).to match(/aws/)
+      k = run!('krates plugin upgrade')
       expect(k.out).to match(/digitalocean/)
-      k = run('kontena plugin list')
+      k = run('krates plugin list')
       lines = k.out.split(/[\r\n]/)
       lines.each do |line|
         plugin, version, _ = line.split(/\s+/, 3)
-        if plugin == 'aws'
-          expect(Gem::Version.new(version) > Gem::Version.new("0.2.7")).to be_truthy
-        elsif plugin == 'digitalocean'
-          expect(Gem::Version.new(version) > Gem::Version.new("0.2.5")).to be_truthy
+        if plugin == 'digitalocean'
+          expect(Gem::Version.new(version) > Gem::Version.new("0.3.8")).to be_truthy
         end
       end
     end
   end
 
   it 'does nothing if no updates' do
-    run!('kontena plugin upgrade')
-    k = run!('kontena plugin upgrade')
+    run!('krates plugin upgrade')
+    k = run!('krates plugin upgrade')
     expect(k.out).to match /Nothing upgraded/
   end
 end
