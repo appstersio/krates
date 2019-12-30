@@ -20,6 +20,7 @@ Gem::Specification.new do |spec|
 
   # NOTE: Exclude files not relevant to the plugin
   spec.files        -= %w[ Dockerfile Makefile docker-compose.yml .dockerignore Rakefile .gitignore .rspec ]
+  spec.files        -= %w[ Gemfile krates.gemspec README.md ]
 
   spec.required_ruby_version = ">= 2.3.0"
 
