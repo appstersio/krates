@@ -51,7 +51,7 @@ module Kontena
       # @return [String]
       def install_dir
         return @install_dir if @install_dir
-        install_dir = File.join(Dir.home, '.kontena', 'gems', RUBY_VERSION)
+        install_dir = File.join(Dir.home, '.krates', 'gems', RUBY_VERSION)
         unless File.directory?(install_dir)
           require 'fileutils'
           FileUtils.mkdir_p(install_dir, mode: 0700)

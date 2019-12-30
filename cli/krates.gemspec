@@ -13,10 +13,13 @@ Gem::Specification.new do |spec|
   spec.homepage      = "https://krates.appsters.io"
   spec.license       = "MIT"
 
-  spec.files         = `git ls-files -z`.split("\x0")
+  spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features|examples|tasks)/}) }
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
-  spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
+  spec.test_files    = spec.files.grep(%r{^(test|spec|features|examples|tasks)/})
   spec.require_paths = ["lib"]
+
+  # NOTE: Exclude files not relevant to the plugin
+  spec.files        -= %w[ Dockerfile Makefile docker-compose.yml .dockerignore Rakefile .gitignore .rspec ]
 
   spec.required_ruby_version = ">= 2.3.0"
 
@@ -26,13 +29,13 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_runtime_dependency "excon", "0.62.0"
   spec.add_runtime_dependency "tty-prompt", "0.16.1"
-  spec.add_runtime_dependency "clamp", "~> 1.2.1"
+  spec.add_runtime_dependency "clamp", "~> 1.2"
   spec.add_runtime_dependency "ruby_dig", "~> 0.0.2"
   spec.add_runtime_dependency "hash_validator", "0.8.0"
-  spec.add_runtime_dependency "retriable", "~> 2.1.0"
+  spec.add_runtime_dependency "retriable", "~> 2.1"
   spec.add_runtime_dependency "opto", "1.8.7"
   spec.add_runtime_dependency "semantic", "~> 1.5"
-  spec.add_runtime_dependency "liquid", "~> 4.0.0"
+  spec.add_runtime_dependency "liquid", "~> 4.0"
   spec.add_runtime_dependency "tty-table", "~> 0.10.0"
   spec.add_runtime_dependency "kontena-websocket-client", "~> 0.1.1"
 end
