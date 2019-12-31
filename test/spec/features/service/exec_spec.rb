@@ -83,7 +83,7 @@ describe 'service exec' do
     end
 
     # RuntimeError : stdin read JSON::GeneratorError: partial character in source, but hit end
-    it 'runs a command with chunked UTF-8 input', :skip => 'RuntimeError : stdin read' do
+    it 'runs a command with chunked UTF-8 input', :broken => true do
       k = kommando("krates service exec -it test-1 sh")
 
       k.out.on("#") do
