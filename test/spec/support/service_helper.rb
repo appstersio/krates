@@ -2,7 +2,7 @@ require 'json'
 
 module ServiceHelper
   def service_events(service, lines: 1000)
-    k = run! "kontena service events --lines=#{lines} #{service}"
+    k = run! "krates service events --lines=#{lines} #{service}"
 
     lines = k.out.lines[1..-1]
     lines.map{|l|
@@ -13,7 +13,7 @@ module ServiceHelper
   end
 
   def service_logs(service, lines: 1000)
-    k = run! "kontena service logs --lines=#{lines} #{service}"
+    k = run! "krates service logs --lines=#{lines} #{service}"
 
     k.out.lines
   end
