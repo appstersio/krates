@@ -3,34 +3,34 @@ require 'spec_helper'
 describe 'stack upgrade' do
   context 'from file' do
     before(:each) do
-      run 'kontena stack rm --force redis'
-      run 'kontena stack rm --force links-external-linked'
+      run 'krates stack rm --force redis'
+      run 'krates stack rm --force links-external-linked'
       with_fixture_dir("stack/upgrade") do
-        run 'kontena stack install version1.yml'
+        run 'krates stack install version1.yml'
       end
     end
 
     after(:each) do
-      run 'kontena stack rm --force redis'
-      run 'kontena stack rm --force links-external-linked'
+      run 'krates stack rm --force redis'
+      run 'krates stack rm --force links-external-linked'
       sleep 5
     end
 
     it 'upgrades a stack' do
-      k = run! 'kontena service show redis/redis'
+      k = run! 'krates service show redis/redis'
       expect(k.out).to match /image: redis:3.0.7-alpine/
 
       with_fixture_dir("stack/upgrade") do
-        run! 'kontena stack upgrade --force --reuse-values redis version2.yml'
+        run! 'krates stack upgrade --force --reuse-values redis version2.yml'
       end
 
-      k = run! 'kontena service show redis/redis'
+      k = run! 'krates service show redis/redis'
       expect(k.out).to match /image: redis:3.2.8-alpine/
     end
 
     it 'prompts if the stack is different' do
       with_fixture_dir("stack/upgrade") do
-        k = kommando 'kontena stack upgrade redis different.yml'
+        k = kommando 'krates stack upgrade redis different.yml'
         k.out.on /Are you sure/ do
           k.in << "n\r"
         end
@@ -43,24 +43,24 @@ describe 'stack upgrade' do
 
   context "for a stack that is linked to externally" do
     before(:each) do
-      run 'kontena service rm --force external-linking-service'
-      run 'kontena stack rm --force links-external-linked'
+      run 'krates service rm --force external-linking-service'
+      run 'krates stack rm --force links-external-linked'
       with_fixture_dir("stack/links") do
-        run! 'kontena stack install external-linked_1.yml'
+        run! 'krates stack install external-linked_1.yml'
       end
     end
 
     after(:each) do
-      run 'kontena service rm --force external-linking-service'
-      run 'kontena stack rm --force links-external-linked'
+      run 'krates service rm --force external-linking-service'
+      run 'krates stack rm --force links-external-linked'
       sleep 5
     end
 
     it 'fails to upgrade if linked' do
-      run! 'kontena service create --link links-external-linked/bar external-linking-service redis'
+      run! 'krates service create --link links-external-linked/bar external-linking-service redis'
 
       with_fixture_dir("stack/links") do
-        k = run 'kontena stack upgrade --force --no-deploy links-external-linked external-linked_2.yml'
+        k = run 'krates stack upgrade --force --no-deploy links-external-linked external-linked_2.yml'
         expect(k.code).to_not eq(0), k.out
         expect(k.out).to match /Cannot delete service that is linked to another service/
       end
@@ -68,13 +68,13 @@ describe 'stack upgrade' do
 
     it 'fails to deploy if linked' do
       with_fixture_dir("stack/links") do
-        run! 'kontena stack upgrade --force --no-deploy links-external-linked external-linked_2.yml'
+        run! 'krates stack upgrade --force --no-deploy links-external-linked external-linked_2.yml'
       end
 
-      run! 'kontena service create --link links-external-linked/bar external-linking-service redis'
+      run! 'krates service create --link links-external-linked/bar external-linking-service redis'
 
       with_fixture_dir("stack/links") do
-        k = run 'kontena stack deploy links-external-linked'
+        k = run 'krates stack deploy links-external-linked'
         expect(k.code).to_not eq(0), k.out
         expect(k.out).to match /deploy failed/
       end
@@ -83,8 +83,8 @@ describe 'stack upgrade' do
 
   context "for a stack that has dependencies" do
     after do
-      run('kontena stack ls -q').out.split(/[\r\n]/).each do |stack|
-        run "kontena stack rm --force #{stack}"
+      run('krates stack ls -q').out.split(/[\r\n]/).each do |stack|
+        run "krates stack rm --force #{stack}"
       end
       sleep 5
     end
@@ -92,14 +92,14 @@ describe 'stack upgrade' do
     context "when a new dependency is added" do
       it 'installs the added stack' do
         with_fixture_dir("stack/depends") do
-          run! 'kontena stack install'
+          run! 'krates stack install'
         end
 
         with_fixture_dir("stack/depends/monitor_added") do
-          run! 'kontena stack upgrade --force twemproxy'
+          run! 'krates stack upgrade --force twemproxy'
         end
 
-        k = run! 'kontena stack ls -q'
+        k = run! 'krates stack ls -q'
         expect(k.out).to match /twemproxy-redis_from_yml-monitor/
       end
     end
@@ -107,17 +107,17 @@ describe 'stack upgrade' do
     context "when a dependency is removed" do
       it 'removes the stack' do
         with_fixture_dir("stack/depends/monitor_added") do
-          run! 'kontena stack install'
+          run! 'krates stack install'
         end
 
-        k = run! 'kontena stack ls -q'
+        k = run! 'krates stack ls -q'
         expect(k.out).to match /twemproxy-redis_from_yml-monitor/
 
         with_fixture_dir("stack/depends/monitor_removed") do
-          run! 'kontena stack upgrade --force twemproxy'
+          run! 'krates stack upgrade --force twemproxy'
         end
 
-        k = run! 'kontena stack ls -q'
+        k = run! 'krates stack ls -q'
         expect(k.out).not_to match /twemproxy-redis_from_yml-monitor/
       end
     end
@@ -125,17 +125,17 @@ describe 'stack upgrade' do
     context "when a dependency is replaced" do
       it 'removes the stack' do
         with_fixture_dir("stack/depends") do
-          run! 'kontena stack install'
+          run! 'krates stack install'
         end
 
-        k = run! 'kontena stack show twemproxy-redis_from_yml'
+        k = run! 'krates stack show twemproxy-redis_from_yml'
         expect(k.out).to match /stack: test\/redis/
 
         with_fixture_dir("stack/depends/second_redis_replaced") do
-          run! 'kontena stack upgrade --force twemproxy'
+          run! 'krates stack upgrade --force twemproxy'
         end
 
-        k = run! 'kontena stack show twemproxy-redis_from_yml'
+        k = run! 'krates stack show twemproxy-redis_from_yml'
         expect(k.out).to match /stack: kontena\/redis/
       end
     end
