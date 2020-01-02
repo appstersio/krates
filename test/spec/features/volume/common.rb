@@ -5,8 +5,7 @@ module Common
   # @param [String] container to find
   # @return [String] fully qualified container path, i.e. node/stack.container
   def find_container(name)
-    k = run 'krates container ls'
-    k.out[/^\w*\/#{name}/]
+    `krates container ls`.match(/^.*\/#{name}/)
   end
 
   # Get container Mounts
