@@ -24,7 +24,7 @@ describe 'complete' do
   end
 
   it 'can complete subcommands' do
-    k = run 'krates complete kontena'
+    k = run 'krates complete krates'
     rows = k.out.split(/[\r\n]+/)
     expect(rows).to include "stack"
     expect(rows).to include "vault"
