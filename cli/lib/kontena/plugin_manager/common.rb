@@ -26,7 +26,7 @@ module Kontena
       end
       module_function :use_dummy_ui
 
-      # Prefix a plugin name into a gem name (hello to kontena-plugin-hello)
+      # Prefix a plugin name into a gem name (hello to krates-plugin-hello)
       def prefix(plugin_name)
         return KRATES_PLUGIN  % nil if plugin_name.nil? || plugin_name.empty?
         return plugin_name if plugin_name.start_with?('krates-plugin-') || plugin_name.include?('.')
