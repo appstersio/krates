@@ -106,9 +106,6 @@ GEM
       activesupport
     nio4r (2.5.2)
     origin (2.3.0)
-    puma (4.3.1)
-      nio4r (~> 2.0)
-    rack (2.0.8)
     pry (0.12.2)
       coderay (~> 1.1.0)
       method_source (~> 0.9.0)
@@ -124,6 +121,9 @@ GEM
     pry-stack_explorer (0.4.9.3)
       binding_of_caller (>= 0.7)
       pry (>= 0.9.11)
+    puma (4.3.1)
+      nio4r (~> 2.0)
+    rack (2.0.8)
     rack-attack (5.0.1)
       rack
     rack-test (0.6.2)

@@ -16,6 +16,10 @@ VERSION=$(shell cat VERSION)
 trace: export TRACE=1
 trace: integration
 
+publish_cmd:
+	@docker run -ti --rm -e "TEST_DIR=cli" --net host --name cmd -e "RUBYGEMS_KEY=$(RUBYGEMS_KEY)" --workdir $(TARGET_PATH) -v $(VOLUME_PATH) $(RUBY_IMAGE) \
+		-c "./build/travis/deploy_gem.sh"
+
 integration: wipe
 	docker-compose run -e "TRACE=${TRACE}" toolbox -c "./build/travis/before_install.sh && ./build/travis/test_e2e.sh"
 
