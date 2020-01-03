@@ -1,17 +1,14 @@
 #!/bin/sh
 
 set -ue
+BUNDLER_VERSION=2.0.2
 
 # login
-docker login -u kontenabot -p $DOCKER_HUB_PASSWORD
-
-# bintray credentials for curl
-echo "machine api.bintray.com login $BINTRAY_USER password $BINTRAY_KEY" >> ~/.netrc
+docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASSWORD
 
 # install dependencies
-gem install --no-ri --no-doc bundler rake colorize dotenv
+gem install bundler --version $BUNDLER_VERSION
+gem install rake colorize dotenv middleman
 
-cd $TRAVIS_BUILD_DIR
 rake release:setup
 rake release:push
-rake release:push_ubuntu

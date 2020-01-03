@@ -16,6 +16,10 @@ VERSION=$(shell cat VERSION)
 trace: export TRACE=1
 trace: integration
 
+publish_images:
+	@docker run -ti --rm -e "TEST_DIR=cli" --net host --name cmd -e "DOCKER_HUB_USER=$(DOCKER_HUB_USER)" -e "DOCKER_HUB_PASSWORD=$(DOCKER_HUB_PASSWORD)" --workdir $(TARGET_PATH) -v $(VOLUME_PATH) -v "/var/run/docker.sock:/var/run/docker.sock:ro" $(RUBY_IMAGE) \
+		-c "./build/travis/deploy.sh"
+
 publish_cmd: wipe
 	@docker run -ti --rm -e "TEST_DIR=cli" --net host --name cmd -e "RUBYGEMS_KEY=$(RUBYGEMS_KEY)" --workdir $(TARGET_PATH) -v $(VOLUME_PATH) $(RUBY_IMAGE) \
 		-c "./build/travis/deploy_gem.sh"

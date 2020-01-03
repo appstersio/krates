@@ -49,10 +49,10 @@ namespace :release do
   ]
 
   task :build_server do
-    headline "Starting to build kontena-server ..."
+    headline "Starting to build krates-master ..."
     Dir.chdir('server') do
       sh("bundle exec rake release:build_docker")
-      sh("bundle exec rake release:build_docs")
+      # sh("bundle exec rake release:build_docs")
     end
   end
 
@@ -98,15 +98,14 @@ namespace :release do
   task :push => [
     :build,
     :push_server,
-    :push_agent,
-    :push_cli
+    :push_agent
   ]
 
   task :push_server do
-    headline "Starting to push kontena/server ..."
+    headline "Starting to push krates/master..."
     Dir.chdir('server') do
       sh("bundle exec rake release:push_docker")
-      sh("bundle exec rake release:push_docs")
+      # sh("bundle exec rake release:push_docs")
     end
   end
 
