@@ -3,15 +3,18 @@ sudo: required
 services:
 - docker
 before_install:
-  - openssl aes-256-cbc -K $encrypted_cdbe4333a8fb_key -iv $encrypted_cdbe4333a8fb_iv
-    -in ./build/daemon.json.enc -out ./build/daemon.json -d
-  - sudo cp ./build/daemon.json /etc/docker/daemon.json
-  - sudo systemctl restart docker.service
-  - docker info
-  - sudo netstat -ntlp | grep LISTEN
+- openssl aes-256-cbc -K $encrypted_cdbe4333a8fb_key -iv $encrypted_cdbe4333a8fb_iv
+  -in ./build/daemon.json.enc -out ./build/daemon.json -d
+- sudo cp ./build/daemon.json /etc/docker/daemon.json
+- sudo systemctl restart docker.service
+- docker info
+- sudo netstat -ntlp | grep LISTEN
 env:
   global:
   - ALLOW_FAILURES=false
+  - secure: R/nA5SVrZeuganh6SgOlJjsg8fDifWvTUoIJYToxMQdrl9RdcQnYFiExvoN/KCNn3ZJSRveVaA6igfMxIVK/ngXv/bb9BQzBs+wfZ5Wx5+HMGy/owfNNNwm7AxQVUaTXuaKL1A9BisIuadjYaNXd/xWhB5ehR8+au4AVsXFIezaeWSMsUDUsl5XGOtyb8O6etfmd1lCjZFTlP/g4qObLbp7JGxgpJk+A4pNgsZGn8mTxFVnFTD9YZ1RNqd6VoEJJP6nHhNmTth2ldXqLj1OlmcUE7UNMEP6jvEfEXYwq2xDT6EsPXJj7cwTOfSotOhKmQ7JSpoTaJy2Fq19Edj8Q+b7AiFfvGFzKs2O2n3A9vHs5YmmwUzkWvF9ZjjgVOwGAG+j/tsQck7HRxZHlXClcPbnK4TZRRKtOWaRs3gDfsRm4F3t19YPjYeB+OAq5q3ZxS80z0tIsan+tve5p7347Zf0jSLojOK5GGSNbNOxsdVnDESKDU/t48XngUAT4ypAt1u0BCSCvJeFC+dzTkm0VZJ8Xzmu510Ue75CrKq5JmxMYZIBPNlaeE1GcnLZ/ky2t3VuMmO7bvBJ+om5cHiFi9PrGcNkHvMA10pIMBV6vzEDCmp5zfug7PU3O513OaYYe4w7n47qoHs4A9uqY+xSZbyz3i+SuaYwR5nLMu+nNWDM=
+  - secure: jynmOuUrckK4KSGKWz4Mv2xWogWUtA2DzbLhtOSsyuSMxKbr8ECdJCkTenh33X7KZg1GukmGX1UyJ1ff3Rp2STzQwkUsGECf7q0kO+s+oEmWBPcaE30n/tMARXziyNEU811txNl8tzS0xegsfYdcoqhT9IrYrd+zJExdr775dmOiaViLHfCoOK3nHvVCU4zxIS1EDlirb3g2vWvHk7jQTiwVwsaHVELW1CtCn/PzQankOoXzy4YzsDh6BKhyWnoqO9pRqYwvPZYpa9vg8JFBk1P7qBuAn2losmOsS0Q4YAXZuXkWJ8+uGfb58dOUqyCYHYqOs3rzJp36RJTb55HSsedIkX6PJt9MEl4gRgdCBuShJR9vYP0YqwvzXttq5bK2jnolQ6XP+fS2SjLWW5exkUWGTciiCWEFVL8vbCX2xK3fT1wcuMoGato6Rs2aoeqKrd9Q/r98D5MAdbstwa/GmH0/6vwO94ZPuqg1eJ7ZvRaARFQRybmwBAJ9xf+zXXF4IFKoUi6F+BISdss3y8xM5leD/UJmesfe2VJ58Mg3DRM3cBaMNU3lsMsBJiV/OIYonwu9TOtHmjPbvpLQpIaahLXieuaWOQScIvHCPvrutvtkucZ4pmh9idyLoPNeObFsQYpkFPpTCLBVSSq1toC+pKi8EDGs6Vb4DT/ZWG4UFPY=
+  - secure: Hikver3zBFlMvDDE+q9FDBt3ebZsL/fTIJXaTTICarauW9vBmlVxMc4rCQaSiBtPt4a71dyuUjCg0sa4B2zpY1+yNsvgCmg856mWJ8hrdZ5BPbxWrENqG1RD6yDah1XRtxExAmFa4GSZhp8AjoSVJmDEPJxZEqSRFFU92G4WbUcKBojkLpXHHR3BcYu4iz0i3oB3oUEvFS9f6EKJouWkCo0JeAMLzUOdIPMityr+h1AeAajCLL3K0jY+U0EFPrqhRafICx+GE2Z41TThKoXWTv8TGD//HapZpkGvu/v6CIUS85CY43FJqKj0IDLt623lByDLbmfipdESnPPLqEkirRjUa05MqCz5lv7RYB1oDR5QuqvcxI1v4MPD/43aKUGwJ5VfRHm+uRyPXXfTvvV6Ul7bblKuzY/p/yZn0x2zGKXTapgu3zI/yo38Ilz/Uo1mE1W2MPGZG8j/ZcWrTF+fQ9Mhm6jx/+KjnWSZCl2Ab26O4BseaE3rCgz+umsmcgtKjjadZilw3KsJUHCbUwB4D3BlYUglf4qEdL+rE3semgWQSm9LNZHLAUsgVQ81a9IGETzyfXToWjjMw4qdyawhpe4ffigWlkxofv1VgdsZo0DBVMbTRkwrBn3kYQUUNZ4ZwX+uW9grvMkWHTWDxX/C8Xa0rQDZqgkKWQdlXQ70AkE=
 stages:
 - name: test
 - name: test e2e
