@@ -14,7 +14,7 @@ describe 'secret env size limits' do
     end
 
     # NOTE: Travis CI environment always fails of not being able to read last part of the error report
-    pending 'fails to upgrade with too many secrets, without killing the deployed container' do
+    it 'fails to upgrade with too many secrets, without killing the deployed container', :broken => true do
       cid = container_id('secrets-envsize.test-1')
 
       with_fixture_dir("secrets") do
