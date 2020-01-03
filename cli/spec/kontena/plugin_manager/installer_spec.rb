@@ -11,7 +11,7 @@ describe Kontena::PluginManager::Installer do
 
     context '#install' do
       it 'runs the installer' do
-        expect(command).to receive(:install).with('kontena-plugin-foo', Gem::Requirement.default).and_return(true)
+        expect(command).to receive(:install).with('krates-plugin-foo', Gem::Requirement.default).and_return(true)
         expect(command).to receive(:installed_gems).and_return([])
         subject.install
       end
@@ -30,7 +30,7 @@ describe Kontena::PluginManager::Installer do
       it 'runs the installer' do
         version = double
         expect(Gem::Requirement).to receive(:new).with('0.1.2').and_return(version)
-        expect(command).to receive(:install).with('kontena-plugin-foo', version).and_return(true)
+        expect(command).to receive(:install).with('krates-plugin-foo', version).and_return(true)
         allow(command).to receive(:installed_gems).and_return([])
         subject.install
       end

@@ -1,7 +1,10 @@
-.env
+.env*
 .dockercfg
 .idea
 .bundle
+.rspec
+.gitignore
+.dockerignore
 virtualbox
 packaging
 build
@@ -9,3 +12,10 @@ release
 *.pem
 vendor
 docs
+docker-compose.yml
+Vagrantfile
+Rakefile
+README.md
+Dockerfile
+.git
+spec

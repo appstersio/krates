@@ -6,7 +6,7 @@ module Kontena
       Gem.autoload :DefaultUserInteraction, 'rubygems/user_interaction'
       Gem.autoload :StreamUI, 'rubygems/user_interaction'
 
-      KONTENA_PLUGIN = 'kontena-plugin-%s'
+      KRATES_PLUGIN  = 'krates-plugin-%s'
 
       # @return [Boolean] is the CLI in plugin debugging mode?
       def plugin_debug?
@@ -26,11 +26,11 @@ module Kontena
       end
       module_function :use_dummy_ui
 
-      # Prefix a plugin name into a gem name (hello to kontena-plugin-hello)
+      # Prefix a plugin name into a gem name (hello to krates-plugin-hello)
       def prefix(plugin_name)
-        return KONTENA_PLUGIN % nil if plugin_name.nil? || plugin_name.empty?
-        return plugin_name if plugin_name.start_with?('kontena-plugin-') || plugin_name.include?('.')
-        KONTENA_PLUGIN % plugin_name
+        return KRATES_PLUGIN  % nil if plugin_name.nil? || plugin_name.empty?
+        return plugin_name if plugin_name.start_with?('krates-plugin-') || plugin_name.include?('.')
+        KRATES_PLUGIN  % plugin_name
       end
       module_function :prefix
 
@@ -51,7 +51,7 @@ module Kontena
       # @return [String]
       def install_dir
         return @install_dir if @install_dir
-        install_dir = File.join(Dir.home, '.kontena', 'gems', RUBY_VERSION)
+        install_dir = File.join(Dir.home, '.krates', 'gems', RUBY_VERSION)
         unless File.directory?(install_dir)
           require 'fileutils'
           FileUtils.mkdir_p(install_dir, mode: 0700)

@@ -12,3 +12,5 @@ docs/_book
 .ruby-version
 .ruby-gemset
 daemon.json
+*.gem
+.vagrant

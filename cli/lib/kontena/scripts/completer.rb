@@ -6,7 +6,7 @@ class Helper
 
   def client_config
     require 'json'
-    config_file = File.expand_path('~/.kontena_client.json')
+    config_file = File.expand_path('~/.krates.json')
     if(File.exist?(config_file))
       JSON.parse(File.read(config_file))
     else
@@ -168,7 +168,7 @@ words = ARGV
 
 if words.first == '--subcommand-tree'
   require 'kontena/main_command'
-  helper.subcommand_tree("kontena", Kontena::MainCommand)
+  helper.subcommand_tree("krates", Kontena::MainCommand)
   exit 0
 end
 

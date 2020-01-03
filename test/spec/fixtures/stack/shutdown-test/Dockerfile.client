@@ -1,6 +1,4 @@
-FROM alpine
-
-RUN apk update && apk --update add ruby
+FROM ruby:2.4.3-slim
 
 ADD client.rb .
 

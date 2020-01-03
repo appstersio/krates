@@ -1,7 +1,7 @@
 development:
   clients:
     default:
-      uri: <%= ENV['MONGODB_URI'] || 'mongodb://localhost:27017/kontena_development' %>
+      uri: <%= ENV['MONGODB_URI'] || 'mongodb://localhost:27017/krates_development' %>
       options:
         max_pool_size: 25
   options:
@@ -10,7 +10,7 @@ development:
 test:
   clients:
     default:
-      uri: <%= ENV['MONGODB_URI'] || 'mongodb://localhost:27017/kontena_test' %>
+      uri: <%= ENV['MONGODB_URI'] || 'mongodb://localhost:27017/krates_test' %>
       options:
         max_pool_size: 25
         write:

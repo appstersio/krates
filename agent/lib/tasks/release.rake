@@ -2,8 +2,8 @@
 
 namespace :release do
   VERSION = Gem::Version.new(File.read('VERSION').strip)
-  NAME = 'kontena-agent'
-  DOCKER_NAME = 'kontena/agent'
+  NAME = 'krates-worker'
+  DOCKER_NAME = 'krates/worker'
   if VERSION.prerelease?
     DOCKER_VERSIONS = ['edge']
     DEB_COMPONENT = 'edge'

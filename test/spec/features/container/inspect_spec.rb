@@ -4,12 +4,12 @@ describe 'container inspect' do
     id = container_id('krates-worker')
     expect(id).not_to be_nil
 
-    k = kommando("kontena container inspect #{id}")
+    k = kommando("krates container inspect #{id}")
     expect(k.run).to be_truthy
   end
 
   it 'returns error if container does not exist' do
-    k = run("kontena container inspect invalid-id")
+    k = run("krates container inspect invalid-id")
     expect(k.code).to eq(1)
   end
 end

@@ -1,16 +1,16 @@
 require 'spec_helper'
 
 describe 'plugin uninstall' do
-  context 'with the aws plugin installed' do
+  context 'with the digitalocean plugin installed' do
     before(:each) do
-      run! 'kontena plugin install aws'
+      run! 'krates plugin install digitalocean'
     end
 
     it 'removes installed plugin' do
-      run! 'kontena plugin uninstall aws'
+      run! 'krates plugin uninstall digitalocean'
 
-      k = run! 'kontena plugin ls'
-      expect(k.out).to_not match(/aws/)
+      k = run! 'krates plugin ls'
+      expect(k.out).to_not match(/digitalocean/)
     end
   end
 end

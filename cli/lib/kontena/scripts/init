@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 
 # This file exists mostly for backwards dependency to
-# allow the old "which kontena && . foofoo/init"
+# allow the old "which krates && . foofoo/init"
 # completion loading
-_kontena_complete() {
+_krates_complete() {
   COMPREPLY=()
   local word="${COMP_WORDS[COMP_CWORD]}"
-  local completions="$(kontena complete ${COMP_WORDS[*]})"
+  local completions="$(krates complete ${COMP_WORDS[*]})"
   COMPREPLY=( $(compgen -W "$completions" -- "$word") )
 }
 
@@ -15,4 +15,4 @@ if [ "$ZSH_VERSION" != "" ]; then
   autoload -U +X bashcompinit && bashcompinit
 fi
 
-which kontena > /dev/null && complete -F _kontena_complete kontena
+which krates > /dev/null && complete -F _krates_complete krates

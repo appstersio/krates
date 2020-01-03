@@ -1,5 +1,0 @@
-#!/bin/sh
-#
-# Perform necessary kontena setup steps
-# before package is installed.
-#

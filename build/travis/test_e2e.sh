@@ -2,15 +2,15 @@
 set -ue
 
 pushd cli && \
-  gem build kontena-cli.gemspec && \
+  gem build krates.gemspec && \
   gem install *.gem && \
-  kontena -v
+  krates -v
 
 popd
 
 pushd test && \
   bundle install && \
-  kontena -v && \
+  krates -v && \
   rake compose:setup
 
 # Skip running all the tests when we're in tracing mode

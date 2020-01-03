@@ -49,10 +49,10 @@ namespace :release do
   ]
 
   task :build_server do
-    headline "Starting to build kontena-server ..."
+    headline "Starting to build krates-master ..."
     Dir.chdir('server') do
       sh("bundle exec rake release:build_docker")
-      sh("bundle exec rake release:build_docs")
+      # sh("bundle exec rake release:build_docs")
     end
   end
 
@@ -71,9 +71,9 @@ namespace :release do
   end
 
   task :build_cli_gem do
-    headline "Starting to build kontena-cli gem ..."
+    headline "Starting to build krates-cmd gem ..."
     Dir.chdir('cli') do
-      sh("gem build kontena-cli.gemspec")
+      sh("gem build *.gemspec")
     end
   end
 
@@ -98,15 +98,14 @@ namespace :release do
   task :push => [
     :build,
     :push_server,
-    :push_agent,
-    :push_cli
+    :push_agent
   ]
 
   task :push_server do
-    headline "Starting to push kontena/server ..."
+    headline "Starting to push krates/master..."
     Dir.chdir('server') do
       sh("bundle exec rake release:push_docker")
-      sh("bundle exec rake release:push_docs")
+      # sh("bundle exec rake release:push_docs")
     end
   end
 
@@ -127,9 +126,9 @@ namespace :release do
   task :push_gem => [:build_cli_gem, :push_cli_gem]
 
   task :push_cli_gem do
-    headline "Starting to push kontena-cli gem..."
+    headline "Starting to push krates-cmd gem..."
     Dir.chdir('cli') do
-      sh("gem push kontena-cli-#{VERSION}.gem")
+      sh("gem push *.gem")
     end
   end
 

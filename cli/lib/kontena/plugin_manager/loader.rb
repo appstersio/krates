@@ -6,7 +6,7 @@ module Kontena
     class Loader
       include Common
 
-      CLI_GEM = 'kontena-cli'.freeze
+      CLI_GEM = 'krates'.freeze
       MIN_CLI_VERSION = '0.15.99'.freeze
 
       def loaded_plugins
@@ -60,8 +60,8 @@ module Kontena
       # @param [Gem::Specification] spec
       # @return [Boolean]
       def spec_has_valid_dependency?(spec)
-        kontena_cli = spec.runtime_dependencies.find{ |d| d.name == CLI_GEM }
-        !kontena_cli.match?(CLI_GEM, MIN_CLI_VERSION)
+        krates = spec.runtime_dependencies.find{ |d| d.name == CLI_GEM }
+        !krates.match?(CLI_GEM, MIN_CLI_VERSION)
       rescue
         false
       end

@@ -17,6 +17,7 @@ require 'ruby_dig'
 require 'kontena_cli'
 require 'webmock/rspec'
 require 'tmpdir'
+require 'pry'
 
 RSpec.configure do |config|
   config.run_all_when_everything_filtered = true

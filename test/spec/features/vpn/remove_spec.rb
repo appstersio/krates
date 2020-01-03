@@ -7,12 +7,12 @@ describe 'vpn remove' do
   end
 
   it 'returns error if vpn does not exist' do
-    k = run 'kontena vpn remove --force'
+    k = run 'krates vpn remove --force'
     expect(k.code).not_to eq(0)
   end
 
   it 'prompts without --force' do
-    k = kommando 'kontena vpn remove', timeout: 5
+    k = kommando 'krates vpn remove', timeout: 5
     k.out.on "Are you sure?" do
       k.in << "y\r"
     end

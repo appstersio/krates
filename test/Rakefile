@@ -57,14 +57,14 @@ namespace :compose do
 
   desc "setup compose master"
   task :setup_master do
-    sh "kontena master login --code #{ENV['INITIAL_ADMIN_CODE']} --name compose-e2e http://localhost:9292"
+    sh "krates master login --code #{ENV['INITIAL_ADMIN_CODE']} --name compose-e2e http://localhost:9292"
   end
 
   desc "setup compose grid"
   task :setup_grid do
-    sh "kontena grid create --token #{ENV['CI_KRATES_TOKEN']} e2e"
-    sh "while [ -z $(kontena node ls -q) ] ; do echo \"... not yet ...\"; sleep 2; done"
-    sh "kontena node ls"
+    sh "krates grid create --token #{ENV['CI_KRATES_TOKEN']} e2e"
+    sh "while [ -z $(krates node ls -q) ] ; do echo \"... not yet ...\"; sleep 2; done"
+    sh "krates node ls"
   end
 
   desc "teardown compose"

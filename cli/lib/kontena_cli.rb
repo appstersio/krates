@@ -71,7 +71,7 @@ module Kontena
     if debug?
       @log_target ||= $stderr
     elsif @log_target.nil?
-      @log_target = File.join(home, 'kontena.log')
+      @log_target = File.join(home, 'krates.log')
     end
   end
 
@@ -81,7 +81,7 @@ module Kontena
 
   def self.home
     return @home if @home
-    @home = File.join(Dir.home, '.kontena')
+    @home = File.join(Dir.home, '.krates')
     Dir.mkdir(@home, 0700) unless File.directory?(@home)
     @home
   end
@@ -92,7 +92,7 @@ module Kontena
   end
 
   def self.version
-    "kontena-cli/#{Kontena::Cli::VERSION}"
+    "krates/#{Kontena::Cli::VERSION}"
   end
 
   def self.on_windows?
@@ -187,4 +187,4 @@ end
 require 'ruby_dig'
 require 'shellwords'
 require 'kontena/cli/version'
-Kontena.logger.debug { "Kontena CLI #{Kontena::Cli::VERSION} (ruby-#{RUBY_VERSION}+#{RUBY_PLATFORM})" }
+Kontena.logger.debug { "Krates #{Kontena::Cli::VERSION} (ruby-#{RUBY_VERSION}+#{RUBY_PLATFORM})" }
