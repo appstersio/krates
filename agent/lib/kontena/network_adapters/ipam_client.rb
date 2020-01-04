@@ -20,7 +20,9 @@ module Kontena::NetworkAdapters
     HEADERS = { "Content-Type" => "application/json" }
 
     def initialize(ipam_url = nil)
+      info "initializing"
       @connection = Excon.new(ipam_url || IPAM_URL)
+      info "initialized"
     end
 
     def activate

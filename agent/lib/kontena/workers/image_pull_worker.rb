@@ -31,6 +31,7 @@ module Kontena::Workers
         info "pulling image with credentials: #{image}"
       end
       cache_key = "#{image}:#{deploy_rev}"
+      info "image cache_key is: #{cache_key}"
       image_cache[cache_key] = Time.now.utc
       retries = 0
       begin
@@ -56,7 +57,10 @@ module Kontena::Workers
     # @return [Boolean]
     def fresh_pull?(image)
       return false unless image_cache[image]
-      image_cache[image] >= (Time.now.utc - 600)
+      expired = image_cache[image] >= (Time.now.utc - 600)
+      info "cached image '#{image}' has expired" if expired
+      info "cached image '#{image}' still valid" unless expired
+      return expired
     end
 
     # @param [String] image
