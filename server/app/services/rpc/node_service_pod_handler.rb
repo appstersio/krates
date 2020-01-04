@@ -50,7 +50,7 @@ module Rpc
       service_instance = node.grid_service_instances.find_by(
         grid_service_id: pod['service_id'], instance_number: pod['instance_number']
       )
-      raise 'Instance not found' unless service_instance
+      raise 'Instance not found (set_state)' unless service_instance
 
       service_instance.set(
         rev: pod['rev'],
@@ -70,7 +70,7 @@ module Rpc
       service_instance = node.grid_service_instances.find_by(
         grid_service_id: pod['service_id'], instance_number: pod['instance_number']
       )
-      raise 'Instance not found' unless service_instance
+      raise 'Instance not found (mark_oneshot_hook)' unless service_instance
 
       oneshot_hook = service_instance.grid_service.hooks.to_a.find{ |h|
         h.oneshot && h.id.to_s == hook['id']
