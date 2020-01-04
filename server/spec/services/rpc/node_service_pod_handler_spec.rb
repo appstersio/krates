@@ -68,7 +68,7 @@ describe Rpc::NodeServicePodHandler do
 
     it 'fail if service instance not found' do
       data['instance_number'] = 3
-      expect{subject.set_state(node.node_id, data)}.to raise_error 'Instance not found'
+      expect{subject.set_state(node.node_id, data)}.to raise_error 'Instance not found (set_state)'
     end
   end
 
