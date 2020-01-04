@@ -109,6 +109,8 @@ describe MongoPubsub, :celluloid => true do
       sub1.terminate
       sub2.terminate
 
+      sleep 1
+
       thread_count = Thread.list.count
 
       sub1 = described_class.subscribe('channel1') {|msg| }
@@ -117,7 +119,8 @@ describe MongoPubsub, :celluloid => true do
       sub2.terminate
 
       GC.start
-      expect(thread_count == Thread.list.count).to be_truthy
+      sleep 1
+      expect(thread_count).to eq(Thread.list.count)
     end
 
     it 'should perform', performance: true do
