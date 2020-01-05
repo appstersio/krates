@@ -83,7 +83,7 @@ module Rpc
       # Why secrets? Well, secrets are already handled in a way they can be concatenated with same env names
       # Must be injected after any secrets/certificates, because the first certificate in `SSL_CERTS` is special
       service.grid_domain_authorizations.select{|d| d.deployable? }.each do |domain_auth|
-        # map domain auth challenge to kontena/lb supported env
+        # map domain auth challenge to krates/lb supported env
         case domain_auth.authorization_type
         when 'http-01'
           env = "ACME_CHALLENGE_#{domain_auth.challenge_opts['token']}"

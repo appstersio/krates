@@ -20,7 +20,7 @@ describe GridDomainAuthorization do
 
   context 'with a linked service' do
     let(:lb_service) { GridService.create!(grid: grid, name: 'lb',
-        image_name: 'kontena/lb:latest'
+        image_name: 'krates/lb:latest'
     ) }
 
     subject {

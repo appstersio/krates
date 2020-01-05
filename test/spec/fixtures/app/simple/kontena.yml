@@ -10,6 +10,6 @@ services:
       - lb
 
   lb:
-    image: kontena/lb:latest
+    image: krates/lb:latest
     ports:
       - 80:80

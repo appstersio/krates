@@ -178,13 +178,13 @@ describe GridService do
   end
 
   describe '#load_balancer?' do
-    it 'returns true if latest official kontena/lb image' do
-      subject.image_name = 'kontena/lb:latest'
+    it 'returns true if latest official krates/lb image' do
+      subject.image_name = 'krates/lb:latest'
       expect(subject.load_balancer?).to eq(true)
     end
 
-    it 'returns true if official kontena/lb image' do
-      subject.image_name = 'kontena/lb:edge'
+    it 'returns true if official krates/lb image' do
+      subject.image_name = 'krates/lb:edge'
       expect(subject.load_balancer?).to eq(true)
     end
 
@@ -194,7 +194,7 @@ describe GridService do
       expect(subject.load_balancer?).to eq(true)
     end
 
-    it 'returns false if not official kontena/lb image' do
+    it 'returns false if not official krates/lb image' do
       subject.image_name = 'acme/lb:latest'
       expect(subject.load_balancer?).to eq(false)
     end

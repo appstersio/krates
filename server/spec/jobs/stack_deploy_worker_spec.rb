@@ -83,7 +83,7 @@ describe StackDeployWorker, celluloid: true do
         source: '...',
         services: [
           {name: 'redis', image: 'redis:2.8', stateful: true },
-          {name: 'lb', image: 'kontena/lb:latest', stateful: false }
+          {name: 'lb', image: 'krates/lb:latest', stateful: false }
         ]
       )
 
@@ -104,7 +104,7 @@ describe StackDeployWorker, celluloid: true do
         source: '...',
         services: [
           {name: 'redis', image: 'redis:2.8', stateful: true },
-          {name: 'lb', image: 'kontena/lb:latest', stateful: false }
+          {name: 'lb', image: 'krates/lb:latest', stateful: false }
         ]
       )
       expect(outcome.success?).to be_truthy

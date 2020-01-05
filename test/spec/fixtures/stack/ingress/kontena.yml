@@ -1,7 +1,7 @@
 stack: ingress
 services:
   lb:
-    image: kontena/lb
+    image: krates/lb
     ports:
       - 80:80
     deploy:

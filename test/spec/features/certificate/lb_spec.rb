@@ -1,7 +1,7 @@
 require 'openssl'
 require 'tmpdir'
 
-describe 'kontena/lb certificates' do
+describe 'krates/lb certificates' do
   let(:tmp_path) { Dir.mktmpdir('kontena-cert-test_') }
   let(:cert_path) { File.join(tmp_path, 'cert.pem') }
   let(:key_path) { File.join(tmp_path, 'key.pem') }
