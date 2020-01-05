@@ -9,7 +9,7 @@ variables:
     type: boolean
 services:
   lb:
-    image: kontena/lb
+    image: krates/lb
   server:
     build:
       context: .

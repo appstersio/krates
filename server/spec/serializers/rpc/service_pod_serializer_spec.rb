@@ -7,7 +7,7 @@ describe Rpc::ServicePodSerializer do
     GridService.create!(
       name: 'lb',
       grid: grid,
-      image_name: 'kontena/lb:latest'
+      image_name: 'krates/lb:latest'
     )
   end
   let(:service_certificates) { nil }

@@ -4,7 +4,7 @@ class GridService
   include Mongoid::Timestamps
   include EventStream
 
-  LB_IMAGE = 'kontena/lb'
+  LB_IMAGE = 'krates/lb'
 
   field :image_name, type: String
   field :labels, type: Hash, default: {}

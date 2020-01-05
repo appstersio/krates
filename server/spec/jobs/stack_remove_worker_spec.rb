@@ -17,7 +17,7 @@ describe StackRemoveWorker do
   end
 
   let :lb_service do
-    GridService.create(grid: grid, stack: default_stack, name: 'lb', image_name: 'kontena/lb:latest')
+    GridService.create(grid: grid, stack: default_stack, name: 'lb', image_name: 'krates/lb:latest')
   end
 
   let :stack do

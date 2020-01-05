@@ -235,7 +235,7 @@ describe GridDomainAuthorizations::Authorize do
     ) }
 
     context 'with a linked service' do
-      let(:linked_service) { GridService.create(grid: grid, name: 'lb', image_name: 'kontena/lb:latest',
+      let(:linked_service) { GridService.create(grid: grid, name: 'lb', image_name: 'krates/lb:latest',
         ports: [ { 'node_port' => 80 } ],
       ) }
 
@@ -343,7 +343,7 @@ EOF
     ) }
 
     context 'with a linked service' do
-      let(:linked_service) { GridService.create(grid: grid, name: 'lb', image_name: 'kontena/lb:latest',
+      let(:linked_service) { GridService.create(grid: grid, name: 'lb', image_name: 'krates/lb:latest',
         ports: [ { 'node_port' => 443 } ],
       ) }
 
