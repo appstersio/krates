@@ -13,9 +13,6 @@ VERSION=$(shell cat VERSION)
 # In this case, if `test` folder exists, `make test` will still be run.
 .PHONY: build version
 
-trace: export TRACE=1
-trace: integration
-
 version:
 	@echo $(VERSION) > version
 	@echo $(VERSION) > server/version
@@ -35,16 +32,16 @@ integration: wipe
 	docker-compose run -e "TRACE=${TRACE}" toolbox -c "./build/travis/before_install.sh && ./build/travis/test_e2e.sh"
 
 master: wipe
-	docker run -ti --rm -e "CI=1" -e "TEST_DIR=server" --net host --name master --workdir $(TARGET_PATH) -v $(VOLUME_PATH) \
+	docker run -ti --rm -e "CI=1" -e "TEST_DIR=server" -e "TRACE=${TRACE}" --net host --name master --workdir $(TARGET_PATH) -v $(VOLUME_PATH) \
 		-v $(DOCKER_SOCKET) $(RUBY_IMAGE) -c "./build/travis/before_install.sh && ./build/travis/test.sh"
 	docker rm -f mongo
 
 worker: wipe
-	docker run -ti --rm -e "TEST_DIR=agent" --net host --name worker --workdir $(TARGET_PATH) -v $(VOLUME_PATH) $(RUBY_IMAGE) \
+	docker run -ti --rm -e "TEST_DIR=agent" -e "TRACE=${TRACE}" --net host --name worker --workdir $(TARGET_PATH) -v $(VOLUME_PATH) $(RUBY_IMAGE) \
 		-c "./build/travis/before_install.sh && ./build/travis/test.sh"
 
 cmd: wipe
-	docker run -ti --rm -e "TEST_DIR=cli" --net host --name cmd --workdir $(TARGET_PATH) -v $(VOLUME_PATH) $(RUBY_IMAGE) \
+	docker run -ti --rm -e "TEST_DIR=cli" -e "TRACE=${TRACE}" --net host --name cmd --workdir $(TARGET_PATH) -v $(VOLUME_PATH) $(RUBY_IMAGE) \
 		-c "./build/travis/before_install.sh && ./build/travis/test.sh"
 
 build:
@@ -59,3 +56,8 @@ down:
 
 volumes:
 	@docker volume prune --force
+
+prune:
+	@git checkout master
+	@git pull
+	@git branch --merged | egrep -v "(^\*|master)" | xargs git branch -d
