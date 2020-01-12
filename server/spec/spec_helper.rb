@@ -33,6 +33,7 @@ require_relative '../app/boot'
 require_relative '../server'
 require 'rack/test'
 require 'mongoid-rspec'
+require 'pry'
 
 require_relative '../app/services/mongodb/migrator'
 
