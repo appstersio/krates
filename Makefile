@@ -24,6 +24,7 @@ pry-test:
 	@docker-compose run --no-deps -e "TRACE=1" toolbox -c "./build/travis/before_install.sh && ./build/travis/test_e2e.sh"
 
 pry-master: LOG_LEVEL=error
+pry-master: PRY_SESSION=yes
 pry-master:
 	@docker-compose run --service-ports -u root master
 
