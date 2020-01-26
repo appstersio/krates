@@ -15,8 +15,8 @@ module GridCertificates
     end
 
     def execute
-      registration = acme_client(self.grid).register(contact: "mailto:#{email}")
-      registration.agree_terms
+      account = acme_client(self.grid).new_account(contact: "mailto:#{email}", terms_of_service_agreed: true)
+      info "Registered new account '#{account.contact}' with status '#{account.status}' and kid '#{account.url}'"
     rescue Acme::Client::Error => exc
       add_error(:acme, :error, exc.message)
     end
