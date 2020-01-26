@@ -72,7 +72,9 @@ module GridDomainAuthorizations
     end
 
     def execute
-      authorization = acme_client(self.grid).authorize(domain: self.domain)
+
+      order = acme_client(self.grid).new_order(identifiers: [self.domain])
+      authorization = order.authorizations.first
       challenge = nil
       case self.authorization_type
       when 'dns-01'
@@ -89,7 +91,7 @@ module GridDomainAuthorizations
         }
       when 'http-01'
         debug "creating http-01 challenge"
-        challenge = authorization.http01
+        challenge = authorization.http
         if challenge.nil?
           add_error(:challenge, :missing, "LE did not offer any http-01 challenge")
           return
