@@ -2,9 +2,8 @@ require 'logger'
 
 module Logging
   def self.initialize_logger(log_target = STDOUT, log_level = Logger::INFO)
-    @logger = Logger.new(log_target)
+    @logger = Logger.new(log_target, level: (ENV['LOG_LEVEL'] || log_level))
     @logger.progname = 'API'
-    @logger.level = ENV["DEBUG"] ? Logger::DEBUG : log_level
     @logger
   end
 

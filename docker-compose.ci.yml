@@ -1,0 +1,8 @@
+version: "3.6"
+
+services:
+  # NOTE: This is master service
+  master:
+    environment:
+      - LOG_LEVEL=DEBUG
+      - DEBUG=yes
