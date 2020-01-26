@@ -32,6 +32,7 @@ services:
     environment:
       - RACK_ENV=production
       - LOG_LEVEL=${LOG_LEVEL:-DEBUG}
+      - PRY_SESSION=${PRY_SESSION}
       - MONGODB_URI=mongodb://mongodb:27017/krates_development
       - VAULT_KEY=8cd0fee89585a5d46ed73fc3b25dbc11
       - VAULT_IV=48dc8d29308eb256edc76f25def07251
