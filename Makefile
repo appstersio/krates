@@ -25,7 +25,7 @@ pry-test:
 
 pry-master: LOG_LEVEL=error
 pry-master: PRY_SESSION=yes
-pry-master:
+pry-master: wipe-exited
 	@docker-compose run --service-ports -u root master
 
 publish_images:
@@ -59,6 +59,9 @@ build:
 
 wipe: down volumes
 	docker ps -aq | xargs -r docker rm -f
+
+wipe-exited:
+	docker ps -aq -f "status=exited" | xargs -r docker rm -f
 
 down:
 	@docker-compose down
