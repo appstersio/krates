@@ -1,3 +1,5 @@
+require 'pry' if ENV['PRY_SESSION'] == 'yes'
+
 require 'logger'
 require 'pathname'
 
@@ -16,7 +18,7 @@ class Server < Roda
   VERSION = File.read('./VERSION').strip
 
   use Rack::Deflater, include: %w(application/json) if ENV['KONTENA_SERVER_GZIP'].to_s == 'true'
-  use Rack::CommonLogger, Logging.logger
+  use Rack::CommonLogger, Logging.logger unless ENV['PRY_SESSION'] == 'yes'
   use Rack::Attack
   use Rack::Static, urls: { "/code" => "app/views/static/code.html" }
   use TokenAuthentication, File.expand_path('../config/authentication.yml', __FILE__)
@@ -45,7 +47,7 @@ class Server < Roda
 
     r.root do
       {
-        name: 'Kontena Master',
+        name: 'Krates Master',
         tagline: 'The Container Platform',
         version: VERSION
       }

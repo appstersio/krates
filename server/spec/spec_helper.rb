@@ -84,11 +84,12 @@ RSpec.configure do |config|
     end
   end
 
-  config.around :each do |ex|
-    Timeout.timeout(5.0) do
-      ex.run
-    end
-  end
+  # TODO: Figure out if we need to enforce timeouts around each test
+  # config.around :each do |ex|
+  #   Timeout.timeout(5.0) do
+  #     ex.run
+  #   end
+  # end
 
   config.around :each, celluloid: true do |ex|
     Celluloid.boot

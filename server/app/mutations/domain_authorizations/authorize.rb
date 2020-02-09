@@ -38,8 +38,6 @@ module GridDomainAuthorizations
         nil
       when 'http-01'
         80
-      when 'tls-sni-01'
-        443
       end
     end
 
@@ -109,6 +107,9 @@ module GridDomainAuthorizations
         end
         verification_cert = [challenge.certificate.to_pem, challenge.private_key.to_pem].join
       end
+
+      # LetsEncrypt v2 API optimization to finalize order using a special url
+      challenge_opts['finalize_url'] = order.finalize_url
 
       if authz = get_authz_for_domain(self.grid, self.domain)
         authz.destroy
