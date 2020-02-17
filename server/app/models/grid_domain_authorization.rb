@@ -12,7 +12,7 @@ class GridDomainAuthorization
   field :domain, type: String
   field :challenge, type: Hash
   field :challenge_opts, type: Hash # TODO encrypt?
-  field :authorization_type, type: String, default: 'tls-sni-01'
+  field :authorization_type, type: String, default: 'http-01'
   field :expires_at, type: Time
 
   belongs_to :grid_service_deploy
@@ -69,8 +69,6 @@ class GridDomainAuthorization
     when 'dns-01'
       false
     when 'http-01'
-      true
-    when 'tls-sni-01'
       true
     end
   end

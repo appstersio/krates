@@ -12,7 +12,7 @@ module GridDomainAuthorizations
     required do
       model :grid, class: Grid
       string :domain
-      string :authorization_type, in: ['dns-01', 'http-01', 'tls-sni-01'], default: 'dns-01'
+      string :authorization_type, in: ['dns-01', 'http-01'], default: 'dns-01'
     end
 
     optional do
@@ -25,8 +25,6 @@ module GridDomainAuthorizations
       when 'dns-01'
         false
       when 'http-01'
-        true
-      when 'tls-sni-01'
         true
       end
     end
@@ -98,14 +96,6 @@ module GridDomainAuthorizations
           'token' => challenge.token,
           'content' => challenge.file_content,
         }
-      when 'tls-sni-01'
-        debug "creating tls-sni-01 challenge"
-        challenge = authorization.tls_sni01
-        if challenge.nil?
-          add_error(:challenge, :missing, "LE did not offer any tls-sni-01 challenge")
-          return
-        end
-        verification_cert = [challenge.certificate.to_pem, challenge.private_key.to_pem].join
       end
 
       # LetsEncrypt v2 API optimization to finalize order using a special url
@@ -122,7 +112,7 @@ module GridDomainAuthorizations
         expires_at: authorization.expires,
         challenge: challenge.to_h,
         challenge_opts: challenge_opts,
-        tls_sni_certificate: verification_cert,
+        tls_sni_certificate: nil, # NOTE: This field is set nil since tls-sni-01 challenge has been deprecated
         grid_service: @lb_service
       )
 

@@ -1519,12 +1519,12 @@ challenge | Let's Encrypt domain authorization challenge details
 challenge_opts | Challenge type specific details, e.g. the DNS TXT records for `dns-01` challenges
 authorization_type | The domain authorization challenge type used to request verification
 expires_at | Timestamp for when the challenge expires, `null` if unknown
-linked_service | Optional linked Kontena Loadbalancer service for `tls-sni-01` challenges
+linked_service | Optional linked Krates LB service for `http-01` challenges
 
 ### Status values
 
 - `created`: authorization has been created, no firther actions yet taken
-- `deploying`: The related tls-sni certificate is currently being deployed to linked service. Only valid for tls-sni type of authorizations
+- `deploying`: The related http-01 certificate is currently being deployed to linked service. Only valid for http-01 type of authorizations
 - `deploy_error`: The deployment of the linked service has errored out, more details can be found from the linked services event logs
 - `expired`: The domain authorization can no longer be used to request a certificate, the domain must be re-authorized
 - `requested`: Authorization has been requested from Let's Encrypt

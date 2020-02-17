@@ -57,10 +57,10 @@ class CertificateRenewJob
       )
       if outcome.success?
         domain_auth = outcome.result
-        wait_until!("deployment of tls-sni secret is finished", timeout: 300, threshold: 20) {
+        wait_until!("deployment of http-01 secret is finished", timeout: 300, threshold: 20) {
           domain_auth.reload.status != :deploying
         }
-        raise "Deployment of tls-sni secret failed" if domain_auth.reload.status == :deploy_error
+        raise "Deployment of http-01 secret failed" if domain_auth.reload.status == :deploy_error
       else
         # No point to continue, cert renewal not gonna succeed
         raise "Domain authorization failed: #{outcome.errors.message}"
