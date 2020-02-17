@@ -113,7 +113,7 @@ describe WebsocketBackend, celluloid: true, eventmachine: true do
 
           expect{
             subject.on_open(client_ws, rack_req)
-          }.to not_change{grid.reload.host_nodes}
+          }.to change{grid.reload.host_nodes}.from([]).to([])
         end
       end
     end
@@ -128,7 +128,7 @@ describe WebsocketBackend, celluloid: true, eventmachine: true do
 
           expect{
             subject.on_open(client_ws, rack_req)
-          }.to not_change{grid.reload.host_nodes}
+          }.to change{grid.reload.host_nodes}.from([]).to([])
         end
       end
     end
@@ -143,7 +143,7 @@ describe WebsocketBackend, celluloid: true, eventmachine: true do
 
           expect{
             subject.on_open(client_ws, rack_req)
-          }.to not_change{grid.reload.host_nodes}
+          }.to change{grid.reload.host_nodes}.from([]).to([])
         end
       end
     end
@@ -159,7 +159,7 @@ describe WebsocketBackend, celluloid: true, eventmachine: true do
 
           expect{
             subject.on_open(client_ws, rack_req)
-          }.to not_change{grid.reload.host_nodes}
+          }.to change{grid.reload.host_nodes}.from([]).to([])
         end
       end
     end
