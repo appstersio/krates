@@ -114,6 +114,14 @@ RSpec.configure do |config|
     @json_response ||= JSON.parse(response.body)
   end
 
+  def fixture_dir(dir)
+    "./spec/fixtures/#{dir}/"
+  end
+
+  def from_fixture(path)
+    File.read "./spec/fixtures/#{path}"
+  end
+
   RSpec::Matchers.define_negated_matcher :not_change, :change
 end
 
