@@ -18,7 +18,7 @@ class Server < Roda
   VERSION = File.read('./VERSION').strip
 
   use Rack::Deflater, include: %w(application/json) if ENV['KONTENA_SERVER_GZIP'].to_s == 'true'
-  use Rack::CommonLogger, Logging.logger unless ENV['PRY_SESSION'] == 'yes'
+  use Rack::CommonLogger, Logging.logger unless ENV['PRY_SESSION'] == 'yes' || ENV['CI'] == '1'
   use Rack::Attack
   use Rack::Static, urls: { "/code" => "app/views/static/code.html" }
   use TokenAuthentication, File.expand_path('../config/authentication.yml', __FILE__)
