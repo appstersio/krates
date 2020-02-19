@@ -17,7 +17,6 @@ services:
       - ".:/src/app"
     depends_on:
       - master
-      - worker
     network_mode: host # NOTE: Host network is required to reach to services locally
   # NOTE: This is master service
   master:
@@ -32,16 +31,17 @@ services:
       - 9292:9292
     environment:
       - RACK_ENV=production
-      - LOG_LEVEL=DEBUG
-      - DEBUG=yes
+      - LOG_LEVEL=${LOG_LEVEL:-DEBUG}
+      - PRY_SESSION=${PRY_SESSION}
       - MONGODB_URI=mongodb://mongodb:27017/krates_development
       - VAULT_KEY=8cd0fee89585a5d46ed73fc3b25dbc11
       - VAULT_IV=48dc8d29308eb256edc76f25def07251
-      - ACME_ENDPOINT=https://acme-staging.api.letsencrypt.org/
+      - ACME_ENDPOINT=https://acme-staging-v02.api.letsencrypt.org/directory
       - INITIAL_ADMIN_CODE=xoxo
       - KONTENA_TOKEN=yoyo
       - CI=1 # NOTE: Special flag to re-configure indexes in MongoDB
     depends_on:
+      - worker
       - mongodb
   # NOTE: This is a worker service to schedule workloads
   worker:

@@ -29,8 +29,7 @@ class WebsocketBackend
   def initialize(app)
     @app     = app
     @clients = []
-    @logger = Logger.new(STDOUT)
-    @logger.level = (ENV['LOG_LEVEL'] || Logger::INFO).to_i
+    @logger = Logger.new(STDOUT, level: (ENV['WEBSOCKET_BACKEND_LOG_LEVEL'] || ENV['LOG_LEVEL'] || Logger::INFO))
     @logger.progname = 'WebsocketBackend'
     @msg_counter = 0
     @msg_dropped = 0

@@ -79,7 +79,7 @@ module Rpc
         secrets << item
       end
 
-      # Inject tls-sni based domain authz as secrets
+      # Inject http-01 based domain authz as secrets
       # Why secrets? Well, secrets are already handled in a way they can be concatenated with same env names
       # Must be injected after any secrets/certificates, because the first certificate in `SSL_CERTS` is special
       service.grid_domain_authorizations.select{|d| d.deployable? }.each do |domain_auth|
@@ -88,12 +88,6 @@ module Rpc
         when 'http-01'
           env = "ACME_CHALLENGE_#{domain_auth.challenge_opts['token']}"
           value = domain_auth.challenge_opts['content']
-
-          secrets << {name: env, type: 'env', value: value}
-
-        when 'tls-sni-01'
-          env = "SSL_CERT_acme_challenge_#{domain_auth.domain.gsub(/[^a-z0-9]/, '_')}"
-          value = domain_auth.tls_sni_certificate
 
           secrets << {name: env, type: 'env', value: value}
         end

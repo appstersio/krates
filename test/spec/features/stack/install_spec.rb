@@ -6,7 +6,10 @@ describe 'stack install' do
     run 'krates stack rm --force simple'
   end
 
-  context 'from registry' do
+  # NOTE: At some point registry stopped accepting unauthenticated requests.
+  # Therefore first step is to mark these tests as :broken,
+  # and second step is to adjust the code to use Github as the source of predefined & usable stacks.
+  context 'from registry', :broken => true do
     before do
       # the two specs use the same stack name
       wait_until_container_gone 'hello-ascii.lb-1'
@@ -123,7 +126,10 @@ describe 'stack install' do
     end
   end
 
-  context 'For a stack with dependencies' do
+  # NOTE: At some point registry stopped accepting unauthenticated requests.
+  # Therefore first step is to mark these tests as :broken,
+  # and second step is to adjust the code to use Github as the source of predefined & usable stacks.
+  context 'For a stack with dependencies', :broken => true do
 
     after(:each) do
       %w(twemproxy-redis_from_registry twemproxy-redis_from_yml twemproxy).each do |stack|

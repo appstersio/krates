@@ -111,9 +111,8 @@ describe WebsocketBackend, celluloid: true, eventmachine: true do
           expect(subject.logger).to receive(:warn).with('reject websocket connection for node nodeABC: Missing token')
           expect(client_ws).to receive(:close).with(4004, 'Missing token')
 
-          expect{
-            subject.on_open(client_ws, rack_req)
-          }.to not_change{grid.reload.host_nodes}
+          subject.on_open(client_ws, rack_req)
+          expect([]).to eq(grid.reload.host_nodes)
         end
       end
     end
@@ -126,9 +125,8 @@ describe WebsocketBackend, celluloid: true, eventmachine: true do
           expect(subject.logger).to receive(:warn).with('reject websocket connection for node <nil>: Missing Kontena-Node-ID')
           expect(client_ws).to receive(:close).with(4000, 'Missing Kontena-Node-ID')
 
-          expect{
-            subject.on_open(client_ws, rack_req)
-          }.to not_change{grid.reload.host_nodes}
+          subject.on_open(client_ws, rack_req)
+          expect([]).to eq(grid.reload.host_nodes)
         end
       end
     end
@@ -141,9 +139,8 @@ describe WebsocketBackend, celluloid: true, eventmachine: true do
           expect(subject.logger).to receive(:warn).with('reject websocket connection for node : Missing Kontena-Node-ID')
           expect(client_ws).to receive(:close).with(4000, 'Missing Kontena-Node-ID')
 
-          expect{
-            subject.on_open(client_ws, rack_req)
-          }.to not_change{grid.reload.host_nodes}
+          subject.on_open(client_ws, rack_req)
+          expect([]).to eq(grid.reload.host_nodes)
         end
       end
     end
@@ -157,9 +154,8 @@ describe WebsocketBackend, celluloid: true, eventmachine: true do
           expect(subject.logger).to receive(:warn).with('reject websocket connection for node nodeABC: Invalid grid token')
           expect(client_ws).to receive(:close).with(4001, 'Invalid grid token')
 
-          expect{
-            subject.on_open(client_ws, rack_req)
-          }.to not_change{grid.reload.host_nodes}
+          subject.on_open(client_ws, rack_req)
+          expect([]).to eq(grid.reload.host_nodes)
         end
       end
     end

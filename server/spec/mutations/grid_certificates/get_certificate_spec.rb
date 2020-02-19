@@ -47,11 +47,6 @@ describe GridCertificates::GetCertificate do
         expect(subject.has_errors?).to be_truthy
       end
     end
-
-    context 'tls-sni-01' do
-
-    end
-
   end
 
   describe '#execute' do
@@ -147,10 +142,7 @@ describe GridCertificates::GetCertificate do
 
       subject.execute
     end
-
-
   end
-
 
   describe '#validate_dns_record' do
     it 'returns false when wrong content in DNS record' do

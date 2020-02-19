@@ -50,11 +50,6 @@ describe GridCertificates::RequestCertificate do
         expect(subject.has_errors?).to be_truthy
       end
     end
-
-    context 'tls-sni-01' do
-      # As of now there's no specific validations for tls-sni verification
-    end
-
   end
 
   describe '#verify_domain' do
@@ -64,12 +59,13 @@ describe GridCertificates::RequestCertificate do
 
     before :each do
       authz
-      expect(acme_client).to receive(:challenge_from_hash).and_return(challenge)
+      expect(acme_client).to receive(:challenge).and_return(challenge)
     end
 
     it 'verifies domain succesfully' do
-      expect(challenge).to receive(:request_verification).and_return(true)
-      expect(challenge).to receive(:verify_status).and_return('valid', 'valid')
+      expect(challenge).to receive(:request_validation).and_return(true)
+      expect(challenge).to receive(:reload)
+      expect(challenge).to receive(:status).and_return('valid', 'valid')
 
       expect{
         subject.verify_domain('example.com')
@@ -80,8 +76,9 @@ describe GridCertificates::RequestCertificate do
     end
 
     it 'fails if verify becomes invalid' do
-      expect(challenge).to receive(:request_verification).and_return(true)
-      expect(challenge).to receive(:verify_status).and_return('pending', 'invalid', 'invalid')
+      expect(challenge).to receive(:request_validation).and_return(true)
+      expect(challenge).to receive(:reload).twice
+      expect(challenge).to receive(:status).and_return('pending', 'invalid', 'invalid')
       expect(challenge).to receive(:error).and_return({'detail' => "Testing"})
       expect(subject).to receive(:add_error).with(:challenge, :invalid, "Testing")
 
@@ -94,9 +91,10 @@ describe GridCertificates::RequestCertificate do
     end
 
     it 'adds error if verification timeouts' do
-      expect(challenge).to receive(:request_verification).and_return(true)
-      expect(challenge).to receive(:verify_status).and_raise(Timeout::Error, "timeout after waiting ...")
-      expect(subject).to receive(:add_error).with(:challenge_verify, :timeout, "Challenge verification timeout: timeout after waiting ...")
+      expect(challenge).to receive(:request_validation).and_return(true)
+      expect(challenge).to receive(:reload)
+      expect(challenge).to receive(:status).and_raise(Timeout::Error, "timeout after waiting ...")
+      expect(subject).to receive(:add_error).with(:challenge_verify, :timeout, "Challenge validation timeout: timeout after waiting ...")
 
       expect{
         subject.verify_domain('example.com')
@@ -107,7 +105,7 @@ describe GridCertificates::RequestCertificate do
     end
 
     it 'adds error if acme server returns an error' do
-      expect(challenge).to receive(:request_verification).and_return(false)
+      expect(challenge).to receive(:request_validation).and_return(false)
       expect(subject).to receive(:add_error)
 
       expect{
@@ -119,7 +117,7 @@ describe GridCertificates::RequestCertificate do
     end
 
     it 'adds error if acme client errors' do
-      expect(challenge).to receive(:request_verification).and_raise(Acme::Client::Error)
+      expect(challenge).to receive(:request_validation).and_raise(Acme::Client::Error)
       expect(subject).to receive(:add_error)
 
       expect{
@@ -136,8 +134,14 @@ describe GridCertificates::RequestCertificate do
       authz
       allow_any_instance_of(described_class).to receive(:verify_domain)
       allow_any_instance_of(described_class).to receive(:validate_dns_record).and_return(true)
-      allow(acme_client).to receive(:new_certificate).and_return(certificate)
+      allow(acme_client).to receive(:finalize).and_return(order)
+
+      allow(order).to receive(:reload) { }
+      allow(order).to receive(:status) { 'valid' }
+      allow(order).to receive(:certificate) { from_fixture 'mutations/grid_certificates/order-certificate.pem' }
     end
+
+    let(:order) { double() }
 
     let(:certificate) do
       double({
@@ -159,14 +163,15 @@ describe GridCertificates::RequestCertificate do
         expect(c.subject).to eq('example.com')
         expect(c.valid_until).not_to be_nil
         expect(c.alt_names).to be_empty
-        expect(c.private_key).to eq('private_key')
-        expect(c.certificate).to eq('certificate_only')
-        expect(c.chain).to eq('chain')
-        expect(c.full_chain).to eq('certificate_onlychain')
-        expect(c.bundle).to eq('certificate_onlychainprivate_key')
+        expect(c.private_key).to start_with('-----BEGIN RSA PRIVATE KEY-----')
+        expect(c.certificate).to start_with('-----BEGIN CERTIFICATE-----')
+        expect(c.chain).to start_with('-----BEGIN CERTIFICATE-----')
+        expect(c.full_chain).to match(/\n-----END CERTIFICATE-----\n-----BEGIN CERTIFICATE-----\n/)
+        expect(c.bundle).to match(/\n-----END CERTIFICATE----------BEGIN RSA PRIVATE KEY-----\n/)
       }.to change {grid.certificates.count}.by (1)
     end
 
+    # NOTE: Certificate payload must have no spaces!!!
     it 'updates cert' do
       subject = described_class.new(grid: grid, secret_name: 'secret', domains: ['example.com'])
       certificate = Certificate.create!(grid: grid, subject: 'example.com', valid_until: Time.now)
@@ -175,7 +180,6 @@ describe GridCertificates::RequestCertificate do
       }.to not_change{grid.certificates.count}.and change{certificate.reload.updated_at}
     end
   end
-
 
   describe '#validate_dns_record' do
     it 'returns false when wrong content in DNS record' do

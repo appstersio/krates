@@ -19,7 +19,7 @@ gem 'authority'
 gem 'mongoid-enum'
 gem 'rollbar', require: false
 gem 'rbtrace', require: false
-gem 'acme-client', '~> 1.0'
+gem 'acme-client', '~> 2.0'
 gem 'jsonpath'
 gem 'json-serializer'
 gem 'bcrypt'
@@ -35,6 +35,7 @@ group :development, :test do
   gem 'rerun', require: false
   gem 'simplecov', require: false
   gem 'webmock', require: false
+  gem 'krates'
   gem 'pry'
   gem 'pry-rescue'
   gem 'pry-byebug'

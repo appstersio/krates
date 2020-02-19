@@ -37,7 +37,7 @@ class Certificate
     [self.subject] + self.alt_names.to_a
   end
 
-  # Checks if all domains are authorized with tls-sni, we can't automate anything else for now
+  # Checks if all domains are authorized with http-01, we can't automate anything else for now
   # @return [Boolean]
   def auto_renewable?
     self.all_domains.each do |domain|

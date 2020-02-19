@@ -20,6 +20,14 @@ version:
 	@git commit --all --message "Krates: New version 'v$(VERSION)' release"
 	@git tag --force "v$(VERSION)"
 
+pry-test:
+	@docker-compose run --no-deps -e "TRACE=1" toolbox -c "./build/travis/before_install.sh && ./build/travis/test_e2e.sh"
+
+pry-master: LOG_LEVEL=error
+pry-master: PRY_SESSION=yes
+pry-master: wipe-exited
+	@docker-compose run --service-ports -u root master
+
 publish_images:
 	@docker run -ti --rm -e "TEST_DIR=cli" --net host --name cmd -e "DOCKER_HUB_USER=$(DOCKER_HUB_USER)" -e "DOCKER_HUB_PASSWORD=$(DOCKER_HUB_PASSWORD)" --workdir $(TARGET_PATH) -v $(VOLUME_PATH) -v "/var/run/docker.sock:/var/run/docker.sock:ro" $(RUBY_IMAGE) \
 		-c "./build/travis/deploy.sh"
@@ -28,6 +36,7 @@ publish_cmd: wipe
 	@docker run -ti --rm -e "TEST_DIR=cli" --net host --name cmd -e "RUBYGEMS_KEY=$(RUBYGEMS_KEY)" --workdir $(TARGET_PATH) -v $(VOLUME_PATH) $(RUBY_IMAGE) \
 		-c "./build/travis/deploy_gem.sh"
 
+integration: export COMPOSE_FILE=docker-compose.yml:docker-compose.ci.yml
 integration: wipe
 	docker-compose run -e "TRACE=${TRACE}" toolbox -c "./build/travis/before_install.sh && ./build/travis/test_e2e.sh"
 
@@ -50,6 +59,9 @@ build:
 
 wipe: down volumes
 	docker ps -aq | xargs -r docker rm -f
+
+wipe-exited:
+	docker ps -aq -f "status=exited" | xargs -r docker rm -f
 
 down:
 	@docker-compose down

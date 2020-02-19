@@ -89,7 +89,10 @@ describe 'stack upgrade' do
       sleep 5
     end
 
-    context "when a new dependency is added" do
+    # NOTE: At some point registry stopped accepting unauthenticated requests.
+    # Therefore first step is to mark these tests as :broken,
+    # and second step is to adjust the code to use Github as the source of predefined & usable stacks.
+    context "when a new dependency is added", :broken => true do
       it 'installs the added stack' do
         with_fixture_dir("stack/depends") do
           run! 'krates stack install'
@@ -104,7 +107,10 @@ describe 'stack upgrade' do
       end
     end
 
-    context "when a dependency is removed" do
+    # NOTE: At some point registry stopped accepting unauthenticated requests.
+    # Therefore first step is to mark these tests as :broken,
+    # and second step is to adjust the code to use Github as the source of predefined & usable stacks.
+    context "when a dependency is removed", :broken => true do
       it 'removes the stack' do
         with_fixture_dir("stack/depends/monitor_added") do
           run! 'krates stack install'
@@ -122,7 +128,10 @@ describe 'stack upgrade' do
       end
     end
 
-    context "when a dependency is replaced" do
+    # NOTE: At some point registry stopped accepting unauthenticated requests.
+    # Therefore first step is to mark these tests as :broken,
+    # and second step is to adjust the code to use Github as the source of predefined & usable stacks.
+    context "when a dependency is replaced", :broken => true do
       it 'removes the stack' do
         with_fixture_dir("stack/depends") do
           run! 'krates stack install'

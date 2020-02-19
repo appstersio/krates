@@ -13,7 +13,7 @@ class Watchdog
 
   LOG_LEVEL = Logger::INFO
 
-  def self.logger(subject, target: STDOUT, level: ENV["WATCHDOG_DEBUG"] ? Logger::DEBUG : LOG_LEVEL)
+  def self.logger(subject, target: STDOUT, level: (ENV['WATCHDOG_LOG_LEVEL'] || ENV['LOG_LEVEL'] || LOG_LEVEL))
     logger = Logger.new(target)
     logger.progname = "#{self.name}<#{subject}>"
     logger.level = level

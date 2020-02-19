@@ -37,7 +37,10 @@ describe 'stack remove' do
     expect(k.code).to eq(0)
   end
 
-  context "for a stack that has dependencies" do
+  # NOTE: At some point registry stopped accepting unauthenticated requests.
+  # Therefore first step is to mark these tests as :broken,
+  # and second step is to adjust the code to use Github as the source of predefined & usable stacks.
+  context "for a stack that has dependencies", :broken => true do
     before do
       with_fixture_dir("stack/depends") do
         run! 'krates stack install'

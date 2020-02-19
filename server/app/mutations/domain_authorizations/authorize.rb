@@ -12,7 +12,7 @@ module GridDomainAuthorizations
     required do
       model :grid, class: Grid
       string :domain
-      string :authorization_type, in: ['dns-01', 'http-01', 'tls-sni-01'], default: 'dns-01'
+      string :authorization_type, in: ['dns-01', 'http-01'], default: 'dns-01'
     end
 
     optional do
@@ -26,8 +26,6 @@ module GridDomainAuthorizations
         false
       when 'http-01'
         true
-      when 'tls-sni-01'
-        true
       end
     end
 
@@ -38,8 +36,6 @@ module GridDomainAuthorizations
         nil
       when 'http-01'
         80
-      when 'tls-sni-01'
-        443
       end
     end
 
@@ -72,7 +68,9 @@ module GridDomainAuthorizations
     end
 
     def execute
-      authorization = acme_client(self.grid).authorize(domain: self.domain)
+
+      order = acme_client(self.grid).new_order(identifiers: [self.domain])
+      authorization = order.authorizations.first
       challenge = nil
       case self.authorization_type
       when 'dns-01'
@@ -89,7 +87,7 @@ module GridDomainAuthorizations
         }
       when 'http-01'
         debug "creating http-01 challenge"
-        challenge = authorization.http01
+        challenge = authorization.http
         if challenge.nil?
           add_error(:challenge, :missing, "LE did not offer any http-01 challenge")
           return
@@ -98,15 +96,10 @@ module GridDomainAuthorizations
           'token' => challenge.token,
           'content' => challenge.file_content,
         }
-      when 'tls-sni-01'
-        debug "creating tls-sni-01 challenge"
-        challenge = authorization.tls_sni01
-        if challenge.nil?
-          add_error(:challenge, :missing, "LE did not offer any tls-sni-01 challenge")
-          return
-        end
-        verification_cert = [challenge.certificate.to_pem, challenge.private_key.to_pem].join
       end
+
+      # LetsEncrypt v2 API optimization to finalize order using a special url
+      challenge_opts['finalize_url'] = order.finalize_url
 
       if authz = get_authz_for_domain(self.grid, self.domain)
         authz.destroy
@@ -119,7 +112,7 @@ module GridDomainAuthorizations
         expires_at: authorization.expires,
         challenge: challenge.to_h,
         challenge_opts: challenge_opts,
-        tls_sni_certificate: verification_cert,
+        tls_sni_certificate: nil, # NOTE: This field is set nil since tls-sni-01 challenge has been deprecated
         grid_service: @lb_service
       )
 

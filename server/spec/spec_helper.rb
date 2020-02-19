@@ -84,11 +84,12 @@ RSpec.configure do |config|
     end
   end
 
-  config.around :each do |ex|
-    Timeout.timeout(5.0) do
-      ex.run
-    end
-  end
+  # TODO: Figure out if we need to enforce timeouts around each test
+  # config.around :each do |ex|
+  #   Timeout.timeout(5.0) do
+  #     ex.run
+  #   end
+  # end
 
   config.around :each, celluloid: true do |ex|
     Celluloid.boot
@@ -111,6 +112,14 @@ RSpec.configure do |config|
 
   def json_response
     @json_response ||= JSON.parse(response.body)
+  end
+
+  def fixture_dir(dir)
+    "./spec/fixtures/#{dir}/"
+  end
+
+  def from_fixture(path)
+    File.read "./spec/fixtures/#{path}"
   end
 
   RSpec::Matchers.define_negated_matcher :not_change, :change

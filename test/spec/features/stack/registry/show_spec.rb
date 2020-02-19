@@ -1,6 +1,9 @@
 require 'spec_helper'
 
-describe 'stack registry' do
+# NOTE: At some point registry stopped accepting unauthenticated requests.
+# Therefore first step is to mark these tests as :broken,
+# and second step is to adjust the code to use Github as the source of predefined & usable stacks.
+describe 'stack registry', :broken => true do
   context 'show' do
     context 'when the stack does not exist' do
       it 'exits with an error' do
