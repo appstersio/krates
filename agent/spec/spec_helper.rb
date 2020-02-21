@@ -9,6 +9,7 @@ end
 
 require_relative '../lib/kontena-agent'
 require 'webmock/rspec'
+require 'pry'
 
 Kontena::Logging.initialize_logger((ENV['LOG_TARGET'] || './log/test.log'), ENV['LOG_LEVEL'].to_i)
 
