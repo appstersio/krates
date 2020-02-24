@@ -10,8 +10,10 @@ services:
   server:
     build: .
     image: krates/healthcheck-test
+    # {% if health_status != "500" %}
     deploy:
       wait_for_port: 8000
+    # {% endif %}
     health_check:
       protocol: http
       port: 8000
