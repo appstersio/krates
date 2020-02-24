@@ -233,6 +233,10 @@ module Kontena
         args: [@node_id],
       )
       @supervisor.supervise(
+        type: Kontena::Workers::ContainerCleanupWorker,
+        as: :container_cleanup_worker
+      )
+      @supervisor.supervise(
         type: Kontena::Workers::EventWorker,
         as: :event_worker
       )
