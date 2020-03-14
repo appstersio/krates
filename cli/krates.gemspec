@@ -27,7 +27,7 @@ Gem::Specification.new do |spec|
   # TODO: Restore metadata section back
 
   spec.add_development_dependency "bundler", "~> 2.0"
-  spec.add_development_dependency "rake", "~> 10.0"
+  spec.add_development_dependency "rake", "~> 13.0"
   spec.add_runtime_dependency "excon", "0.62.0"
   spec.add_runtime_dependency "tty-prompt", "0.16.1"
   spec.add_runtime_dependency "clamp", "~> 1.2"
