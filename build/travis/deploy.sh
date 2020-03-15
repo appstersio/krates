@@ -1,7 +1,7 @@
 #!/bin/sh
 
 set -ue
-BUNDLER_VERSION=2.0.2
+BUNDLER_VERSION=2.1.4
 
 # login
 docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASSWORD
