@@ -52,8 +52,6 @@ class GridScheduler
   # @param [GridService] service
   # @return [Boolean]
   def active_deploys_within_stack?(service)
-    # E, [2020-01-29T07:51:55.569697 #11] ERROR -- GridSchedulerJob: undefined method `select_server' for nil:NilClass
-    # binding.pry
     service.stack.stack_deploys.where(:created_at.gt => 30.minutes.ago, :_deploy_state.in => [:created, :ongoing]).count > 0
   end
 

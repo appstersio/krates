@@ -48,6 +48,7 @@ class GridSchedulerJob
         rescue => exc
           error "error occurred in service #{service.to_path}"
           error exc.message
+          error exc.backtrace.join("\n")
         ensure
           Mongoid::QueryCache.clear_cache
         end

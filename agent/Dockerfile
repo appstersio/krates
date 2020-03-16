@@ -1,8 +1,8 @@
-FROM ruby:2.4.9-slim
+FROM ruby:2.6.5-slim
 LABEL maintainer="Pavel Tsurbeleu <staticpagesio@gmail.com>"
 
 ENV LANG=C.UTF-8 \
-    BUNDLER_VERSION=2.0.2 \
+    BUNDLER_VERSION=2.1.4 \
     BUNDLE_JOBS=16 \
     BUNDLE_GEMFILE=
 

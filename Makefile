@@ -1,7 +1,7 @@
 # README: http://makefiletutorial.com
 TARGET_PATH   = /src/app
 VOLUME_PATH   = $(shell pwd):$(TARGET_PATH)
-RUBY_IMAGE    = krates/toolbox:2.4.9-7
+RUBY_IMAGE    = krates/toolbox:2.6.5-1
 DOCKER_SOCKET = /var/run/docker.sock:/var/run/docker.sock
 
 # Courtesy of: https://stackoverflow.com/a/49524393/3072002
@@ -17,6 +17,7 @@ version:
 	@echo $(VERSION) > version
 	@echo $(VERSION) > server/version
 	@echo $(VERSION) > agent/version
+	@echo $(VERSION) > cli/version
 	@git commit --all --message "Krates: New version 'v$(VERSION)' release"
 	@git tag --force "v$(VERSION)"
 
