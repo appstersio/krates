@@ -1,4 +1,4 @@
-FROM ruby:2.5-slim
+FROM ruby:2.6.5-slim
 LABEL maintainer="Pavel Tsurbeleu <staticpagesio@gmail.com>"
 
 ENV LANG=C.UTF-8 \
