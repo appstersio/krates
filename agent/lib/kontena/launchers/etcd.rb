@@ -8,7 +8,7 @@ module Kontena::Launchers
     include Kontena::Helpers::IfaceHelper
 
     ETCD_VERSION = ENV['ETCD_VERSION'] || '2.3.7'
-    ETCD_IMAGE = ENV['ETCD_IMAGE'] || 'kontena/etcd'
+    ETCD_IMAGE = ENV['ETCD_IMAGE'] || 'krates/etcd'
 
     def initialize(autostart = true)
       @image_pulled = false
