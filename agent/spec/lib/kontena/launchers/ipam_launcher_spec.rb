@@ -81,8 +81,8 @@ describe Kontena::Launchers::IpamPlugin do
 
       ipam_container = double
       expect(Docker::Container).to receive(:create).with(hash_including(
-        'name' => 'kontena-ipam-plugin',
-        'Image' => 'kontena/docker-ipam-plugin:latest',
+        'name' => 'krates-ipam-plugin',
+        'Image' => 'krates/ipam-plugin:latest',
         "Volumes" => {"/run/docker/plugins"=>{}, "/var/run/docker.sock"=>{}},
         "StopSignal"=>"SIGTTIN",
         "Cmd"=>["bundle", "exec", "thin", "-a", "127.0.0.1", "-p", "2275", "-e", "production", "start"],
@@ -100,7 +100,7 @@ describe Kontena::Launchers::IpamPlugin do
       expect(ipam_container).to receive(:start)
       allow(ipam_container).to receive(:id).and_return('12345')
 
-      subject.create_container('kontena/docker-ipam-plugin:latest', node)
+      subject.create_container('krates/ipam-plugin:latest', node)
     end
 
     it 'creates new container' do
@@ -114,8 +114,8 @@ describe Kontena::Launchers::IpamPlugin do
       allow(Docker::Container).to receive(:get).and_return(nil)
       ipam_container = double
       expect(Docker::Container).to receive(:create).with(hash_including(
-        'name' => 'kontena-ipam-plugin',
-        'Image' => 'kontena/docker-ipam-plugin:latest',
+        'name' => 'krates-ipam-plugin',
+        'Image' => 'krates/ipam-plugin:latest',
         "Volumes" => {"/run/docker/plugins"=>{}, "/var/run/docker.sock"=>{}},
         "StopSignal"=>"SIGTTIN",
         "Cmd"=>["bundle", "exec", "thin", "-a", "127.0.0.1", "-p", "2275", "-e", "production", "start"],
@@ -132,7 +132,7 @@ describe Kontena::Launchers::IpamPlugin do
         })).and_return(ipam_container)
       expect(ipam_container).to receive(:start)
       allow(ipam_container).to receive(:id).and_return('12345')
-      subject.create_container('kontena/docker-ipam-plugin:latest', node)
+      subject.create_container('krates/ipam-plugin:latest', node)
     end
   end
 end

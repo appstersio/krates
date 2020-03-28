@@ -9,10 +9,10 @@ module Kontena::Launchers
     include Kontena::Helpers::ImageHelper
     include Kontena::Helpers::WaitHelper
 
-    IPAM_SERVICE_NAME = 'kontena-ipam-plugin'.freeze
+    IPAM_SERVICE_NAME = 'krates-ipam-plugin'.freeze
 
     IPAM_VERSION = ENV['IPAM_VERSION'] || '0.2.2'
-    IPAM_IMAGE = ENV['IPAM_IMAGE'] || 'kontena/ipam-plugin'
+    IPAM_IMAGE = ENV['IPAM_IMAGE'] || 'krates/ipam-plugin'
 
     def initialize(autostart = true)
       @running = false
