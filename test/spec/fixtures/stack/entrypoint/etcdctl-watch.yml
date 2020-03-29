@@ -2,6 +2,6 @@ stack: test/etcdctl-watch
 services:
   etcdctl:
     network_mode: host
-    image: kontena/etcd:2.3.7
+    image: krates/etcd:2.3.7
     entrypoint: /usr/bin/etcdctl
     command: watch --forever --recursive /
