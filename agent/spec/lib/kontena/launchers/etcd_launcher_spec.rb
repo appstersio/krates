@@ -66,21 +66,21 @@ describe Kontena::Launchers::Etcd do
 
   describe '#pull_image' do
     it 'does nothing if image already exists' do
-      image = 'kontena/etcd:2.2.4'
+      image = 'krates/etcd:2.3.7'
       allow(Docker::Image).to receive(:exist?).with(image).and_return(true)
       expect(Docker::Image).not_to receive(:create)
       subject.pull_image(image)
     end
 
     it 'sets image_pulled flag if image already exists' do
-      image = 'kontena/etcd:2.2.4'
+      image = 'krates/etcd:2.3.7'
       allow(Docker::Image).to receive(:exist?).with(image).and_return(true)
       subject.pull_image(image)
       expect(subject.image_pulled?).to be_truthy
     end
 
     it 'pulls image if it does not exist' do
-      image = 'kontena/etcd:2.2.4'
+      image = 'krates/etcd:2.3.7'
       allow(Docker::Image).to receive(:exist?).with(image).and_return(false)
       expect(Docker::Image).to receive(:create).with({'fromImage' => image})
       subject.after(0.01) {
