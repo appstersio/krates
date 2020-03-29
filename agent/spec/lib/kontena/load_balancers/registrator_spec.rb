@@ -39,19 +39,19 @@ describe Kontena::LoadBalancers::Registrator do
 
   describe '#etcd_running?' do
     it 'returns false if etcd does not exist' do
-      expect(Docker::Container).to receive(:get).with('kontena-etcd').and_raise(Docker::Error::NotFoundError.new('foo'))
+      expect(Docker::Container).to receive(:get).with('krates-etcd').and_raise(Docker::Error::NotFoundError.new('foo'))
       expect(subject.etcd_running?).to eq(false)
     end
 
     it 'returns false if etcd is not running' do
       expect(Docker::Container).to receive(:get).
-        with('kontena-etcd').and_return(spy(:etcd, info: {'State' => {}}))
+        with('krates-etcd').and_return(spy(:etcd, info: {'State' => {}}))
       expect(subject.etcd_running?).to eq(false)
     end
 
     it 'returns true if etcd is running' do
       expect(Docker::Container).to receive(:get).
-        with('kontena-etcd').and_return(spy(:etcd, info: {
+        with('krates-etcd').and_return(spy(:etcd, info: {
           'State' => {'Running' => true}
         })
       )
