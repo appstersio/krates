@@ -3,5 +3,5 @@ services:
   etcdctl:
     network_mode: host
     image: krates/etcd:2.3.7
-    entrypoint: /usr/bin/etcdctl
+    entrypoint: etcdctl
     command: watch --forever --recursive /
