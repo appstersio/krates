@@ -166,7 +166,7 @@ module Kontena::LoadBalancers
 
     # @return [Boolean]
     def etcd_running?
-      etcd = Docker::Container.get('kontena-etcd') rescue nil
+      etcd = Docker::Container.get('krates-etcd') rescue nil
       return false if etcd.nil?
       etcd.info['State']['Running'] == true
     end

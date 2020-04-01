@@ -71,10 +71,10 @@ module Kontena::Launchers
 
     # @param [String] image
     def create_data_container(image)
-      data_container = Docker::Container.get('kontena-etcd-data') rescue nil
+      data_container = Docker::Container.get('krates-etcd-data') rescue nil
       unless data_container
         Docker::Container.create(
-          'name' => 'kontena-etcd-data',
+          'name' => 'krates-etcd-data',
           'Image' => image,
           'Volumes' => {'/var/lib/etcd' => {}}
         )
@@ -138,13 +138,13 @@ module Kontena::Launchers
       info "cluster members: #{initial_cluster.join(',')}"
 
       container = Docker::Container.create(
-        'name' => 'kontena-etcd',
+        'name' => 'krates-etcd',
         'Image' => image,
         'Cmd' => cmd,
         'HostConfig' => {
           'NetworkMode' => 'host',
           'RestartPolicy' => {'Name' => 'always'},
-          'VolumesFrom' => ['kontena-etcd-data']
+          'VolumesFrom' => ['krates-etcd-data']
         }
       )
       container.start!
@@ -154,12 +154,12 @@ module Kontena::Launchers
       container
     end
 
-    # Gets kontena-etcd container
+    # Gets krates-etcd container
     # @return [Docker::Container, nil] The container or nil if not found
     # @raise [Docker::Error] Lets unexpected Docker errors fall through
     def get_container
       begin
-        Docker::Container.get('kontena-etcd')
+        Docker::Container.get('krates-etcd')
       rescue Docker::Error::NotFoundError
         info "etcd container does not exist"
         nil

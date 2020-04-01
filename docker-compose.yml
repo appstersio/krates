@@ -16,8 +16,17 @@ services:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
       - ".:/src/app"
     depends_on:
-      - master
+      - haproxy
     network_mode: host # NOTE: Host network is required to reach to services locally
+  # NOTE: This is HAProxy service
+  haproxy:
+    image: krates/haproxy
+    links:
+      - "master:kontena-server-api"
+    ports:
+      - 9292:80
+    depends_on:
+      - master
   # NOTE: This is master service
   master:
     container_name: krates-master
@@ -27,8 +36,6 @@ services:
     build:
       context: server
       dockerfile: Dockerfile
-    ports:
-      - 9292:9292
     environment:
       - RACK_ENV=production
       - LOG_LEVEL=${LOG_LEVEL:-DEBUG}

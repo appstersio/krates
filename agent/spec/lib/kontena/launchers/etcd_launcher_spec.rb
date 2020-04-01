@@ -149,13 +149,13 @@ describe Kontena::Launchers::Etcd do
         ]
         etcd_container = double
         expect(Docker::Container).to receive(:create).with(hash_including(
-          'name' => 'kontena-etcd',
+          'name' => 'krates-etcd',
           'Image' => 'etcd',
           'Cmd' => expected_cmd,
           'HostConfig' => {
             'NetworkMode' => 'host',
             'RestartPolicy' => {'Name' => 'always'},
-            'VolumesFrom' => ['kontena-etcd-data']
+            'VolumesFrom' => ['krates-etcd-data']
           })).and_return(etcd_container)
         expect(etcd_container).to receive(:start!)
         allow(etcd_container).to receive(:id).and_return('12345')
@@ -183,13 +183,13 @@ describe Kontena::Launchers::Etcd do
         ]
         etcd_container = double
         expect(Docker::Container).to receive(:create).with(hash_including(
-          'name' => 'kontena-etcd',
+          'name' => 'krates-etcd',
           'Image' => 'etcd',
           'Cmd' => expected_cmd,
           'HostConfig' => {
             'NetworkMode' => 'host',
             'RestartPolicy' => {'Name' => 'always'},
-            'VolumesFrom' => ['kontena-etcd-data']
+            'VolumesFrom' => ['krates-etcd-data']
           })).and_return(etcd_container)
         expect(etcd_container).to receive(:start!)
         allow(etcd_container).to receive(:id).and_return('12345')
@@ -312,13 +312,13 @@ describe Kontena::Launchers::Etcd do
         ]
         etcd_container = double
         expect(Docker::Container).to receive(:create).with(hash_including(
-          'name' => 'kontena-etcd',
+          'name' => 'krates-etcd',
           'Image' => 'etcd',
           'Cmd' => expected_cmd,
           'HostConfig' => {
             'NetworkMode' => 'host',
             'RestartPolicy' => {'Name' => 'always'},
-            'VolumesFrom' => ['kontena-etcd-data']
+            'VolumesFrom' => ['krates-etcd-data']
           })).and_return(etcd_container)
         expect(etcd_container).to receive(:start!)
         allow(etcd_container).to receive(:id).and_return('12345')
@@ -348,13 +348,13 @@ describe Kontena::Launchers::Etcd do
   end
 
   describe '#get_container' do
-    it 'returns kontena-etcd container' do
+    it 'returns krates-etcd container' do
       etcd = double
       expect(Docker::Container).to receive(:get).and_return(etcd)
       expect(subject.get_container).to eq(etcd)
     end
 
-    it 'returns nil if kontena-etcd does not exist' do
+    it 'returns nil if krates-etcd does not exist' do
       expect(Docker::Container).to receive(:get).and_raise(Docker::Error::NotFoundError)
       expect(subject.get_container).to eq(nil)
     end

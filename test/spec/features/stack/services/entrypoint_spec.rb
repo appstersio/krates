@@ -34,7 +34,7 @@ describe 'stack service entrypoint' do
     it 'configures the container with the correct entrypoint' do
       inspect = inspect_container(container_id('etcdctl-watch.etcdctl-1'))
 
-      expect(inspect['Config']['Entrypoint']).to eq ['/usr/bin/etcdctl']
+      expect(inspect['Config']['Entrypoint']).to eq ['etcdctl']
       expect(inspect['Config']['Cmd']).to eq ['watch', '--forever', '--recursive', '/']
     end
   end
