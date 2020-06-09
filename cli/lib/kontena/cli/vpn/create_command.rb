@@ -23,7 +23,7 @@ module Kontena::Cli::Vpn
       vpn_ip = node_vpn_ip(node)
       data = {
         name: name,
-        stack: 'kontena/vpn',
+        stack: 'krates/vpn',
         version: Kontena::Cli::VERSION,
         registry: 'file://',
         source: '---',
@@ -31,7 +31,7 @@ module Kontena::Cli::Vpn
         services: [
           name: 'server',
           stateful: true,
-          image: 'kontena/openvpn:ethwe',
+          image: 'krates/openvpn',
           ports: [
             {
               container_port: '1194',
