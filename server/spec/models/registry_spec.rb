@@ -1,6 +1,6 @@
 
 describe Registry do
-  it { should be_timestamped_document }
+  it { should have_timestamps }
   it { should have_fields(:name, :url, :username, :password, :email)}
   it { should belong_to(:grid) }
   it { should have_index_for(grid_id: 1) }

@@ -5,7 +5,7 @@ gem 'roda', '~> 2.26.0'
 gem 'celluloid', '~> 0.17.3'
 gem 'tilt-jbuilder'
 gem 'mutations'
-gem 'mongoid', '~> 5'
+gem 'mongoid', '~> 6'
 gem 'symmetric-encryption', '~> 3.9.1'
 gem 'activesupport'
 gem 'faye-websocket', '~> 0.10.7'
@@ -16,7 +16,7 @@ gem 'random_token'
 gem 'msgpack'
 gem 'httpclient', '~> 2.3'
 gem 'authority'
-gem 'mongoid-enum'
+gem 'krates-mongoid-enum', "~> 0.5"
 gem 'rollbar', require: false
 gem 'rbtrace', require: false
 gem 'acme-client', '~> 2.0'
@@ -30,7 +30,7 @@ gem 'hkdf', '~> 0.3.0'
 group :development, :test do
   gem 'dotenv'
   gem 'rspec', '~> 3.3.0', require: false
-  gem 'mongoid-rspec', '~> 3.0.0', require: false
+  gem 'mongoid-rspec', '~> 4', require: false
   gem 'rack-test', require: false
   gem 'rerun', require: false
   gem 'simplecov', require: false

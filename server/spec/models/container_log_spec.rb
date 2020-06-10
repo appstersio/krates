@@ -1,6 +1,6 @@
 
 describe ContainerLog do
-  it { should be_timestamped_document }
+  it { should have_timestamps }
   it { should have_fields(:type, :data, :name, :instance_number)}
 
   it { should belong_to(:grid) }

@@ -1,6 +1,6 @@
 
 describe Container do
-  it { should be_timestamped_document }
+  it { should have_timestamps }
   it { should have_fields(
         :container_id, :name, :driver,
         :exec_driver, :image, :image_version,
@@ -30,9 +30,7 @@ describe Container do
   end
 
   let(:grid_service) do
-    service = GridService.create!(grid: grid, name: 'redis', image_name: 'redis:2.8')
-    service.image = image
-    service
+    GridService.create!(grid: grid, name: 'redis', image_name: 'redis:2.8', image: image)
   end
 
   let(:image) do

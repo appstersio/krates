@@ -1,7 +1,7 @@
 
 describe Stack do
 
-  it { should be_timestamped_document }
+  it { should have_timestamps }
   it { should have_fields(:name).of_type(String) }
   it { should have_fields(:labels).of_type(Array) }
   it { should belong_to(:grid) }

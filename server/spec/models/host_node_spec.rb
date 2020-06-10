@@ -4,7 +4,7 @@ describe HostNode do
     described_class.create_indexes
   end
 
-  it { should be_timestamped_document }
+  it { should have_timestamps }
   it { should be_kind_of(EventStream) }
   it { should have_fields(:node_id, :name, :os, :driver, :public_ip).of_type(String) }
   it { should have_fields(:labels).of_type(Array) }
