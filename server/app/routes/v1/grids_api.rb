@@ -116,11 +116,9 @@ module V1
           end
 
           r.on 'container_logs' do
-            scope = @grid.container_logs.includes(
-              :host_node, :grid, :grid_service
-            ).with(
-              read: { mode: :secondary_preferred }
-            )
+            scope = @grid.with(read: { mode: :secondary_preferred }) do |klass|
+              klass.container_logs.includes(:host_node, :grid, :grid_service)
+            end
 
             unless r['containers'].nil?
               container_names = r['containers'].split(',')
