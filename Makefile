@@ -47,7 +47,7 @@ master: wipe
 	docker rm -f mongo
 
 worker: wipe
-	docker run -ti --rm -e "TEST_DIR=agent" -e "TRACE=${TRACE}" -e "LOG_LEVEL=ERROR" --net host --name worker --workdir $(TARGET_PATH) -v $(VOLUME_PATH) $(RUBY_IMAGE) \
+	docker run -ti --rm -e "TEST_DIR=agent" -e "TRACE=${TRACE}" --net host --name worker --workdir $(TARGET_PATH) -v $(VOLUME_PATH) $(RUBY_IMAGE) \
 		-c "./build/travis/before_install.sh && ./build/travis/test.sh"
 
 cmd: wipe
