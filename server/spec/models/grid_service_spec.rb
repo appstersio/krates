@@ -1,5 +1,5 @@
 describe GridService do
-  it { should be_timestamped_document }
+  it { should have_timestamps }
   it { should be_kind_of(EventStream) }
   it { should have_fields(:image_name, :name, :user, :entrypoint, :state,
                           :net, :log_driver, :pid, :stop_signal).of_type(String) }

@@ -1,7 +1,7 @@
 require_relative '../spec_helper'
 
 describe VolumeInstance do
-  it { should be_timestamped_document }
+  it { should have_timestamps }
   it { should have_fields(:name) }
   it { should belong_to(:host_node)}
   it { should belong_to(:volume)}

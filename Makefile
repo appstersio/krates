@@ -1,7 +1,7 @@
 # README: http://makefiletutorial.com
 TARGET_PATH   = /src/app
 VOLUME_PATH   = $(shell pwd):$(TARGET_PATH)
-RUBY_IMAGE    = krates/toolbox:2.6.5-1
+RUBY_IMAGE    = krates/toolbox:2.6.5-3
 DOCKER_SOCKET = /var/run/docker.sock:/var/run/docker.sock
 
 # Courtesy of: https://stackoverflow.com/a/49524393/3072002
@@ -42,7 +42,7 @@ integration: wipe
 	docker-compose run -e "TRACE=${TRACE}" toolbox -c "./build/travis/before_install.sh && ./build/travis/test_e2e.sh"
 
 master: wipe
-	docker run -ti --rm -e "CI=1" -e "TEST_DIR=server" -e "TRACE=${TRACE}" --net host --name master --workdir $(TARGET_PATH) -v $(VOLUME_PATH) \
+	docker run -ti --rm -e "CI=1" -e "TEST_DIR=server" -e "TRACE=${TRACE}" -e "LOG_LEVEL=ERROR" --net host --name master --workdir $(TARGET_PATH) -v $(VOLUME_PATH) \
 		-v $(DOCKER_SOCKET) $(RUBY_IMAGE) -c "./build/travis/before_install.sh && ./build/travis/test.sh"
 	docker rm -f mongo
 
@@ -51,7 +51,7 @@ worker: wipe
 		-c "./build/travis/before_install.sh && ./build/travis/test.sh"
 
 cmd: wipe
-	docker run -ti --rm -e "TEST_DIR=cli" -e "TRACE=${TRACE}" --net host --name cmd --workdir $(TARGET_PATH) -v $(VOLUME_PATH) $(RUBY_IMAGE) \
+	docker run -ti --rm -e "TEST_DIR=cli" -e "TRACE=${TRACE}" -e "LOG_LEVEL=ERROR" --net host --name cmd --workdir $(TARGET_PATH) -v $(VOLUME_PATH) $(RUBY_IMAGE) \
 		-c "./build/travis/before_install.sh && ./build/travis/test.sh"
 
 build:

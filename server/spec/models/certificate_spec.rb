@@ -1,5 +1,5 @@
 describe Certificate do
-  it { should be_timestamped_document }
+  it { should have_timestamps }
   it { should belong_to(:grid) }
 
   let(:grid) { Grid.create!(name: 'test-grid') }

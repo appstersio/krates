@@ -1,6 +1,6 @@
 
 describe ContainerStat do
-  it { should be_timestamped_document }
+  it { should have_timestamps.for(:creating) }
   it { should have_fields(:spec, :cpu, :memory, :filesystem, :diskio, :network)}
 
   it { should belong_to(:grid) }

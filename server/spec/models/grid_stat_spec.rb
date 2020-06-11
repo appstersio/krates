@@ -1,6 +1,6 @@
 
 describe GridStat do
-  it { should be_timestamped_document }
+  it { should have_timestamps }
   it { should have_fields(:running_containers, :not_running_containers)}
 
   let :grid do

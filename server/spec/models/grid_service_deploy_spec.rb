@@ -1,5 +1,5 @@
 describe GridServiceDeploy do
-  it { should be_timestamped_document }
+  it { should have_timestamps }
   it { should have_fields(:started_at, :finished_at).of_type(DateTime) }
   it { should have_fields(:reason).of_type(String) }
   it { should belong_to(:grid_service) }

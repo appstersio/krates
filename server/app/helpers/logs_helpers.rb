@@ -1,4 +1,6 @@
 module LogsHelpers
+  include Logging
+
   LOGS_LIMIT_DEFAULT = 100
   LOGS_LIMIT_MAX = 10000
   LOGS_STREAM_CHUNK = LOGS_LIMIT_DEFAULT * 3
@@ -19,6 +21,7 @@ module LogsHelpers
     end
 
     if follow
+      debug "following container logs have been requested, since: #{since}; scope: #{scope}; limit: #{limit};"
       stream(loop: true) do |out|
         if from
           # all items following a specific item
@@ -29,12 +32,14 @@ module LogsHelpers
         end
 
         if !logs.empty?
+          debug "received some container logs, starting to render these: #{logs.first.id}...#{logs.last.id}"
           logs.each do |log|
             out << render('container_logs/_container_log', locals: {log: log})
           end
           from = logs.last.id
-          sleep 0.1
+          # sleep 0.1
         else
+          debug 'idling keepalive, since no container logs have been received...'
           # idle keepalive, trigger write errors on timeout
           out << ' '
 
@@ -70,6 +75,7 @@ module LogsHelpers
     end
 
     if follow
+      debug "following event logs have been requested, since: #{since}; scope: #{scope}; limit: #{limit};"
       stream(loop: true) do |out|
         if from
           # all items following a specific item
@@ -80,12 +86,14 @@ module LogsHelpers
         end
 
         if !logs.empty?
+          debug "received some event logs, starting to render these: #{logs.first.id}...#{logs.last.id}"
           logs.each do |log|
             out << render('event_logs/_event_log', locals: {event_log: log})
           end
           from = logs.last.id
           sleep 0.1
         else
+          debug 'idling keepalive, since no event logs have been received...'
           # idle keepalive, trigger write errors on timeout
           out << ' '
 
