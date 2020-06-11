@@ -104,7 +104,7 @@ namespace :release do
   task :push_server do
     headline "Starting to push krates/master..."
     Dir.chdir('server') do
-      sh("bundle exec rake release:push_docker")
+      sh("rake release:push_docker")
       # sh("bundle exec rake release:push_docs")
     end
   end
@@ -112,7 +112,7 @@ namespace :release do
   task :push_agent do
     headline "Starting to push kontena/agent ..."
     Dir.chdir('agent') do
-      sh("bundle exec rake release:push_docker")
+      sh("rake release:push_docker")
     end
   end
 
