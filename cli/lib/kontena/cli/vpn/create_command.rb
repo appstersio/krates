@@ -31,7 +31,7 @@ module Kontena::Cli::Vpn
         services: [
           name: 'server',
           stateful: true,
-          image: 'krates/openvpn',
+          image: 'krates/openvpn:latest',
           ports: [
             {
               container_port: '1194',
