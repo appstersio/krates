@@ -7,7 +7,7 @@ module Kontena::Cli::Registry
     include Kontena::Cli::GridOptions
     include Kontena::Cli::Stacks::StacksHelper
 
-    REGISTRY_VERSION = '2.6.0'
+    REGISTRY_VERSION = 'latest'
 
     option '--node', 'NODE', 'Node name'
     option '--s3-bucket', 'S3_BUCKET', 'S3 bucket'
@@ -90,7 +90,7 @@ module Kontena::Cli::Registry
 
       data = {
         name: 'registry',
-        stack: 'kontena/registry',
+        stack: 'krates/registry',
         version: Kontena::Cli::VERSION,
         source: '---',
         registry: 'file://',
@@ -100,7 +100,7 @@ module Kontena::Cli::Registry
             name: 'api',
             stateful: stateful,
             container_count: instances,
-            image: "kontena/registry:#{REGISTRY_VERSION}",
+            image: "krates/registry:#{REGISTRY_VERSION}",
             volumes: ['/registry'],
             env: env,
             secrets: secrets,
