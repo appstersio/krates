@@ -1,4 +1,5 @@
 class JobSupervisor < Celluloid::Supervision::Container
+  supervise type: SelfUpgradeJob, as: :self_upgrade_job
   supervise type: ContainerCleanupJob, as: :container_cleanup_job
   supervise type: DistributedLockCleanupJob, as: :distributed_lock_cleanup_job
   supervise type: NodeCleanupJob, as: :node_cleanup_job

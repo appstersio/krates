@@ -1,5 +1,4 @@
 class ReencryptVaultSecrets < Mongodb::Migration
-  include Logging
 
   def self.up
     GridSecret.each do |secret|
