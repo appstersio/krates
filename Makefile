@@ -19,7 +19,6 @@ version:
 	@echo $(VERSION) > agent/version
 	@echo $(VERSION) > cli/version
 	@git commit --all --message "Krates: New version 'v$(VERSION)' release"
-	@git tag --force "v$(VERSION)"
 
 pry-test:
 	@docker-compose run --no-deps -e "TRACE=1" toolbox -c "./build/travis/before_install.sh && ./build/travis/test_e2e.sh"
