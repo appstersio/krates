@@ -26,6 +26,7 @@ gem 'bcrypt'
 gem 'rack-attack'
 gem 'lru_redux', '~> 1.1.0'
 gem 'hkdf', '~> 0.3.0'
+gem 'octokit'
 
 group :development, :test do
   gem 'dotenv'

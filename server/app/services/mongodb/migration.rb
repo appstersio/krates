@@ -21,7 +21,7 @@ module Mongodb
     end
 
     def self.info(msg)
-      puts msg
+      puts msg unless ENV['LOG_LEVEL'] == 'ERROR'
     end
   end
 end
