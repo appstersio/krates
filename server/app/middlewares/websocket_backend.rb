@@ -185,7 +185,6 @@ class WebsocketBackend
     agent_version = req.env['HTTP_KONTENA_VERSION'].to_s
 
     unless self.valid_agent_version?(agent_version)
-      send_master_info(ws)
       raise CloseError.new(4010), "agent version #{agent_version} is not compatible with server version #{Server::VERSION}"
     end
 
@@ -214,8 +213,6 @@ class WebsocketBackend
         connected_at: connected_at,
     }
     @clients << client
-
-    send_master_info(ws)
 
     EM.defer { Agent::NodePlugger.new(node).plugin! connected_at }
 
@@ -353,7 +350,9 @@ class WebsocketBackend
   # @param [String] agent_version
   # @return [Boolean]
   def valid_agent_version?(agent_version)
-    Gem::Dependency.new('', "~> #{self.our_version}").match?('', agent_version)
+    match = Gem::Dependency.new('', "~> #{Server::VERSION}").match?('', agent_version)
+    logger.info "Matching server's version '#{Server::VERSION}' to worker's '#{agent_version}' and match is '#{match}'"
+    return match
   end
 
   # @return [String]
