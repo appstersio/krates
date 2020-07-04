@@ -353,7 +353,9 @@ class WebsocketBackend
   # @param [String] agent_version
   # @return [Boolean]
   def valid_agent_version?(agent_version)
-    Gem::Dependency.new('', "~> #{self.our_version}").match?('', agent_version)
+    match = Gem::Dependency.new('', "~> #{Server::VERSION}").match?('', agent_version)
+    logger.info "Matching server's version '#{Server::VERSION}' to worker's '#{agent_version}' and match is '#{match}'"
+    return match
   end
 
   # @return [String]
