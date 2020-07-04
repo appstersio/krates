@@ -36,18 +36,21 @@ module Kontena::Workers
       subscribe('container:event', :on_container_event)
       subscribe('websocket:connected', :on_connect) # from master_info RPC
       subscribe('websocket:disconnected', :on_disconnect)
-      info 'initialized'
+      info "initialized, autostart => #{autostart}"
 
       if autostart
         async.watch_queue
         async.process_queue
+        info "in autostart block, ws connected => #{websocket_client.connected?}"
         async.start if websocket_client && websocket_client.connected?
       end
     end
 
     # Watch queue and warn if it has grown too much
     def watch_queue
+      info 'watching queue'
       every(WATCH_INTERVAL) do
+        info "watch queue interval, queue size => #{@queue.size}"
         if @queue.size > QUEUE_MAX_SIZE
           warn "queue is full (size is #{@queue.size}), log lines are dropped until queue has free space"
         elsif @queue.size > QUEUE_THROTTLE
@@ -61,8 +64,10 @@ module Kontena::Workers
     # Process items from @queue
     def process_queue
       loop do
+        info "process queue tick, processing => #{processing?}"
         sleep 1 until processing?
         buffer = @queue.shift(BATCH_SIZE)
+        info "processing queue, buffer size => #{buffer.size}"
         if buffer.size > 0
           rpc_client.notification('/containers/log_batch', [buffer])
           sleep 0.01
@@ -74,7 +79,12 @@ module Kontena::Workers
 
     # Start streaming and processing after etcd is running
     def start
-      wait_until!("etcd running") { Actor[:etcd_launcher].running? }
+      info 'starting worker'
+      wait_until!("etcd running") {
+        up = Actor[:etcd_launcher].running?
+        info "waiting for etcd actor to be running ~> #{up}"
+        return up
+      }
 
       exclusive {
         start_streaming unless streaming?
@@ -103,6 +113,7 @@ module Kontena::Workers
     # @param data [Object]
     def on_connect(topic, data)
       start
+      info "ws connected, starting worker"
     end
 
     # @param topic [String]
