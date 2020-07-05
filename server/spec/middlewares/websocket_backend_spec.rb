@@ -8,6 +8,7 @@ describe WebsocketBackend, celluloid: true, eventmachine: true do
   before do
     allow(subject).to receive(:logger).and_return(logger)
     allow(logger).to receive(:debug)
+    allow(logger).to receive(:info)
   end
 
   before(:each) do
@@ -34,8 +35,8 @@ describe WebsocketBackend, celluloid: true, eventmachine: true do
       expect(subject.valid_agent_version?('0.9.2')).to eq(true)
     end
 
-    it 'returns true when patch level is less than' do
-      expect(subject.valid_agent_version?('0.9.0')).to eq(true)
+    it 'returns false when patch level is less than' do
+      expect(subject.valid_agent_version?('0.9.0')).to eq(false)
     end
 
     it 'returns false when minor version is different' do

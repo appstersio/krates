@@ -11,6 +11,7 @@ module Kontena::Workers
       @container = container
       @queue = queue
       @dropped = 0
+      info 'initialized'
       every(60) {
         if @dropped > 0
           warn "dropped #{@dropped} log lines because queue was full"
