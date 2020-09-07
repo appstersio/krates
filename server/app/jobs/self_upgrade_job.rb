@@ -33,9 +33,10 @@ class SelfUpgradeJob
 private
 
   def shutdown
-    # Very basic, just terminate the process for now
-    info "Terminating current process as been instructed by upgrade routine."
-    exit(0)
+    # Very basic, just stop Puma process via pumactl for now
+    info "Triggering forced upgrade of the current version as been instructed, initiating Puma server shutdown via 'pumactl'..."
+    # TODO: Fix issue with shutdown sequence when MongoPubSub notifications not delivered, since the actor is already terminated.
+    system("pumactl stop --pidfile /var/tmp/server.pid")
   end
 
   def latest_version
