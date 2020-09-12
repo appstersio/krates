@@ -10,7 +10,7 @@ module Kontena::Cli::Nodes
     parameter "[NODE]", "SSH to Grid node. Use --any to connect to the first available node"
     parameter "[COMMANDS] ...", "Run command on host"
     option ["-a", "--any"], :flag, "Connect to first available node"
-    option ["-i", "--identity-file"], "IDENTITY_FILE", "Path to ssh private key"
+    option ["-i", "--identity-file"], "IDENTITY_FILE", "Path to ssh private key", environment_variable: 'KRATES_NODE_IDENTITY_FILE'
     option ["-u", "--user"], "USER", "Login as a user", default: "core"
     option "--private-ip", :flag, "Connect to node's private IP address"
     option "--internal-ip", :flag, "Connect to node's internal IP address (requires VPN connection)"
