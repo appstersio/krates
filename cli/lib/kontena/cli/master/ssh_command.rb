@@ -8,7 +8,7 @@ module Kontena::Cli::Master
 
     parameter "[COMMANDS] ...", "Run command on host"
 
-    option ["-i", "--identity-file"], "IDENTITY_FILE", "Path to ssh private key"
+    option ["-i", "--identity-file"], "IDENTITY_FILE", "Path to ssh private key", environment_variable: 'KRATES_MASTER_IDENTITY_FILE'
     option ["-u", "--user"], "USER", "Login as a user", default: "core"
 
     requires_current_master
