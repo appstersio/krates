@@ -60,4 +60,13 @@ describe Kontena::Cli::Nodes::SshCommand do
     expect(subject).to receive(:exec).with('ssh', 'core@192.0.2.10', '-F', 'ssh/config' 'ls', '-l')
     subject.run ['test-node', '--', '-F', 'ssh/config' 'ls', '-l']
   end
+
+  it "uses environment variable to provide identity file to SSH" do
+    # Stub ENV keys access to mimic correct state of the variable(s)
+    allow(ENV).to receive(:key?).and_return(true)
+    allow(ENV).to receive(:[]).with('KRATES_NODE_IDENTITY_FILE').and_return('~/x/y/z/id_rsa')
+    # Assert use case
+    expect(subject).to receive(:exec).with('ssh', '-i', '~/x/y/z/id_rsa', 'core@192.0.2.10')
+    subject.run ['test-node']
+  end
 end
