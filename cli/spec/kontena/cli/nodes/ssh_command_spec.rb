@@ -12,8 +12,16 @@ describe Kontena::Cli::Nodes::SshCommand do
     }
   end
 
+  let :vagrant_node do
+    {
+      'labels' => ['provider=vagrant'],
+      'overlay_ip' => '10.81.0.2',
+    }
+  end
+
   before do
     allow(client).to receive(:get).with('nodes/test-grid/test-node').and_return(node)
+    allow(client).to receive(:get).with('nodes/test-grid/vagrant-node').and_return(vagrant_node)
   end
 
   describe '--any flag' do
@@ -49,6 +57,11 @@ describe Kontena::Cli::Nodes::SshCommand do
   it "uses the overlay IP" do
     expect(subject).to receive(:exec).with('ssh', 'core@10.81.0.1')
     subject.run ['--internal-ip', 'test-node']
+  end
+
+  it "uses the overlay IP for vagrant node" do
+    expect(subject).to receive(:exec).with('ssh', 'core@10.81.0.2')
+    subject.run ['--internal-ip', 'vagrant-node']
   end
 
   it "passes through the command to SSH" do
