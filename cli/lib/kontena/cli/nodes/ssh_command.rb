@@ -33,7 +33,7 @@ module Kontena::Cli::Nodes
 
       provider = Array(node["labels"]).find{ |l| l.start_with?('provider=')}.to_s.split('=').last
 
-      if provider == 'vagrant'
+      if provider == 'vagrant' && !internal_ip?
         unless Kontena::PluginManager::Common.installed?('vagrant')
           exit_with_error 'You need to install vagrant plugin to ssh into this node. Use kontena plugin install vagrant'
         end
