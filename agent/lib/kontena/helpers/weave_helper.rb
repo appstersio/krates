@@ -8,9 +8,15 @@ module Kontena
     module WeaveHelper
       include WaitHelper
 
-      WEAVE_VERSION = ENV['WEAVE_VERSION'] || '1.9.3'
+      WEAVE_VERSION = ENV['WEAVE_VERSION'] || '1.9.8'
       WEAVE_IMAGE = ENV['WEAVE_IMAGE'] || 'weaveworks/weave'
       WEAVEEXEC_IMAGE = ENV['WEAVEEXEC_IMAGE'] || 'weaveworks/weaveexec'
+      WEAVE_DEBUG = ENV['WEAVE_DEBUG'] == '1' || false
+
+      # @return [Boolean]
+      def weave_debug
+        WEAVE_DEBUG
+      end
 
       # @return [String]
       def weave_version

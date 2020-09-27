@@ -207,9 +207,12 @@ module Kontena::NetworkAdapters
       trusted_subnets = node.grid['trusted_subnets']
       until weave && weave.running? do
         exec_params = [
+          # '--local', 'launch', '--ipalloc-range', '', '--dns-domain', 'kontena.local', # (2.7.0)
           '--local', 'launch-router', '--ipalloc-range', '', '--dns-domain', 'kontena.local',
           '--password', ENV['KONTENA_TOKEN'], '--conn-limit', '0'
         ]
+        exec_params += ['--log-level=debug'] if weave_debug
+        # exec_params += ['--trusted-subnets', trusted_subnets.join(',')] if trusted_subnets.size > 0 # (2.7.0)
         exec_params += ['--trusted-subnets', trusted_subnets.join(',')] if trusted_subnets
         @executor_pool.execute(exec_params)
         weave = Docker::Container.get('weave') rescue nil
