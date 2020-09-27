@@ -19,7 +19,7 @@ module Kontena::NetworkAdapters
     # @yield [line] Each line of output
     def execute(cmd, &block)
       begin
-        info "executing cmd: #{cmd}"
+        info "executing cmd: #{censor_password(cmd)}"
         container = Docker::Container.create(
           'Image' => weave_exec_image,
           'Cmd' => cmd,
