@@ -3,7 +3,7 @@
 set -ue
 
 # login
-docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASSWORD
+docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASSWORD quay.io
 
 # install dependencies
 gem install colorize dotenv middleman

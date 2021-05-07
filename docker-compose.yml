@@ -3,7 +3,7 @@ version: "3.6"
 services:
   # NOTE: This is a development box service
   toolbox:
-    image: krates/toolbox:2.6.5-3
+    image: quay.io/krates/toolbox:2.6.5-3
     working_dir: /src/app
     logging:
       driver: "journald"
@@ -30,7 +30,7 @@ services:
   # NOTE: This is master service
   master:
     container_name: krates-master
-    image: krates/master:${VERSION}
+    image: quay.io/krates/master:${VERSION}
     volumes:
       - ./server:/app
     build:
@@ -53,7 +53,7 @@ services:
   # NOTE: This is a worker service to schedule workloads
   worker:
     container_name: krates-worker
-    image: krates/worker:${VERSION}
+    image: quay.io/krates/worker:${VERSION}
     build:
       context: agent
       dockerfile: Dockerfile

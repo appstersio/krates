@@ -11,8 +11,8 @@ module Kontena::Launchers
 
     IPAM_SERVICE_NAME = 'krates-ipam-plugin'.freeze
 
-    IPAM_VERSION = ENV['IPAM_VERSION'] || '0.2.2'
-    IPAM_IMAGE = ENV['IPAM_IMAGE'] || 'krates/ipam-plugin'
+    IPAM_VERSION = ENV['IPAM_VERSION'] || '0.2.3'
+    IPAM_IMAGE = ENV['IPAM_IMAGE'] || 'quay.io/krates/ipam-plugin'
 
     def initialize(autostart = true)
       @running = false
