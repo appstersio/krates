@@ -1,7 +1,7 @@
 namespace :release do
   VERSION = Gem::Version.new(File.read('VERSION').strip)
   DEB_NAME = 'kontena-cli'
-  DOCKER_NAME = 'kontena/cli'
+  DOCKER_NAME = 'quay.io/kontena/cli'
   if VERSION.prerelease?
     DOCKER_VERSIONS = ['edge']
     DEB_COMPONENT = 'edge'

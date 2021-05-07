@@ -1,7 +1,7 @@
 namespace :release do
   VERSION = Gem::Version.new(File.read('VERSION').strip)
   NAME = 'krates-master'
-  DOCKER_NAME = 'krates/master'
+  DOCKER_NAME = 'quay.io/krates/master'
   if VERSION.prerelease?
     DOCKER_VERSIONS = ['edge']
     DEB_COMPONENT = 'edge'
